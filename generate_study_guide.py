@@ -71,6 +71,7 @@ def generate_study_guide_chunk(
         "3.  **Explain Clearly**: Expand on bullet points, explain formulas, and make the text flow logically like a book.\n"
         "4.  **Use Context**: Use the provided previous/next context to ensure continuity, but ONLY output the rewritten content for the 'CURRENT SECTION'.\n"
         "5.  **Latex**: Preserve and fix any latex formatting issues if found. IMPORTANT: Block equations start and end with `$$` and MUST be on their own lines, surrounded by blank lines.\n"
+        "6.  **Lists**: You MUST provide a blank line before starting any list (bulleted or numbered) to ensure proper rendering.\n"
     )
 
     try:

@@ -64,6 +64,7 @@ When we focus on the underlying constants or slowly varying properties of a syst
 ![](_page_3_Picture_4.jpeg)
 
 The process of identification is broken down into several critical steps:
+
 *   **Structure Determination:** Selecting the mathematical form of the model (e.g., the order of the differential or difference equations).
 *   **Parameter Estimation:** Calculating the numerical values of the coefficients within that structure.
 *   **Algorithm Selection:** Choosing between **batch algorithms** (processing all data at once) or **recursive algorithms** (updating estimates as new data arrives in real-time).
@@ -75,6 +76,7 @@ While parameters define the "rules" of the system, the **System State** represen
 ![](_page_3_Picture_11.jpeg)
 
 State estimation is categorized based on the relationship between the time of the estimate and the time of the available measurements:
+
 *   **Filtering:** Estimating the current state based on measurements up to the present time.
 *   **Prediction:** Estimating a future state based on current and past data.
 *   **Smoothing:** Estimating a past state using data collected after that point in time (non-real-time).
@@ -88,6 +90,7 @@ The general transformation is expressed as:
 $$p(y|\theta, \ldots) \Rightarrow p(\theta|y, \ldots)$$
 
 This logic applies across all domains of the course:
+
 *   **For Parameters ($\theta$):** $p(y|\theta,\ldots) \Rightarrow p(\theta|y,\ldots)$
 *   **For States ($x$):** $p(y|x,\ldots) \Rightarrow p(x|y,\ldots)$
 *   **For Models/Modes ($m$):** $p(y|m,\ldots) \Rightarrow p(m|y,\ldots)$
@@ -99,6 +102,7 @@ In many complex scenarios, a system may operate in different "modes" (e.g., a se
 ![](_page_3_Picture_21.jpeg)
 
 **Fault Detection and Isolation (FDI)** relies on:
+
 *   **System Mode Probability:** Calculating which model currently best explains the observed data.
 *   **Mode Switching:** Modeling the transitions between modes as a **Hidden Markov Process**.
 
@@ -147,14 +151,18 @@ The final grade for this course is determined by a composite score across severa
 
 1.  **Seminar (40% of final grade):**
     The seminar component focuses on continuous assessment throughout the semester. This includes the **mid-year test**, performance in **three major assignments**, and potential **bonus points** for exceptional contributions or solutions. 
+
     *   *Requirement:* A minimum of 50 points in this category is required to receive credit.
 2.  **Written Test (30% of final grade):**
     This is a closed-book examination consisting of 10 standard questions and 2 advanced questions. No external references or aids are permitted.
+
     *   *Requirement:* A minimum of 50 points is required to pass the course.
 3.  **Complex Example (30% of final grade):**
     This component involves solving a more sophisticated problem that mirrors real-world engineering challenges. Unlike the written test, references and course materials are permitted for this section.
+
 4.  **Oral Exam:**
     The oral examination serves two primary purposes:
+
     *   **Clarification:** To resolve indeterminate cases where a student is on the border between two grades.
     *   **Advanced Assessment:** For candidates aiming for an "A" grade, the oral exam will cover supplementary reading materials highlighted in the lecture slides.
 
@@ -205,6 +213,7 @@ A random sample is a set of $n$ representative data items selected from a statis
 $$X_i \sim p_{\theta}(x) \rightarrow \{X_1, \dots, X_n\}$$
 
 Where:
+
 *   $n$ is the **size of the sample**.
 *   $\theta$ is the **parameter** of interest (which may be unknown and is what we aim to estimate).
 
@@ -231,6 +240,7 @@ In the study of estimation and control, we often rely on fundamental statistical
 ### **Assumptions**
 
 To analyze the properties of these statistics, we establish a standard framework:
+
 - Let $X_i$ be a sequence of **i.i.d.** (independent and identically distributed) random variables.
 - Each variable has a defined mean $\mathcal{E}\{X_i\} = \mu$ and a variance $\operatorname{cov}\{X_i\} = \sigma^2$.
 
@@ -361,6 +371,7 @@ $$\sum_{i=1}^n X_i \rightarrow \mathcal{N}\left(n\mu, n\sigma^2\right)$$
 
 #### **Theorem (Moivre/Laplace) – Discrete Random Variables**
 This is a special case of the CLT applied to Bernoulli trials (discrete outcomes). Let $\{X_1, X_2, \dots, X_n\}$ be i.i.d. random variables following an alternative (Bernoulli) distribution where:
+
 *   $P\{X_i = 1\} = q$ (Success)
 *   $P\{X_i = 0\} = 1 - q$ (Failure)
 *   $E\{X_i\} = q$
@@ -394,6 +405,7 @@ $$f(x) = K \exp \left(-\sum_{i=1}^{n} \lambda_i g_i(x)\right)$$
 
 #### Example: Why the Normal Distribution?
 The Gaussian distribution is the maximum entropy distribution for a specified mean and variance.
+
 *   **Case 1:** If we only know the second raw moment $\mathcal{E}\{x^{2}\} = M_{2}$, the maximum entropy p.d.f. is $f(x) = K e^{-\lambda_{1}x^{2}}$, which is a zero-mean Normal distribution $\mathcal{N}(0, M_{2})$.
 *   **Case 2:** If we know the variance (second central moment) $\mathcal{E}\{(x - \mu)^{2}\} = C_{2}$, the resulting p.d.f. is $f(x) = K e^{-\lambda_{1}(x - \mu)^{2}}$, which is the general Normal distribution $\mathcal{N}(\mu, C_{2})$.
 
@@ -415,6 +427,7 @@ $$E_{\alpha} = \left\{ x \mid (x - \hat{x})^{T} P^{-1} (x - \hat{x}) \leq \alpha
 The scalar random variable $y = (x-\hat{x})^T P^{-1}(x-\hat{x})$ follows a **Chi-square distribution** with $n$ degrees of freedom ($\chi_n^2$). 
 
 **Proof Sketch:**
+
 1. Transform the variable: Let $y = P^{-1/2}(x - \hat{x})$. Since $x$ is Gaussian, $y$ is also Gaussian.
 2. Calculate the covariance of $y$:
 
@@ -529,6 +542,7 @@ This can be expressed by integrating over the joint distribution:
 $$P_{\tilde{x}_{\mathsf{MS}}} = \int \int \tilde{x}(y) \tilde{x}^{\mathsf{T}}(y) p(x|y) \ dx \ p(y) \ dy = \int P_{x|y}(y) p(y) \ dy = P_{x|y}$$
 
 Where:
+
 - $P_{x|y}(y)$ is the covariance matrix of the estimation error for a specific observation $y$.
 - $P_{x|y}$ is the mean covariance matrix, which represents the average uncertainty across all possible observations.
 
@@ -554,6 +568,7 @@ The estimation error $(x - \mathcal{E}\{x|y\})$ is orthogonal to any function $g
 $$\mathcal{E}\left\{g(y)^{T}\left(x-\mathcal{E}\left\{x|y\right\}\right)\right\}=0$$
 
 **Key Implications:**
+
 1. The MS error is orthogonal to all possible functions (linear or non-linear) of the observed data.
 2. The MS estimate is the "best" possible estimate in terms of the Euclidean norm:
 
@@ -568,6 +583,7 @@ $$\mathcal{E}\left\{g(y)^{T}\left(x-\mathcal{E}\left\{x|y\right\}\right)\right\}
 ### Linear Mean Square Estimate
 
 While the MS estimate (conditional mean) is theoretically optimal, it has practical drawbacks:
+
 - It requires full knowledge of the joint probability density function $p(x, y)$, which is often unknown.
 - Calculating the conditional mean can be analytically or computationally intractable for complex distributions.
 
@@ -577,6 +593,7 @@ To overcome these issues, we restrict the estimator to be a **linear function** 
 $$\hat{x}_{\mathsf{LMS}}(y) = Ay + b$$
 
 **Requirements and Goals:**
+
 - **Information:** We only require the first and second moments (means and covariances) of $x$ and $y$, rather than the full p.d.f.
 - **Optimality Criterion:** Minimize the Linear Mean Square (LMS) error:
 
@@ -874,12 +891,14 @@ In the frequentist framework, the Maximum Likelihood (ML) estimate possesses sev
 
 ### **Efficiency and the Cramér-Rao Bound**
 An estimate is said to be **efficient** if its error covariance reaches the theoretical lower bound defined by the inverse of the Fisher Information Matrix.
+
 *   **Efficiency**: $P_{\tilde{x}} = F^{-1}$
     
 This implies that no other unbiased estimator can have a lower variance than the ML estimate in these conditions.
 
 ### **Consistency**
 An estimate is **consistent** if it converges in probability to the true value of the parameter as the number of observations $n$ increases to infinity.
+
 *   **Consistency**: $P(\|x - \hat{x}(y_1, \dots, y_n)\| > \varepsilon) \to 0 \text{ for } n \to \infty$
 
 ---
@@ -1025,11 +1044,13 @@ Consider a coin-tossing experiment where we want to estimate the probability of 
     $$L_n(\theta) = \sum_{i=1}^n \{x_i \ln \theta + (1-x_i) \ln(1-\theta)\} = n\bar{X} \ln \theta + n(1-\bar{X}) \ln(1-\theta)$$
 
     where $\bar{X}$ is the sample average.
+
 *   **Optimization**: Setting the derivative $\frac{dL_n(\theta)}{d\theta} = 0$ yields:
 
     $$\widehat{\theta}_{ML} = \bar{X}$$
 
 **Conclusions**:
+
 *   The ML estimate for a Bernoulli process is simply the **sample average**.
 *   This estimate is computationally efficient and can be **updated recursively** as new data arrives.
 
@@ -1056,6 +1077,7 @@ This expression holds true only if **all** observed samples fall within the rang
 
 **Conclusions:**
 To maximize the likelihood $l_n(\theta)$, we need to choose the smallest possible $\theta$ that still satisfies the condition $|x_i| \leq \theta$ for all $i$.
+
 *   **ML Estimate:** The estimate is defined by the maximum absolute value in the sample set:
 
     $$\widehat{\theta}_{\text{ML}} = \max_{i} |x_i|$$
@@ -1090,6 +1112,7 @@ Maximizing $L_n(\theta)$ is equivalent to minimizing the summation term:
 $$f(\theta) = \sum_{i=1}^n \ln \left(1 + (x_i - \theta)^2\right)$$
 
 **Conclusions:**
+
 *   **Numerical Solution:** Unlike the Gaussian case, the derivative of $f(\theta)$ results in a high-order polynomial. Consequently, there is no closed-form analytical solution; the estimate must be found using numerical optimization.
 *   **Sufficient Statistics:** There are no "smaller" statistics (like the mean or variance) that can summarize the data. To compute the ML estimate, the entire raw dataset must be preserved.
 
@@ -1149,6 +1172,7 @@ $$\vdots$$
 $$p(\theta|y_1, y_2, \dots, y_n) \propto l(\theta|y_n)p(\theta|y_1, y_2, \dots, y_{n-1})$$
 
 **Key Conclusions:**
+
 *   The **posterior p.d.f.** is always proportional to the **prior p.d.f.** multiplied by the **likelihood**.
 *   The likelihood $l(\theta|y_i)$ captures **all information** about $\theta$ contained within the specific data point $y_i$.
 *   The resulting p.d.f. effectively bridges the gap between the inherent randomness of observations and the subjective uncertainty of the parameter.
@@ -1217,6 +1241,7 @@ In Bayesian estimation, we leverage the naturally recursive character of the upd
 $$p(\theta|y_1, y_2, \ldots, y_n) \propto l(\theta|y_n) p(\theta|y_1, y_2, \ldots, y_{n-1})$$
 
 A **conjugated prior** is a specific choice of prior distribution such that the posterior distribution belongs to the same functional family as the prior. This property is highly desirable for several reasons:
+
 *   **Analytic Invariance**: The mathematical form of the p.d.f. is preserved throughout the update process. For example, if we use a Normal prior with a Normal likelihood, the resulting posterior is also a Normal distribution.
 *   **Computational Efficiency**: The **functional** recursion (updating the entire shape of the distribution) is reduced to a simple **algebraic** recursion on the parameters of the distribution (e.g., updating only the mean and covariance).
 
@@ -1300,6 +1325,7 @@ To make this expression more manageable for Bayesian updating, we decompose the 
 $$\sum_{i=1}^{n} (y_i - \mu)^2 = \sum_{i=1}^{n} (y_i - \overline{y})^2 + n(\overline{y} - \mu)^2 = \nu s^2 + n(\overline{y} - \mu)^2$$
 
 Here, we define the **sufficient statistics** that capture all the necessary information from the data:
+
 *   **Sample Average:** $\overline{y} = \frac{1}{n} \sum_{i=1}^{n} y_i$
 *   **Degrees of Freedom:** $\nu = n-1$
 *   **Sample Variance:** $s^2 = \frac{1}{\nu} \sum_{i=1}^{n} (y_i - \overline{y})^2$
@@ -1313,6 +1339,7 @@ This structure is particularly useful because the first term in the exponent res
 
 #### **Prior Selection**
 To perform Bayesian inference without incorporating external subjective information, we use a **non-informative prior**. Following the logic of Jeffrey's rule for location and scale parameters:
+
 *   For the location parameter $\mu$, we assume a flat prior: $p(\mu | \sigma) \propto \text{const}$.
 *   For the scale parameter $\sigma$, we assume a prior proportional to its reciprocal: $p(\sigma) \propto \sigma^{-1}$.
 
@@ -1335,6 +1362,7 @@ By combining the likelihood function with the non-informative prior $p(\mu, \sig
 $$p(\mu, \sigma | y) = \left(\frac{n}{2\pi}\right)^{1/2} \frac{2}{\Gamma(\nu/2)} \left(\frac{\nu s^2}{2}\right)^{\nu/2} \sigma^{-(n+1)} \exp\left(-\frac{(\mu - \overline{y})^2}{2\sigma^2/n} - \frac{\nu s^2}{2\sigma^2}\right)$$
 
 To ensure this is a valid p.d.f., it must integrate to 1. We can verify the normalization constants using the following standard integrals:
+
 1.  **For the scale parameter ($\sigma$):** $\int_{0}^{\infty} x^{-(\nu+1)} e^{-a/x^{2}} dx = \frac{1}{2} a^{-\nu/2} \Gamma(\nu/2)$
 2.  **For the location parameter ($\mu$):** $\int_{-\infty}^{\infty} e^{-\frac{1}{2\sigma^{2}}(x-\mu)^{2}} dx = \sqrt{2\pi}\sigma$
 
@@ -1432,6 +1460,7 @@ When dealing with normally distributed data, we can identify specific summaries 
     In this case, the **sufficient statistics** for the pair $\{\mu, \sigma\}$ are the triple $\{\overline{y}, s^2, n\}$, where $s^2$ is the sample variance.
 
 **Key Properties:**
+
 *   **Minimal Sufficient Statistic:** This is the statistic with the smallest possible dimension that still captures all information from the data.
 *   **Finite Sufficient Statistics:** The existence of finite sufficient statistics is crucial for real-time estimation. It allows for the **accumulation of information** from an ever-growing stream of data within a limited memory space. This concept is mathematically analogous to the "state" of a dynamic system, where the current state summarizes all past inputs necessary to predict the future.
 
@@ -1452,12 +1481,14 @@ When we combine this informative prior with new observed data $y$ (characterized
 $$p(\sigma|y) \propto \sigma^{-(\nu_a + \nu + 1)} \exp\left(-\frac{\nu_a s_a^2 + \nu s^2}{2\sigma^2}\right) = \sigma^{-(\overline{\nu} + 1)} \exp\left(-\frac{\overline{\nu} \, \overline{s}^2}{2\sigma^2}\right)$$
 
 The updated parameters of the distribution are calculated as follows:
+
 *   **Updated Degrees of Freedom:** $\overline{\nu} = \nu_a + \nu$
 *   **Updated Combined Variance:** $\overline{\nu}\,\overline{s}^2 = \nu_a s_a^2 + \nu s^2$
 
 Note that while the marginal distribution for $\sigma$ is updated, the functional form of the conditional distribution $p(\mu | \sigma, y)$ remains a normal distribution centered at the sample mean.
 
 **Interpretation of Initial Statistics:**
+
 *   $\nu_a$: Represents the **prior accuracy** or the "weight" given to prior knowledge, expressed in terms of an equivalent sample size.
 *   $s_a^2$: Represents the **prior information** regarding the expected value of the variance $\sigma^2$.
 
@@ -1474,6 +1505,7 @@ Parameter estimation is the process of using observed data to refine our knowled
 ### **The Estimation Workflow**
 
 The estimation process typically follows a recursive or batch logic:
+
 1.  **Prior Knowledge**: We begin with an initial belief about the parameters, represented by the prior distribution $p(\theta)$.
 2.  **Data Collection**: We observe a set of measurements or data points $y$.
 3.  **Likelihood Evaluation**: We determine how likely the observed data is, given specific parameter values, using the model $p(y|\theta)$.
@@ -1518,6 +1550,7 @@ $$
 $$
 
 In this product:
+
 *   **$\rho(y(\cdot) | u(\cdot), \mathcal{D}^{(\cdot)})$**: Represents the **System Model**, describing how the system generates an output given the current input and past data.
 *   **$\rho(u(\cdot) | \mathcal{D}^{(\cdot)})$**: Represents the **Control Law**, describing how the controller chooses an input based on the available history.
 
@@ -1743,6 +1776,7 @@ This can be rewritten in the form of a predictor plus an error term:
 $$y(t) = \hat{y}(t | \mathcal{D}^{t-1}, u(t), \theta) + e(t)$$
 
 In this formulation:
+
 1.  The term $\hat{y}(t | \mathcal{D}^{t-1}, u(t), \theta)$ represents the **optimal prediction**.
 2.  The term $(H(d) - I)e(t)$ depends strictly on past data $\mathcal{D}^{t-1}$ because $H(d)$ is monic (its first term is $I$), meaning $H(d)-I$ starts with a delay:
 
@@ -1807,6 +1841,7 @@ This is often referred to as an **equation error model** because the noise term 
 
 #### **Polynomial Representation**
 Using the delay operator $d$ (where $d \cdot y(t) = y(t-1)$), we can define the following polynomials:
+
 *   $a(d) = 1 + a_1 d + \dots + a_{n_a} d^{n_a}$
 *   $b(d) = b_0 + b_1 d + \dots + b_{n_b} d^{n_b}$
 
@@ -1820,6 +1855,7 @@ By rearranging the equation, we obtain the fractional form:
 $$y(t) = \frac{b(d)}{a(d)} u(t) + \frac{1}{a(d)} e(t)$$
 
 In this structure:
+
 *   The **deterministic transfer function** $G(d) = \frac{b(d)}{a(d)}$ can be chosen to represent the system dynamics.
 *   The **noise shaping filter** $H(d) = \frac{1}{a(d)}$ is defined implicitly by the denominator of the deterministic part. This coupling is a limitation of ARX, as the noise and system dynamics share the same poles.
 
@@ -1843,6 +1879,7 @@ $$\hat{y}(t|t-1,u(t)) = -\sum_{i=1}^{n_a} a_i y(t-i) + \sum_{i=0}^{n_b} b_i u(t-
 
 #### **Linear Regression Form**
 The predictor can be written as a scalar product of a **parameter vector** $\theta$ and a **data vector (regressor)** $z(t)$:
+
 *   $\theta = [a_1, a_2, \dots, a_{n_a}, b_0, b_1, \dots, b_{n_b}]^T$
 *   $z(t) = [-y(t-1), -y(t-2), \dots, -y(t-n_a), u(t), u(t-1), \dots, u(t-n_b)]^T$
 
@@ -1966,6 +2003,7 @@ The ARX model assumes that the current output $y(t)$ is a linear combination of 
 $$y(t) = z^{T}(t)\theta + e(t), \quad e(t) \sim \mathcal{N}(0, \sigma_e^2), \quad \theta \in \mathcal{R}^n$$
 
 Where:
+
 *   $z(t)$ is the **regressor vector** containing past data.
 *   $\theta$ is the **parameter vector** to be estimated.
 *   $e(t)$ is the **equation error**, assumed here to be Gaussian white noise.
@@ -2060,6 +2098,7 @@ This is compactly expressed as:
 $$p(\theta | \sigma_e, \mathcal{D}^T) = \mathcal{N}(\hat{\theta}, \sigma_e^2 P_\theta)$$
 
 Where:
+
 *   $\hat{\theta}$ is the mean (and mode) of the distribution, representing our best estimate.
 *   $\sigma_e^2 P_\theta$ is the covariance matrix, where $P_\theta = (Z^T Z)^{-1}$ scales the uncertainty based on the information content of the regressor matrix $Z$.
 
@@ -2161,6 +2200,7 @@ The most fundamental measure of fit is the residual sum of squares. Once the par
 $$\sigma_e^2 \approx s^2 = \frac{1}{T-n} \left( Y - Z\hat{\theta} \right)^T \left( Y - Z\hat{\theta} \right)$$
 
 Where:
+
 *   $T$ is the number of data samples.
 *   $n$ is the number of estimated parameters (model order).
 *   $Y$ is the vector of observed outputs.
@@ -2174,6 +2214,7 @@ To prevent overfitting, we use the **Akaike Information Criterion (AIC)**. The A
 $$AIC = T\log(s^2) + 2n$$
 
 In this formula:
+
 *   $T\log(s^2)$ represents the log-likelihood of the model (how well the model fits the data).
 *   $2n$ is the penalty term for the number of parameters $n$.
 
@@ -2199,6 +2240,7 @@ One of the primary indicators of a "good" model is that the residuals (predictio
 $$R_{e,e}(k) = \mathcal{E}\left\{e(t)e(t+k)\right\} \approx \frac{1}{T-k}\sum_{t=1}^{T-k}e(t)e(t+k)$$
 
 Where:
+
 *   **$T$** is the total number of data points.
 *   **$k$** is the lag (typically $k < K \ll T$).
 *   If $R_{e,e}(k)$ is significantly non-zero for $k > 0$, it suggests that the model order is too low (underfitting), as there is still predictable structure left in the residuals.
@@ -2242,6 +2284,7 @@ The data generator used for this demonstration follows a pure ARX (Auto-Regressi
 ![](_page_72_Figure_3.jpeg)
 
 The figure above illustrates the typical behavior of the selection criteria:
+
 1.  **Estimated Noise Variance ($s^2$):** As the model order increases, the residual sum of squares generally decreases. However, once the true order is reached, the decrease in $s^2$ becomes marginal, as the model begins to fit the stochastic noise rather than the underlying system dynamics.
 2.  **AIC Curve:** The AIC introduces a penalty term $2n$ for model complexity. In this textbook case, the AIC curve typically shows a distinct minimum at the true order of the system. This "elbow" or minimum point provides a clear, objective justification for selecting a specific order, balancing the trade-off between bias (underfitting) and variance (overfitting).
 
@@ -2270,6 +2313,7 @@ When we fit an ARX model to data generated by an ARMAX process, we are dealing w
 ![](_page_73_Figure_3.jpeg)
 
 The figure above displays the results of this estimation. Key observations typically include:
+
 *   **Bias in Parameters**: Due to the unmodeled noise dynamics, the estimates for the system's physical parameters may exhibit bias if the model order is too low.
 *   **Residual Correlation**: The residuals of a low-order ARX fit will not be white, as they still contain the dynamics of the $C(d)$ polynomial.
 *   **Order Inflation**: To achieve a "white" residual, the selection criteria may suggest a much higher model order than the physical system actually possesses, effectively using the AR (Auto-Regressive) part to approximate the MA (Moving-Average) noise component.
@@ -2287,6 +2331,7 @@ To perform recursive estimation in a Bayesian framework, we utilize a **conjugat
 $$\rho\left(\theta, \sigma_{e} | \mathcal{D}^{t}\right) = \rho\left(\theta | \sigma_{e}, \mathcal{D}^{t}\right) \times \rho\left(\sigma_{e} | \mathcal{D}^{t}\right) = \mathcal{N}(\hat{\theta}(t), \sigma_{e}^{2} P(t)) \times \chi_{\nu(t)}^{2}\left(\frac{\nu(t) s^{2}(t)}{2\sigma_{e}^{2}}\right)$$
 
 Where:
+
 *   $\hat{\theta}(t)$ is the point estimate of the parameters at time $t$.
 *   $P(t)$ is the normalized covariance matrix.
 *   $s^2(t)$ is the estimate of the noise variance $\sigma_e^2$.
@@ -2319,6 +2364,7 @@ By processing the algebra of the Bayesian update, we derive the following recurs
 
 #### **Auxiliary Variables**
 To simplify the calculation, we define the **prediction error** and the **normalized regressor norm**:
+
 *   **Prediction Error:** $\varepsilon(t|t-1) = y(t) - z^{\mathsf{T}}(t)\hat{\theta}(t-1)$
 *   **Scalar Gain Factor:** $\zeta(t) = z^{\mathsf{T}}(t)P(t-1)z(t)$
 
@@ -2453,12 +2499,14 @@ If you have a fixed dataset $\mathcal{D}^T = \{y(t), u(t)\}_{t=1}^T$, the point 
 
 #### **Impact of Excitation**
 The convergence of the parameter estimates $\hat{\theta}(t)$ to their true values depends heavily on the "richness" of the input signal, known as **Persistence of Excitation**.
+
 - If the input $u(t)$ is sufficiently exciting, the information matrix $P(t)^{-1}$ grows with time, causing the normalized covariance matrix $P(t)$ to shrink toward zero.
 - As $P(t) \to 0$, the uncertainty in our estimates vanishes, and the parameters converge to the true system values.
 - If the system is poorly excited (e.g., the input is constant or zero), certain directions in the parameter space will remain uncertain, and $P(t)$ will not decrease in those directions.
 
 #### **Uncertainty of $a_i$ vs. $b_i$ Parameters**
 In an ARX model, we estimate two sets of parameters:
+
 1.  **$a_i$ parameters**: These relate to the auto-regressive part (past outputs $y(t-i)$).
 2.  **$b_i$ parameters**: These relate to the exogenous part (past inputs $u(t-i)$).
 
@@ -2513,8 +2561,10 @@ The recursive update equations for the ARX model parameters are derived as follo
 
 #### **Auxiliary Variables**
 To simplify the notation, we define the **prediction error** $\varepsilon$ and the **normalized regressor norm** $\zeta$:
+
 *   **Prediction Error:** $\varepsilon(t|t-1) = y(t) - z^{T}(t)\hat{\theta}(t|t-1)$
     (The difference between the actual observed output and the output predicted by the previous model).
+
 *   **Regressor Norm:** $\zeta(t|t-1) = z^{T}(t)P(t|t-1)z(t)$
     (A measure of the "informativeness" or "strength" of the current regressor $z(t)$ relative to the current parameter uncertainty).
 
@@ -2590,6 +2640,7 @@ Under this model, the mean estimate remains the same, but the uncertainty (covar
 $$P(t+1|t) = P(t|t) + V(t)$$
 
 **Key Characteristics:**
+
 - **Directional Tracking:** If we have prior knowledge about which parameters are likely to change (or in which directions), we can incorporate this into the matrix $V(t)$.
 - **Limitations:** This basic linear forgetting model typically assumes a constant noise variance $\sigma_e^2$; it does not inherently account for time-varying noise in the observation process.
 
@@ -2697,6 +2748,7 @@ While exponential forgetting allows the model to adapt to changes, it introduces
 
 #### 1. Poor System Excitation
 If the input signal does not sufficiently "excite" the system (e.g., in closed-loop control where the input is linearly dependent on the output), the regressor $z(t)$ may lack information in certain directions.
+
 *   **Covariance Wind-up:** Information subject to forgetting is not replaced by new data. This leads to the unlimited growth of eigenvalues in the covariance matrix $P$ in "unexcited" directions, making the estimator extremely sensitive to noise.
 
 #### 2. Possible Solutions
@@ -2715,6 +2767,7 @@ Restricted forgetting aims to prevent covariance wind-up by only increasing unce
 
 #### **Data Update Analysis**
 To understand restricted forgetting, we analyze how the covariance matrix $P$ changes during a standard update:
+
 1.  **Parameter Uncertainty:** Defined as $\tilde{\theta}(t|t-1) = \theta(t) - \hat{\theta}(t|t-1)$.
 2.  **Directional Uncertainty:** The uncertainty of a scalar product $x^T\theta$ is given by $x^T P x$.
 3.  **Covariance Update:** 
@@ -2749,6 +2802,7 @@ This selective increase is achieved by constructing the drift covariance matrix 
 $$V(t|t) = \frac{\zeta_{\nu}(t)}{\zeta^{2}(t|t)} P(t|t) z(t) z^{T}(t) P(t|t)$$
 
 **Validation:**
+
 *   Multiplying by $z^T$ and $z$ yields exactly $\zeta_{\nu}(t)$.
 *   Multiplying by an orthogonal vector $x^T$ (where $x^T P z = 0$) yields $0$, confirming that uncertainty is preserved in all other directions.
 
@@ -2831,6 +2885,7 @@ $$\mu_{x|y} = \mu_x + P_{xy}P_{yy}^{-1}(y - \mu_y)$$
 $$P_{x|y} = P_{xx} - P_{xy}P_{yy}^{-1}P_{yx}$$
 
 By substituting the LD factors:
+
 *   $P_{yy} = L_y D_y L_y^T$
 *   $P_{xy} = K D_y L_y^T$
 *   $P_{xx} = K D_y K^T + L_{x|y} D_{x|y} L_{x|y}^T$
@@ -2914,6 +2969,7 @@ After the transformation, we obtain the LD-factors of the joint distribution:
 $$\left| \begin{bmatrix} d_{y}(t) \\ d(t|t) \end{bmatrix}; \begin{bmatrix} 1 & k^{T}(t) \\ 0 & L^{T}(t|t) \end{bmatrix} \right|$$
 
 From this result, we can directly extract:
+
 *   **$k(t)$**: The Kalman gain vector used to update the parameter mean.
 *   **$d_{y}(t) = 1 + \zeta(t|t-1)$**: The normalized output variance (innovation covariance).
 *   **$d(t|t), L(t|t)$**: The LD-factors of the posterior parameter covariance matrix $P(t|t)$.
@@ -3377,6 +3433,7 @@ $$x(t+1) = Ax(t) + Bu(t) + v(t)$$
 $$y(t) = Cx(t) + Du(t) + e(t)$$
 
 Where:
+
 *   $x(t)$ is the state vector.
 *   $u(t)$ is the deterministic input.
 *   $v(t)$ is the **process noise**, representing modeling errors or unmeasured disturbances.
@@ -3427,6 +3484,7 @@ This steady-state solution satisfies the **Discrete Algebraic Lyapunov Equation*
 $$P_{x} = AP_{x}A^{T} + Q$$
 
 **Interpretation of the Lyapunov equation:**
+
 1.  **Stability Test:** For a deterministic system, the existence of a positive definite $P_x$ for a given $Q$ proves stability ($AP_xA^T - P_x = -Q$).
 2.  **Stochastic Equilibrium:** In a stochastic context, it represents the balance where the "thinning" of uncertainty by the stable dynamics $A$ exactly offsets the "injection" of new uncertainty by the process noise $Q$.
 
@@ -3547,6 +3605,7 @@ We consider the joint c.p.d.f. of the state and output. Under Gaussian assumptio
 $$\rho\left(\begin{bmatrix}x(t)\\y(t)\end{bmatrix}\middle|\mathcal{D}^{t-1}\right) = \mathcal{N}\left(\begin{bmatrix}\hat{x}(t|t-1)\\\hat{y}(t|t-1)\end{bmatrix};\begin{bmatrix}P(t|t-1)&P(t|t-1)C^T\\CP(t|t-1)&CP(t|t-1)C^T+R\end{bmatrix}\right)$$
 
 The updated mean (state estimate) and covariance are found using the properties of conditional Gaussians:
+
 *   **Updated State:** $\hat{x}(t|t) = \hat{x}(t|t-1) + L(t)(y(t) - C\hat{x}(t|t-1) - Du(t))$
 *   **Kalman Gain:** $L(t) = P(t|t-1)C^{T} (CP(t|t-1)C^{T} + R)^{-1}$
 *   **Updated Covariance:** $P(t|t) = P(t|t-1) - P(t|t-1)C^{T} (CP(t|t-1)C^{T} + R)^{-1} CP(t|t-1)$
@@ -3653,6 +3712,7 @@ For a linear system, the deterministic control input $u(t)$ shifts the mean but 
 $$\varepsilon(t|t-1) = y(t) - \hat{y}(t|t-1)$$
 
 By the **orthogonality principle**, the optimal estimate ensures that the prediction error is orthogonal to all past data. This implies:
+
 1. The error has zero mean: $\mathcal{E}\{\varepsilon(t|t-1)\} = 0$.
 2. The error is uncorrelated with past outputs: $\mathcal{E}\{\varepsilon(t|t-1)y^T(t-\tau)\} = 0$.
 3. The error sequence is **white noise**: $\mathcal{E}\{\varepsilon^T(t|t-1)\varepsilon(t-\tau|t-\tau-1)\} = 0$ for $\tau \neq 0$.
@@ -3791,6 +3851,7 @@ The evolution of the state $x(\tau)$ is modeled as:
 $$dx(\tau) = A_c x(\tau) d\tau + B_c u(\tau) d\tau + dw(\tau)$$
 
 Here, the uncertainty is represented by $dw(\tau)$, which is the increment of a **Wiener process** (Brownian motion). The stochastic properties of these increments are defined as:
+
 - $\mathcal{E}\{dw(\tau)\} = 0$ (Zero mean)
 - $\mathcal{E}\{dw(\tau) dw^{T}(\tau)\} = Q d\tau$ (Covariance proportional to the infinitesimal time step)
 
@@ -3876,6 +3937,7 @@ To implement the smoother, we first perform a standard forward pass using the Ka
 
 #### **Statistics from the forward run of the Kalman filter**
 During the forward pass, for each time step $t$, we compute and store:
+
 *   **Data update step (Filtering):** The conditional probability density function (c.p.d.f.) of the state given all data up to time $t$.
 
     $$p(x(t)|\mathcal{D}^t) = \mathcal{N}(\hat{x}(t|t), P(t|t))$$
@@ -3932,6 +3994,7 @@ $$y = g(x) = g(\hat{x} + \tilde{x}) \approx g(\hat{x}) + \frac{\partial g}{\part
 
 #### **Linear Approximation (1st Order)**
 By taking the expectation of the first-order expansion, we derive the linear approximations used in the standard EKF:
+
 *   **Mean:** $\mathcal{E} \{ y \} \approx \mathcal{E} \left\{ g(\hat{x}) + \frac{\partial g}{\partial x}^T \tilde{x} \right\} = g(\hat{x})$
 *   **Covariance:** $\operatorname{cov} \{ y \} \approx \mathcal{E} \left\{ \left(\frac{\partial g}{\partial x}^T \tilde{x}\right) \left(\tilde{x}^T \frac{\partial g}{\partial x}\right) \right\} = \frac{\partial g}{\partial x}^T P_x \frac{\partial g}{\partial x}$
 
@@ -3993,6 +4056,7 @@ $$P(t+1|t) = A(t)P(t|t)A^{T}(t) + \Gamma_{v}(t)Q\Gamma_{v}^{T}(t)$$
 The IEKF improves the data update step by iteratively re-linearizing the measurement equation. This is essentially a Gauss-Newton optimization to find the Maximum A Posteriori (MAP) estimate.
 
 **Iteration Process:**
+
 1.  Initialize $\hat{x}^{(0)}(t) = \hat{x}(t|t-1)$.
 2.  Calculate Jacobian $G^{(i)}(t)$ and Gain $K^{(i)}(t)$ at the current iteration $\hat{x}^{(i)}(t)$.
 3.  Update the estimate $\hat{x}^{(i+1)}(t)$ until convergence.
@@ -4009,6 +4073,7 @@ The UKF addresses the flaws of linearization by using the **Unscented Transforma
 
 #### **Sigma-Point Definition**
 For a state vector of dimension $n_x$, we generate $2n_x + 1$ sigma-points:
+
 *   **Mean point:** $x_0 = \hat{x}$ with weight $w_0 = \frac{k}{n_x + k}$
 *   **Spread points:** $x_i = \hat{x} \pm S_i$ with weights $w_i = \frac{1}{2(n_x + k)}$
 
@@ -4110,6 +4175,7 @@ On-line detection is performed in real-time as data arrives. We observe a sequen
 $$y(t) \sim p_{\theta}(y(t)|y(t-1),\ldots,y(1))$$
 
 The fundamental challenge is that the **time of change ($t_0$)** is unknown. The system is characterized by:
+
 *   For $t \leq t_0$: The parameter is $\theta = \theta^0$ (the nominal state).
 *   For $t > t_0$: The parameter shifts to $\theta = \theta^1$ (the changed state).
 
@@ -4203,6 +4269,7 @@ Depending on the application requirements, different criteria can be used to opt
 
 ### Most powerful test $g_{MP}^*$
 The goal of the Most Powerful (MP) test is to maximize the detection capability for a strictly controlled false alarm rate.
+
 - **Procedure**: Select a fixed significance level $\alpha_0$ (typically between $0.01$ and $0.05$).
 - **Optimization**: Minimize the Type II error (thereby maximizing the test power, $1-\beta$) subject to the constraint that the Type I error does not exceed $\alpha_0$.
 
@@ -4210,6 +4277,7 @@ $$g_{MP}^* = \arg\min_{g} \beta(g) \quad \text{subject to} \quad \alpha(g) = \al
 
 ### Bayesian test $g_B^*$
 The Bayesian approach treats the hypotheses as random variables with known prior probabilities $P\{H_0\}$ and $P\{H_1\}$.
+
 - **Optimization**: Minimize the total weighted probability of error.
 
 $$w(g) = P\{g(\mathcal{Y}^N) \neq 0 | H_0\} P\{H_0\} + P\{g(\mathcal{Y}^N) \neq 1 | H_1\} P\{H_1\} = \alpha(g)P\{H_0\} + \beta(g)P\{H_1\}$$
@@ -4283,6 +4351,7 @@ The statistics are updated recursively:
 $$S_k = S_{k-1} + \ln \frac{p_1(y(k))}{p_0(y(k))}$$
 
 The decision scheme involves two thresholds, $a$ and $b$:
+
 1.  **Accept $H_1$**: if $S_k \ge b$
 2.  **Accept $H_0$**: if $S_k \le a$
 3.  **Continue**: if $a < S_k < b$ (accumulate more data)
@@ -4301,10 +4370,12 @@ This approach is highly efficient as it minimizes the average number of samples 
 
 #### Objectives and Assumptions
 We aim to develop "on-line" recursive algorithms to detect a single abrupt change in the parameter $\theta$ of a stochastic process.
+
 - **Assumption**: $\theta = \theta_0$ for $t \le t_0$ and $\theta = \theta_1$ for $t > t_0$, where $t_0$ is the unknown change time.
 - **Statistic**: The core of these algorithms is the log-likelihood ratio $s(y) = \ln \frac{p_{\theta_1}(y)}{p_{\theta_0}(y)}$.
 
 **Key Property**:
+
 - Under $H_0$, $\mathcal{E}\{s(y)|\theta_0\} < 0$ (the cumulative sum drifts downward).
 - Under $H_1$, $\mathcal{E}\{s(y)|\theta_1\} > 0$ (the cumulative sum drifts upward).
 The detection of a change is essentially the detection of this change in the sign of the mean of the increments $s(y)$.
@@ -4330,6 +4401,7 @@ $$s(y) = \ln \frac{l(\mu_1|y)}{l(\mu_0|y)} = -\frac{(y-\mu_1)^2}{2\sigma^2} + \f
 
 ##### Statistical Properties of $s(y)$
 The effectiveness of the test depends on the expected value of $s(y)$ under different conditions:
+
 *   **Under $H_0$ ($\mu = \mu_0$):**
 
     $$\mathcal{E}\{s(y)|\mu = \mu_0\} = \frac{\mu_1 - \mu_0}{\sigma^2} \left(\mu_0 - \frac{\mu_0 + \mu_1}{2}\right) = -\frac{(\mu_1 - \mu_0)^2}{2\sigma^2} < 0$$
@@ -4356,10 +4428,12 @@ $$\text{var} \{s(y)|\mu = \mu_i\} = \frac{(\mu_1 - \mu_0)^2}{\sigma^4} \text{var
 
 ##### Properties of the Cumulative Statistic $S_N$
 For a sequence of $N$ independent samples, the cumulative log-likelihood ratio $S_N(\mathcal{Y}^N) = \sum_{k=1}^N s(y(k))$ exhibits the following properties:
+
 *   **Mean:** $\mathcal{E}\{S_N|\mu=\mu_i\} = N \cdot \mathcal{E}\{s(y)|\mu=\mu_i\}$
 *   **Variance:** $\text{var}\{S_N|\mu=\mu_i\} = N \cdot \text{var}\{s(y)|\mu=\mu_i\}$
 
 **Key Observations:**
+
 1.  The **mean difference** between hypotheses grows linearly with $N$.
 2.  The **standard deviation** (the "scale" of uncertainty) grows with $\sqrt{N}$.
 3.  As the sample size $N$ increases, the separation between the distributions of $S_N$ under $H_0$ and $H_1$ becomes more distinct, leading to better discrimination and a reduced false alarm rate.
@@ -4456,6 +4530,7 @@ To detect the change, we focus on the growth of the statistic relative to its hi
 $$m_k = \min_{i=0,\ldots,k} S_i$$
 
 The detection is based on the difference between the current cumulative sum and this minimum. The critical function is defined as:
+
 - $g_k = 1$ (Change detected) if $S_k - m_k \ge \lambda$
 - $g_k = 0$ (No change) if $S_k - m_k < \lambda$
 
@@ -4465,6 +4540,7 @@ This approach uses an **adaptive thresholding** mechanism. By measuring the "ris
 The CUSUM method can be viewed as a sequence of Sequential Likelihood Ratio (SLR) tests. If the statistic $S_k$ drops too low (e.g., $S_k < -\epsilon$), it indicates that the evidence for $H_1$ is non-existent, and we restart the cycle.
 
 In the limit where the lower boundary $\epsilon \to 0$, the statistics update can be simplified. We prevent the cumulative sum from becoming negative, effectively "resetting" the search for a change whenever the evidence points strongly toward $H_0$:
+
 - $S_k = S_{k-1} + s_k$ if $S_{k-1} + s_k > 0$
 - $S_k = 0$ if $S_{k-1} + s_k \le 0$
 
@@ -4552,6 +4628,7 @@ Consider a three-mode system with the transition matrix $\Pi$:
 $$\Pi = \begin{pmatrix} 0.6 & 0.3 & 0.1 \\ 0.0 & 0.4 & 0.6 \\ 0.4 & 0.2 & 0.4 \end{pmatrix}$$
 
 Starting from an initial state where the system is certainly in Mode 1 ($P_m(0) = [1, 0, 0]^T$), the distribution converges over time toward a steady-state equilibrium:
+
 - $P_m(1) = (0.600, 0.300, 0.100)^T$
 - $P_m(2) = (0.400, 0.320, 0.270)^T$
 - $P_m(\infty) = (0.353, 0.294, 0.353)^T$
@@ -4573,6 +4650,7 @@ $$p_i(x(t+1)|x(t), u(t), y(t)) = p(x(t+1)|x(t), u(t), y(t), m(t) = i)$$
 
 #### Multiple models of output measurement
 These models are designed to detect issues related to the observation process, such as:
+
 - **Sensor faults:** Increased noise levels or constant biases.
 - **Communication loss:** "Frozen" sensors where the output remains static.
 - **Range limitations:** Clipping or saturation of sensor data.
@@ -4653,6 +4731,7 @@ Mathematically, the transition probability is defined by the Kronecker delta fun
 $$P\{m(t) = i \mid m(t-1) = j, \mathcal{D}^{t-1}\} = \delta(i, j), \quad i, j = 1, \dots, M$$
 
 Where:
+
 - $\delta(i, j) = 1$ if $i = j$
 - $\delta(i, j) = 0$ if $i \neq j$
 
@@ -4882,6 +4961,7 @@ The optimal decision $d^*(y)$ is found by minimizing the expected loss over the 
 $$d^*(y) = \arg\min_{d} \int L(\theta, d) p(\theta|y) \ d\theta$$
 
 Where:
+
 *   **Utility/Loss Function**: We define a function $U(\theta, d)$ to maximize utility or $L(\theta, d)$ to minimize loss. This function quantifies the "cost" of making decision $d$ when the true state is $\theta$.
 *   **Decision $d$**: The variable to be optimized (e.g., the estimated state $\hat{x}$).
 *   **Posterior Distribution $p(\theta|y)$**: This represents our updated information about the unknown parameter $\theta$ after observing data $y$.
@@ -4948,6 +5028,7 @@ This formulation shows that the new estimate is a weighted average of the previo
 While the empirical p.d.f. is mathematically useful, it is often too "spiky" for practical visualization or decision-making. The histogram provides a smoother, discretized approximation by grouping data into intervals.
 
 ▶ **Binning Process**: 
+
 1. We divide the range of the data sample $\mathcal{Y}^n = \{y_1, \dots, y_n\}$ into $m$ disjoint bins (intervals), each with a fixed width $h$.
 2. We define an **indicator (membership) function** $I_j(y)$ to determine if a point belongs to a specific bin:
 
@@ -4965,6 +5046,7 @@ In this equation, $n$ is the total number of samples and $h$ is the bin width. T
 ![](_page_160_Picture_14.jpeg)
 
 The choice of the bin width $h$ is critical:
+
 *   If $h$ is **too small**, the histogram becomes jagged and overfits the noise in the sample (high variance).
 *   If $h$ is **too large**, the histogram becomes too smooth and loses the underlying structure of the distribution (high bias).
 
@@ -4980,6 +5062,7 @@ The histogram is the most fundamental non-parametric tool. Given a sample set $\
 
 #### 1. Bin Counts and Probabilities
 For each bin $j$, we define:
+
 *   **Bin count** $n_b(j)$: The number of observations falling into the $j$-th bin.
 *   **Bin probability** $p_b(j) = \frac{n_b(j)}{n}$: The relative frequency of observations in that bin.
 
@@ -5031,6 +5114,7 @@ $$k_{n,h}(y) = \frac{1}{nh} \sum_{i=1}^{n} K\left(\frac{y-y_i}{h}\right)$$
 In this formulation, $K(\cdot)$ is the **kernel function**—a symmetric function that integrates to one—and $h$ is the **bandwidth** (or smoothing parameter). Effectively, the KDE places a small "bump" of probability mass (the kernel) at each data point $y_i$ and sums them to create a global estimate.
 
 **Frequently used kernels:**
+
 *   **Normal (Gaussian) kernel:** $K(y) = \frac{1}{\sqrt{2\pi}} \exp\left(-y^2/2\right)$. This is the most common choice due to its smooth analytical properties.
 *   **Tukey (Biweight) kernel:** $K(y) = \frac{15}{16} (1 - y^2)^2$ for $|y| \le 1$, and $0$ otherwise. This kernel has finite support, meaning it only considers data points within a specific distance.
 
@@ -5044,6 +5128,7 @@ If the true underlying density $p(y)$ were known, the optimal bandwidth $h$ that
 $$h = \left[ \frac{\int K^2(y) \ dy}{\int y^2 K^2(y) \ dy} \right]^{1/5} \left[ n \int \left(\frac{d^2 p(y)}{d y^2}\right)^2 \ dy \right]^{-1/5}$$
 
 **Practical Implementation:**
+
 1.  **Iterative Approach:** Since $p(y)$ is unknown, we can start with an initial guess $h^{(i)}$, estimate the density $k_{n,h^{(i)}}(y)$, use that estimate to calculate a refined $h^{(i+1)}$, and repeat until convergence:
 
     $$h^{(i)} \rightarrow p(y) \approx k_{n,h^{(i)}}(y) \rightarrow h^{(i+1)} \rightarrow p(y) \approx k_{n,h^{(i+1)}}(y) \dots$$
@@ -5073,6 +5158,7 @@ For the specific case where the data is assumed to be normally distributed, $y \
 $$h \approx 1.06 \ \sigma n^{-1/5}$$
 
 where:
+
 *   $\sigma$ is the standard deviation of the samples.
 *   $n$ is the total number of observations in the sample set $\mathcal{Y}^n$.
 
@@ -5118,12 +5204,14 @@ One of the most common algorithms for generating pseudorandom numbers is the **c
     $$x_i = (69069 x_{i-1} + 1) \mod 2^{32}$$
 
     Here, $a=69069$ is the multiplier, $c=1$ is the increment, and $M=2^{32}$ is the modulus.
+
 3.  **Normalize**: To obtain a value $u_i$ in the range $[0, 1]$, divide the integer by the modulus:
 
     $$u_i = 2^{-32}x_i$$
 
 #### Verification of Randomness
 To ensure a generator is suitable for estimation tasks, it must be tested for two primary qualities:
+
 *   **Distribution**: Does the histogram of $u_i$ look flat across the interval $[0, 1]$?
 *   **Independence**: Are subsequent samples uncorrelated? This is verified by checking the **covariance function**. For a truly random sequence, the covariance should be zero for all lags $k \neq 0$.
 
@@ -5170,6 +5258,7 @@ A common "quick" approximation uses $n=12$ samples from a uniform distribution $
 $$y_{12} = \frac{\sum_{i=1}^{12} x_i - 12 \left(\frac{1}{2}\right)}{\sqrt{\frac{1}{12}} \sqrt{12}} = \sum_{i=1}^{12} x_i - 6 \longrightarrow \mathcal{N}(0,1)$$
 
 **Characteristics of the CLT Approximation:**
+
 *   **Simplicity**: The formula is extremely simple to implement, requiring only 12 additions and one subtraction.
 *   **Finite Support**: Unlike a true Gaussian distribution, this approximation has truncated tails. Since the maximum value of $\sum x_i$ is 12 and the minimum is 0, the resulting $y_{12}$ is strictly bounded within $[-6, 6]$.
 *   **Accuracy**: While the tails are missing, the probability of a true standard normal variable exceeding $|y| > 6$ is less than $10^{-8}$, making this approximation sufficient for many practical engineering applications.
@@ -5189,6 +5278,7 @@ In many control and estimation problems, we require random samples from a specif
 The most fundamental method for generating a random variable $x$ with a desired probability density function (p.d.f.) $f(x)$ is the **Inverse Transform Sampling** method. This method relies on the cumulative distribution function $F(x) = \int_{-\infty}^x f(t) dt$.
 
 The algorithm is as follows:
+
 1.  Generate a sample $u$ from a standard uniform distribution, $u \sim U(0,1)$, where $u \in [0,1]$.
 2.  Compute the desired sample by applying the inverse CDF: $x = F^{-1}(u)$.
 
@@ -5246,6 +5336,7 @@ The Accept-Reject algorithm is a fundamental technique for generating samples fr
 **Assumption:** There exists a finite constant $M$ such that $\frac{f(x)}{g(x)} \leq M$ for all $x$ in the support of $f$. This ensures that the "envelope" $M \cdot g(x)$ always stays above $f(x)$.
 
 **The Algorithm:**
+
 1.  Generate a candidate sample $x$ from the proposal distribution $g(x)$.
 2.  Generate a uniform random variable $u \sim U(0, 1)$.
 3.  **Acceptance Criterion:** If $u \leq \frac{f(x)}{M \cdot g(x)}$, accept the sample and set $y_i = x$. Otherwise, reject $x$ and return to step (1).
@@ -5355,6 +5446,7 @@ In this framework, the **samples** $\theta^i$ are provided by the prior $p(\thet
 The weighted bootstrap method is a resampling technique used to approximate a target distribution $f(x)$ when we only have access to samples from a proposal distribution $g(x)$. This is particularly useful in Bayesian estimation when the posterior distribution is difficult to sample from directly.
 
 **Algorithm Steps:**
+
 1.  **Initial Sampling:** Obtain a set of $N$ samples $x_i$ from the available proposal distribution $g(x)$, where $i = 1, \dots, N$.
 2.  **Weight Calculation:** For each sample, calculate the importance weight $w_i = \frac{f(x_i)}{g(x_i)}$. This weight represents how well the sample from $g(x)$ represents the target distribution $f(x)$.
 3.  **Normalization:** Normalize the weights so they sum to unity: $q_i = \frac{w_i}{\sum_{j=1}^N w_j}$.
@@ -5379,6 +5471,7 @@ In a Bayesian context, if we assume a uniform prior $p(x_i) = g(x_i) = 1/N$, and
 For non-linear state-space models with arbitrary noise distributions, the Particle Filter (a Sequential Monte Carlo method) implements the Bayesian recursion using the weighted bootstrap.
 
 **Model Definition:**
+
 - **State Equation:** $x(k+1) = f(x(k), u(k), v(k))$, where $v(k) \sim p_v(\cdot)$
 - **Measurement Equation:** $y(k) = g(x(k), u(k), e(k))$, where $e(k) \sim p_e(\cdot)$
 
@@ -5386,6 +5479,7 @@ For non-linear state-space models with arbitrary noise distributions, the Partic
 Set $k = 0$ and draw $N$ initial samples (particles) from the initial state distribution: $x_i \sim p(x(0)|\mathcal{D}^0)$.
 
 **2. Time-Update Step (Prediction):**
+
 - Sample process noise: $v_i(k) \sim p_v(v(k))$ for $i = 1, \dots, N$.
 - Propagate each particle through the system dynamics:
 
@@ -5394,6 +5488,7 @@ Set $k = 0$ and draw $N$ initial samples (particles) from the initial state dist
   This represents the predicted distribution $p(x(k+1)|\mathcal{D}^k)$.
 
 **3. Data-Update Step (Correction):**
+
 - Increment time $k = k + 1$ and receive the new measurement $y(k)$.
 - Evaluate the likelihood $w_i = p(y(k)|x_i(k|k-1), u(k))$ for every particle.
 - Normalize the weights: $q_i = \frac{w_i}{\sum_{j=1}^N w_j}$.
@@ -5410,6 +5505,7 @@ Set $k = 0$ and draw $N$ initial samples (particles) from the initial state dist
 The time and data updates can be combined into a single recursive loop to improve computational efficiency.
 
 **Combined Algorithm:**
+
 1.  **Observe:** Get the current measurement $y(k)$.
 2.  **Weight:** Evaluate and normalize the likelihoods of the existing particles:
 
@@ -5435,6 +5531,7 @@ $$p(y(k)|x_i, u(k)) = p_e\left(y(k) - g'(x_i, u(k))\right)$$
 
 **Resulting Estimates:**
 Once the particles are updated, the state and its uncertainty can be approximated:
+
 - **Mean (Point Estimate):** $\hat{x}(k|k-1) \approx \frac{1}{N} \sum_{i=1}^{N} x_i(k|k-1)$
 - **Covariance (Uncertainty):** $P(k|k-1) \approx \frac{1}{N-1} \sum_{i=1}^{N} (x_i - \hat{x})(x_i - \hat{x})^T$
 
@@ -5514,6 +5611,7 @@ To perform the time-update (prediction), we generate a new set of sample points.
 $$x^{(i)}(t+1) = f(x^{(j)}(t), u(t)) + v^{(i)}(t)$$
 
 Where:
+
 *   $x^{(j)}(t) \sim p(x(t)|t)$ represents samples drawn from the filtered posterior at time $t$.
 *   $v^{(i)}(t) \sim p_v(v(t))$ represents samples drawn from the known process noise distribution.
 
@@ -5634,17 +5732,20 @@ Gaussian Process Regression (GPR) is a powerful non-parametric Bayesian approach
 
 #### **Probability space**
 A probability space is defined by a set of elementary events $S = \{\zeta_1, \dots, \zeta_n\}$.
+
 *   $\mathcal{A} \subseteq \mathcal{S}$ represents an event.
 *   $\mathcal{A} = \mathcal{S}$ is the **certain event**.
 *   $\mathcal{A} = \emptyset$ is the **impossible event**.
 
 The **probability of an event** $P(A)$ must satisfy the Kolmogorov axioms:
+
 1.  $P(A) \geq 0$ (Non-negativity).
 2.  $P(S) = 1$ (Normalization).
 3.  If $A \cap B = \emptyset$, then $P(A \cup B) = P(A) + P(B)$ (Additivity).
 
 ### **Random variable**
 A random variable is a mapping $S \mapsto \mathbb{R}$, where a real value $X(\zeta_i)$ is assigned to each outcome $\zeta_i$ of an experiment. For this mapping to be valid:
+
 1.  The set $\{\zeta_i \mid X(\zeta_i) \leq x\}$ must be a valid event.
 2.  The limits must be well-behaved: $P(\{X(\zeta_i) = -\infty\}) = 0$ and $P(\{X(\zeta_i) = \infty\}) = 1$.
 
@@ -5659,16 +5760,19 @@ $$F_X(x) = P\{X \le x\}, \qquad f_X(x) = \frac{dF_X(x)}{dx}$$
 
 #### **Random process**
 A random process (or stochastic process) is a mapping $\mathbb{T} \times \mathcal{S} \mapsto \mathbb{R}$, assigning a time function $X(t, \zeta_i)$ to each outcome $\zeta_i$.
+
 *   If $\mathbb{T} = \mathbb{R}$, it is a **continuous-time process**.
 *   If $\mathbb{T} = \mathbb{N}$, it is a **discrete-time process**.
 
 **Interpretations of $X(t, \zeta)$:**
+
 1.  **Family of functions**: Both $t$ and $\zeta$ vary.
 2.  **Realization (Sample Path)**: Fixed $\zeta$, variable $t$. This is a single observed trajectory.
 3.  **Random Variable**: Fixed $t$, variable $\zeta$. The state of the process at a specific moment.
 4.  **Number**: Fixed $t$ and fixed $\zeta$.
 
 **Distribution Functions:**
+
 *   **First order**: $f_X(x, t)$ describes the distribution at a single time $t$.
 *   **Second order**: $f_X(x_1, x_2, t_1, t_2)$ describes the joint distribution of the process at two different times, $t_1$ and $t_2$.
 *   **n-th order**: Generalizes to the joint distribution of $X(t_1), \dots, X(t_n)$.
@@ -5692,6 +5796,7 @@ $$C_X(t_1,t_2) = \mathcal{E}\{ (X(t_1) - \mu(t_1))(X(t_2) - \mu(t_2)) \}$$
 
 ### **Stationarity**
 A process is **stationary** if its statistical properties do not change over time.
+
 *   **First-order stationarity**: The mean is constant, $\mu_X(t) = \text{constant}$.
 *   **Second-order (Wide-sense) stationarity**: The correlation/covariance depends only on the time lag $\tau = t_1 - t_2$, rather than absolute time.
 
@@ -5739,6 +5844,7 @@ where $K(Z, Z)$ is the kernel matrix with entries $K_{ij} = k(t_i, t_j)$.
 
 ### Regression - functional space view: Example
 Consider a linear model $y = z\theta + e$ with a prior $\theta \sim \mathcal{N}(0, \sigma_\theta^2)$.
+
 *   **Prediction**: To predict $x(t)$ at a new point given data $y$, we use the joint covariance matrix:
 
     $$\operatorname{cov}\left\{\begin{array}{c} x(t) \\ y \end{array}\right\} = \left[\begin{array}{cc} P_{xx} & P_{xy} \\ P_{yx} & P_{yy} \end{array}\right]$$
@@ -5968,6 +6074,7 @@ To predict the vector of impulse response coefficients $g = [g(0), \dots, g(T)]^
 $$\operatorname{cov}\left\{\begin{array}{c}g\\y\end{array}\right\} = \left[\begin{array}{cc}P_{gg} & P_{gy}\\P_{yg} & P_{yy}\end{array}\right]$$
 
 In this block matrix:
+
 - $P_{gg}$ is the prior covariance of the impulse response derived directly from the kernel $k(t_1, t_2)$.
 - $P_{gy}$ and $P_{yy}$ are cross-covariances that account for the filtering operation of the input signal $u(t)$.
 
