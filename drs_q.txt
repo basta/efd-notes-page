@@ -1,0 +1,94 @@
+Recount briefly the history of man-made networks.
+Describe the general structure of a network.
+Name a few examples of physical, biological, social and information networks.
+Describe how the structure of various networks is revealed empirically.
+Define a binary relation and establish a connection with its graph.
+Tell the difference between a graph and a hyper-graph. Depict a given hyper-graph by a bipartite network.
+Explain the difference between a multi-graph and a simple graph.
+Define the graph adjacency matrix.
+Compare the co-citation and bibliographic coupling.
+Explain the two one-mode projections of a bipartite network.
+Define planar networks and state the 'four color' theorem.
+Explain the difference between a sparse and a dense network.
+Define a path and explain the difference between an Eulerian and a Hamiltonian path.
+State the min-cut max-flow theorem.
+Define the graph Laplacian matrix and its relation to diffusion processes on graphs.
+State the Geršgorin disc theorem and explain how it is applied to the graph Laplacian.
+Define the Fiedler eigenvalue and explain its significance for the graph topology.
+Define the Frobenius form of the graph Laplacian and explain how it reveals the graph topology.
+Define the Metzler matrix.
+Define the M-matrix.
+Explain how the geometric multiplicity of eigenvalues differ from the algebraic one.
+Explain the meaning of the geometric multiplicity of a zero eigenvalue for graph Laplacians.
+Define the left zero eigenvector.
+Define a balanced graph.
+Define a strongly connected graph.
+Define the degree centrality.
+Motivate the eigenvector centrality.
+Explain the difference between the eigenvector centrality and the Katz centrality.
+Define PageRank and modified PageRank.
+Explain hubs and authorities and their relation to co-citation and bibliographic coupling.
+Define closeness centrality and discuss different variants thereof.
+Define betweenness centrality.
+Explain the difference between cliques, plexes and cores.
+Define k-components and compare them with connected components.
+Define transitivity of a network in any of equivalent ways.
+Define local clustering.
+Explain the concept of reciprocity and how it relates to loops of length two.
+Define structural balance for networks with signed edges. Show that structurally balanced network is certainly clusterable (Harrary's theorem).
+Show by counterexample that a clusterable network need not be structurally balanced.
+Explain vertex similarity.
+Define structural and regular equivalence and explain the differences of them.
+Define homophily and assortative mixing in networks.
+Define assortative mixing with respect to scalar characteristics. Explain how does it differ from that for enumerative characteristics.
+Define the modularity matrix for undirected networks.
+Explain assortative mixing with respect to the degree. Discuss what are its implications on the network topology.
+Define the power law distributions, explain how to calculate their moments.
+Explain the effect of top heavy distribution of vertex degrees for the networks.
+Explain the importance of the small world effect for the functionality of computer networks.
+Explain the concept of algorithm complexity. Define the O notation.
+Explain how the network topology is represented in computer memory. Compare the adjacency matrix and the adjacency list.
+Define the tree data structure. What is a balanced tree and what is the worst case complexity of finding an element in it?
+Explain how trees are used to represent networks.
+Define a binary heap. Why would one use such a structure in network algorithms?
+Describe the breadth-first search algorithm.
+Explain the computational complexity of the naive implementation of the breadth-first search.
+Explain the computational complexity of the more sophisticated implementation of the breadth-first search using a buffer.
+Describe how to find the actual shortest paths. Assume first single shortest paths, then generalize to possible multiple shortest paths.
+Describe Dijkstra's algorithm, explain why it works and analyze its computational complexity.
+Explain how to apply Dijkstra's algorithm to find the actual least weight path tree for a given starting vertex.
+Explain how to find the betweenness centrality of a given vertex using either the breadth-first search or Dijkstra's algorithm.
+Describe the augmenting path algorithm (Ford-Fulkerson algorithm).
+Describe the power method for finding leading eigenvalues and eigenvectors. What is the importance of choosing the initial seed?
+Explain how to efficiently find all eigenvalues and eigenvectors of a given matrix. Specify which algorithms are used for matrix transformation and efficient solution of the transformed eigen-problem, given different starting matrices (symmetric/asymmetric, sparse/dense).
+Why to use heuristic algorithms in general, even if no proof of correctness is available?
+What is the difference between the graph partitioning and the community detection problems?
+Describe the Kernighan-Lin algorithm for graph partitioning. What is its computational complexity? What is roughly the size of the network for which it can be reasonably expected to work?
+Describe the spectral partitioning algorithm. Explain the importance of the graph Laplacian matrix and its Fiedler eigenvalue. What is its computational complexity? What is roughly the size of a network for which it can be reasonably expected to work?
+Describe the variant Kernighan-Lin algorithm for community detection. What is its complexity? How does it compare to the original Kernighan-Lin algorithm for graph partitioning?
+Describe the spectral modularity maximization method of community detection. Explain the importance of the modularity matrix and its leading eigenvector.
+How does repeated bisection work for modularity maximization? Compare it with the same approach in graph partitioning.
+Briefly describe simulated annealing, genetic algorithm and greedy algorithm for modularity maximization.
+Describe the algorithm using betweenness centrality for community detection. How does the Radicci algorithm differ from it?
+Explain how the agglomerative algorithms proceed in community detection.
+Define hierarchical clustering. What is a dendrogram? Explain the similarity-based hierarchical clustering with single-, complete- and average-linkage clustering.
+Comment on which of the algorithms detect a fixed number vs. an unspecified number of communities.
+Explain the difference between site and bond percolation.
+Describe uniform and non-uniform vertex removal. Comment on the robustness of power law networks to vertex removal.
+Describe a few examples of fully mixed epidemics models, e.g. SI, SIR, SIS, SEIR.
+Explain how to model epidemics on networks. What is the role of vertices and vertex variables?
+Describe the Lotka-Volterra predator-prey model. Explain various ways how it extends to the network setting.
+Enumerate the stages of the traditional (offline) web search. Explain how the algorithms used in modern web search engines such as Google differ from the traditional web search.
+Explain the web crawling procedure. Give examples of advanced techniques that facilitate the web crawling process.
+Describe the process of indexing in web search, both the simple version and its possible extensions.
+Describe simple search in distributed databases. What is its complexity if the file is present only on a single computer in the network? How does the complexity change if the file exists on a fixed fraction of computers in the network?
+Explain how supernodes improve the search in distributed networks.
+Describe the two models of message passing, i.e., the Kleinberg's model and the hierarchical model, and enumerate their limitations (assumptions). What is the complexity of message passing in these models?
+Elaborate on the constraints that have to be imposed on networks as the main conclusion of message passing analysis using models.
+Define the consensus/synchronization problem in states and outputs. Explain the difference between homogeneous and heterogeneous agents.
+Write the single-integrator leaderless consensus dynamics in continuous time. How to include a leader?
+Write the single-integrator leaderless consensus dynamics in discrete time. How to include a leader?
+Set up the dynamical equations for continuous-time homogeneous LTI agents using local neighborhood error signal for state synchronization.
+Show how to use complex matrix pencils for investigating state synchronization of homogeneous agents.
+Show that with the distributed feedback gain designed from the single-agent Algebraic Riccati Equation the resulting synchronizing region is an unbounded left-hand half-plane in the complex plane.
+What are the necessary topological conditions on the communication graph for consensus or synchronization? Explain the dynamical role of the Fiedler eigenvalue in continuous time single integrator consensus
