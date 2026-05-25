@@ -1,0 +1,2852 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q20-how-can-retrieval-and-ransac-be/">
+      
+      
+        <link rel="prev" href="../q19-how-is-spatial-verification-used-to/">
+      
+      
+        <link rel="next" href="../q40-deep-neural-nets-for-image-classification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q20. How can retrieval and RANSAC be… - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zoom-in-retrieval-using-retrieval-and-ransac" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q20. How can retrieval and RANSAC be…
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q03-describe-the-algorithm-for-the-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q11-describe-local-binary-patterns-like-descriptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q27-describe-the-ransac-algorithm-its-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zoom-in-retrieval-using-retrieval-and-ransac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zoom-In Retrieval Using Retrieval and RANSAC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Zoom-In Retrieval Using Retrieval and RANSAC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-zoomin-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Zoom‑In Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-twostage-zoomin-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Two‑Stage Zoom‑In Retrieval
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Two‑Stage Zoom‑In Retrieval">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-stage-1-scaleaware-bow-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Stage 1: Scale‑Aware BoW Retrieval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-stage-2-ransacbased-verification-and-reranking-by-scale-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Stage 2: RANSAC‑Based Verification and Re‑Ranking by Scale Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-differences-from-standard-bow-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Differences from Standard BoW Retrieval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-why-the-modification-is-necessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Why the Modification Is Necessary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q40-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q43-deep-neural-nets-for-detection-proposal-based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q35-dct---discriminative-kernel-correlation-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#zoom-in-retrieval-using-retrieval-and-ransac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zoom-In Retrieval Using Retrieval and RANSAC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Zoom-In Retrieval Using Retrieval and RANSAC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-zoomin-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Zoom‑In Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-twostage-zoomin-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Two‑Stage Zoom‑In Retrieval
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Two‑Stage Zoom‑In Retrieval">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-stage-1-scaleaware-bow-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Stage 1: Scale‑Aware BoW Retrieval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-stage-2-ransacbased-verification-and-reranking-by-scale-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Stage 2: RANSAC‑Based Verification and Re‑Ranking by Scale Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-differences-from-standard-bow-retrieval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Differences from Standard BoW Retrieval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-why-the-modification-is-necessary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Why the Modification Is Necessary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q20. How can retrieval and RANSAC be…</h1>
+
+<h2 id="zoom-in-retrieval-using-retrieval-and-ransac">Zoom-In Retrieval Using Retrieval and RANSAC</h2>
+<p>The standard image retrieval pipeline, described in previous sections, ranks database images by their visual similarity to the query – typically returning near‑duplicates or images depicting the same object at a similar scale. In many applications, however, we are interested in a <strong>zoom‑in</strong> operation: given a query image, find database images that show a <em>higher‑resolution</em> view of some object or region present in the query. This is essential for detail mining, 3D reconstruction from a single image, and exploring fine‑grained structures. This section explains how a modified retrieval stage combined with RANSAC‑based spatial verification can perform zoom‑in retrieval, how the initial retrieval differs from standard BoW, and why that modification is necessary.</p>
+<h3 id="1-the-zoomin-task">1. The Zoom‑In Task</h3>
+<p>Formally, the zoom‑in task asks: for a query image <span class="arithmatex">\(I_q\)</span>, retrieve database images <span class="arithmatex">\(I_{db}\)</span> such that <span class="arithmatex">\(I_{db}\)</span> depicts a part of <span class="arithmatex">\(I_q\)</span> at a <strong>larger scale</strong>. That is, the object or region visible in the query appears bigger (more pixels) in the database image. This is the opposite of zoom‑out, and it requires identifying images where the geometric transformation between the query and the database involves a scale factor <span class="arithmatex">\(s &gt; 1\)</span> (the database image is “zoomed in” relative to the query).</p>
+<p>Standard BoW retrieval is scale‑agnostic: it counts how many visual words co‑occur, regardless of whether the matching features have the same, larger, or smaller scale. Consequently, a near‑duplicate image at the same scale will often receive a higher BoW score than a zoomed‑in image that shares only a subset of the visual words (because the zoomed‑in image covers a smaller field of view). To perform zoom‑in retrieval, we must therefore <strong>modify the initial ranking</strong> to favour candidates with a large scale change, and then use <strong>spatial verification</strong> to accurately estimate the scale factor and re‑rank the shortlist.</p>
+<h3 id="2-twostage-zoomin-retrieval">2. Two‑Stage Zoom‑In Retrieval</h3>
+<p>The approach follows the familiar two‑stage paradigm – fast initial retrieval followed by geometric re‑ranking – but with crucial adaptations at both stages.</p>
+<h4 id="21-stage-1-scaleaware-bow-retrieval">2.1 Stage 1: Scale‑Aware BoW Retrieval</h4>
+<p>In standard BoW, the similarity between query <span class="arithmatex">\(q\)</span> and database image <span class="arithmatex">\(d\)</span> is</p>
+<div class="arithmatex">\[
+s_{\text{BoW}}(q,d) = \sum_{k=1}^{K} \text{idf}_k^2 \cdot \text{tf}_q(k) \cdot \text{tf}_d(k),
+\]</div>
+<p>where <span class="arithmatex">\(\text{tf}(k)\)</span> is the number of local features assigned to visual word <span class="arithmatex">\(k\)</span>. This score treats every co‑occurrence equally, irrespective of the geometric properties of the underlying features.</p>
+<p>For zoom‑in, we exploit the fact that each local feature carries a <strong>shape</strong> <span class="arithmatex">\(A\)</span> (a <span class="arithmatex">\(2\times2\)</span> matrix encoding scale and rotation, or an affine shape). When a query feature with shape <span class="arithmatex">\(A_q\)</span> matches a database feature with shape <span class="arithmatex">\(A_{db}\)</span> via the same visual word, the relative scale change can be extracted directly from the shapes. For a similarity‑covariant feature, the scale is proportional to the determinant or the singular values of <span class="arithmatex">\(A\)</span>; the scale ratio is</p>
+<div class="arithmatex">\[
+r = \frac{\text{scale}(A_{db})}{\text{scale}(A_q)}.
+\]</div>
+<p>A zoom‑in corresponds to <span class="arithmatex">\(r &gt; 1\)</span>. We can therefore modify the voting weight of each match to be a function of <span class="arithmatex">\(r\)</span> that <strong>increases with <span class="arithmatex">\(r\)</span></strong>. For example, the score can be redefined as</p>
+<div class="arithmatex">\[
+s_{\text{zoom}}(q,d) = \sum_{k=1}^{K} \sum_{\substack{\mathbf{x} \in \mathcal{X}_q^{(k)} \\ \mathbf{y} \in \mathcal{X}_d^{(k)}}} \text{idf}_k \cdot g\!\left( \frac{\text{scale}(A_{\mathbf{y}})}{\text{scale}(A_{\mathbf{x}})} \right),
+\]</div>
+<p>where <span class="arithmatex">\(g(r)\)</span> is a monotonically increasing function for <span class="arithmatex">\(r \ge 1\)</span>, e.g., <span class="arithmatex">\(g(r) = r^\alpha\)</span> or a step function that only counts matches with <span class="arithmatex">\(r &gt; 1\)</span>. This <strong>scale‑aware scoring</strong> can be implemented efficiently by storing the scale (or the full shape) of each feature in the inverted file’s posting lists. During query time, for each candidate match, the scale ratio is computed and the vote is weighted accordingly.</p>
+<p>The result of this first stage is a shortlist of images that are likely to contain a zoomed‑in view of some part of the query. The ranking is no longer purely based on visual word co‑occurrence; it is biased toward images where the matched features exhibit a larger scale than the query features.</p>
+<h4 id="22-stage-2-ransacbased-verification-and-reranking-by-scale-change">2.2 Stage 2: RANSAC‑Based Verification and Re‑Ranking by Scale Change</h4>
+<p>The top‑ranked candidates from the scale‑aware BoW stage are then subjected to <strong>fast spatial matching</strong> (the deterministic RANSAC variant described in the Spatial Verification section). Recall that from a single tentative correspondence <span class="arithmatex">\((A, x, y) \leftrightarrow (A', x', y')\)</span>, we can directly hypothesise a similarity or affine transformation</p>
+<div class="arithmatex">\[
+F = A' \, A^{-1}.
+\]</div>
+<p>For each hypothesis, we count the number of inliers – correspondences that satisfy the reprojection error threshold. The transformation <span class="arithmatex">\(F\)</span> also provides an accurate estimate of the <strong>global scale change</strong> between the two images. For a similarity transformation, the scale factor <span class="arithmatex">\(s\)</span> is simply the singular value of the upper‑left <span class="arithmatex">\(2\times2\)</span> submatrix of <span class="arithmatex">\(F\)</span>; for an affine transformation, it can be taken as the square root of the determinant of that submatrix.</p>
+<p>The final re‑ranking of the shortlist is then performed according to the <strong>estimated scale change</strong> <span class="arithmatex">\(s\)</span>, possibly combined with the inlier count to ensure geometric consistency. A typical strategy is to rank images by <span class="arithmatex">\(s\)</span> (largest first) among those that have a sufficient number of inliers, or to use a combined score such as <span class="arithmatex">\(\text{inliers} \times s\)</span>. This directly implements the “maximise scale change” objective mentioned in the slides.</p>
+<h3 id="3-differences-from-standard-bow-retrieval">3. Differences from Standard BoW Retrieval</h3>
+<p>The table below summarises the key differences between the first stage of zoom‑in retrieval and the standard BoW pipeline.</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Standard BoW Retrieval</th>
+<th>Zoom‑In First Stage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vote weight</strong></td>
+<td><span class="arithmatex">\(\text{idf}^2\)</span> (or <span class="arithmatex">\(\text{idf}\)</span>) per co‑occurrence</td>
+<td><span class="arithmatex">\(\text{idf} \cdot g(\text{scale ratio})\)</span>, with <span class="arithmatex">\(g\)</span> favouring <span class="arithmatex">\(r&gt;1\)</span></td>
+</tr>
+<tr>
+<td><strong>Information used</strong></td>
+<td>Visual word identity only</td>
+<td>Visual word identity + local feature scale (or shape)</td>
+</tr>
+<tr>
+<td><strong>Inverted file contents</strong></td>
+<td>(image‑id, term frequency)</td>
+<td>(image‑id, scale/shape, optionally residual)</td>
+</tr>
+<tr>
+<td><strong>Ranking criterion</strong></td>
+<td>Visual similarity (same scale preferred)</td>
+<td>Likelihood of zoom‑in (larger scale preferred)</td>
+</tr>
+<tr>
+<td><strong>Output</strong></td>
+<td>Top‑<span class="arithmatex">\(K\)</span> visually similar images</td>
+<td>Top‑<span class="arithmatex">\(K\)</span> candidate zoom‑in images</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-why-the-modification-is-necessary">4. Why the Modification Is Necessary</h3>
+<p>Without the scale‑aware modification, standard BoW retrieval would rank images that are globally similar to the query – typically near‑duplicates or images taken from a similar viewpoint and scale – at the very top. A zoomed‑in image, which captures only a portion of the query’s content, will naturally share fewer visual words with the query and will therefore receive a lower BoW score. It would be buried deep in the ranking, often outside the shortlist that is feasible to process with spatial verification.</p>
+<p>By incorporating scale information directly into the initial scoring, we <strong>pull zoom‑in candidates toward the top</strong> of the ranking. This ensures that the subsequent RANSAC‑based verification, which is computationally more expensive, is applied to a set of images that are genuinely likely to contain a zoomed‑in view. The RANSAC stage then provides a precise estimate of the scale factor and filters out any false positives that may have been boosted by accidental scale‑consistent matches.</p>
+<p>In summary, the modification is necessary because the zoom‑in task requires a <strong>different relevance criterion</strong> – scale change rather than visual similarity – and the initial retrieval must reflect this criterion to make the two‑stage pipeline effective.</p>
+<h3 id="5-summary">5. Summary</h3>
+<p>Zoom‑in retrieval is achieved by a two‑stage process:</p>
+<ol>
+<li><strong>Scale‑aware BoW retrieval</strong> – The inverted file stores feature scales (or shapes). During querying, each match is weighted by a function of the scale ratio <span class="arithmatex">\(r = \text{scale}_{db} / \text{scale}_{query}\)</span>, favouring <span class="arithmatex">\(r &gt; 1\)</span>. This produces a shortlist of candidate zoom‑in images.</li>
+<li><strong>RANSAC‑based verification and re‑ranking</strong> – Fast spatial matching estimates the geometric transformation and counts inliers. The scale factor <span class="arithmatex">\(s\)</span> extracted from the transformation is used to re‑rank the candidates, maximising the scale change.</li>
+</ol>
+<p>The first stage differs from standard BoW by replacing the scale‑blind idf vote with a scale‑dependent weight. This is essential because standard BoW would otherwise rank same‑scale near‑duplicates above zoomed‑in images, preventing the latter from ever reaching the spatial verification stage.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>Standard BoW retrieval is described as "scale-agnostic." Why does this property cause it to systematically rank zoomed-in images lower than near-duplicates, even when the zoomed-in image is a more relevant result for the task?</li>
+<li>The scale-aware score weights each match by <span class="arithmatex">\(g(r)\)</span> where <span class="arithmatex">\(r = \text{scale}(A_{db}) / \text{scale}(A_q)\)</span>. How would the retrieval behaviour change if <span class="arithmatex">\(g\)</span> were replaced with a constant function <span class="arithmatex">\(g(r) = 1\)</span>, and is there any scenario where this substitution would still produce correct zoom-in results?</li>
+<li>In Stage 2, the transformation <span class="arithmatex">\(F = A' A^{-1}\)</span> is hypothesised from a single correspondence. When would this single-correspondence hypothesis be unreliable, and how does counting inliers compensate for that unreliability?</li>
+<li>If the database contains images captured with a very wide-angle lens (extreme zoom-out relative to the query), how might the pipeline incorrectly rank or miss true zoom-in candidates, and what modification to the scoring or re-ranking could address this?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>A zoomed-in image shares only a subset of visual words with the query because it depicts a smaller field of view — fewer query features fall within the zoomed-in region, so the BoW co-occurrence count is inherently lower. Near-duplicates, by contrast, cover the same scene at the same scale and therefore match a much larger fraction of the query's visual words, yielding a higher <span class="arithmatex">\(s_{\text{BoW}}\)</span> score. Because scale is completely ignored in the standard vote weight <span class="arithmatex">\(\text{idf}^2 \cdot \text{tf}_q(k) \cdot \text{tf}_d(k)\)</span>, there is no mechanism to compensate for this structural disadvantage of zoomed-in images.</p>
+</li>
+<li>
+<p>Setting <span class="arithmatex">\(g(r) = 1\)</span> reduces the scale-aware score back to a standard (unnormalised) BoW score, removing the preference for <span class="arithmatex">\(r &gt; 1\)</span> matches and making Stage 1 scale-blind again. Zoom-in results could still reach the shortlist if the zoomed-in image happens to share enough visual words with the query by chance — for instance, if the query image is nearly blank except for one highly distinctive region that dominates the match count — but this would be coincidental rather than systematic, and the pipeline would generally fail to surface zoom-in candidates.</p>
+</li>
+<li>
+<p>The single-correspondence hypothesis <span class="arithmatex">\(F = A'A^{-1}\)</span> relies on the local affine shapes <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(A'\)</span> being accurately detected and mutually consistent; noisy or degenerate feature shapes (e.g., from textureless regions or repeated patterns) can yield a wildly incorrect <span class="arithmatex">\(F\)</span>. Counting inliers compensates by checking how many other correspondences are geometrically consistent with the hypothesised <span class="arithmatex">\(F\)</span> under a reprojection error threshold — a spurious hypothesis will produce few inliers, while a correct one will accumulate many, making the inlier count a robust quality measure even when individual hypotheses are unreliable.</p>
+</li>
+<li>
+<p>Wide-angle (strongly zoomed-out) database images have feature scales much smaller than query features, giving scale ratios <span class="arithmatex">\(r = \text{scale}_{db}/\text{scale}_{query} \ll 1\)</span>. With a monotonically increasing <span class="arithmatex">\(g(r)\)</span> these images receive very low Stage-1 scores, so they are correctly suppressed — but if such images happen to share a large number of visual words they could still fill the shortlist and crowd out true zoom-in candidates. A targeted fix is to enforce a hard lower bound, discarding matches with <span class="arithmatex">\(r &lt; 1\)</span> entirely (i.e., <span class="arithmatex">\(g(r) = 0\)</span> for <span class="arithmatex">\(r \le 1\)</span>), and to cap the shortlist evaluation at candidates whose Stage-2 estimated scale <span class="arithmatex">\(s\)</span> exceeds a minimum threshold, ensuring wide-angle images are excluded at both stages.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

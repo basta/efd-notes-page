@@ -1,0 +1,2870 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q11-describe-local-binary-patterns-like-descriptors/">
+      
+      
+        <link rel="prev" href="../q10-rootsift-descriptor-describe-the-algorithm/">
+      
+      
+        <link rel="next" href="../q12-how-are-local-descriptors-matched-what/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q11. Describe "Local Binary Patterns" like descriptors - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#local-binary-patterns-and-binary-descriptors" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q11. Describe "Local Binary Patterns" like descriptors
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q03-describe-the-algorithm-for-the-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#local-binary-patterns-and-binary-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Binary Patterns and Binary Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Binary Patterns and Binary Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-local-binary-pattern-lbp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Local Binary Pattern (LBP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-from-lbp-to-binary-keypoint-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. From LBP to Binary Keypoint Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-brief-binary-robust-independent-elementary-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. BRIEF: Binary Robust Independent Elementary Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-orb-oriented-fast-and-rotated-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. ORB: Oriented FAST and Rotated BRIEF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-brisk-binary-robust-invariant-scalable-keypoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. BRISK: Binary Robust Invariant Scalable Keypoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-freak-fast-retina-keypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. FREAK: Fast Retina Keypoint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-common-properties-of-binary-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Common Properties of Binary Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q27-describe-the-ransac-algorithm-its-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q20-how-can-retrieval-and-ransac-be/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q40-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q43-deep-neural-nets-for-detection-proposal-based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q35-dct---discriminative-kernel-correlation-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#local-binary-patterns-and-binary-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Binary Patterns and Binary Descriptors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Binary Patterns and Binary Descriptors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-local-binary-pattern-lbp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Local Binary Pattern (LBP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-from-lbp-to-binary-keypoint-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. From LBP to Binary Keypoint Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-brief-binary-robust-independent-elementary-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. BRIEF: Binary Robust Independent Elementary Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-orb-oriented-fast-and-rotated-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. ORB: Oriented FAST and Rotated BRIEF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-brisk-binary-robust-invariant-scalable-keypoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. BRISK: Binary Robust Invariant Scalable Keypoints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-freak-fast-retina-keypoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. FREAK: Fast Retina Keypoint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-common-properties-of-binary-descriptors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Common Properties of Binary Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q11. Describe "Local Binary Patterns" like descriptors</h1>
+
+<h2 id="local-binary-patterns-and-binary-descriptors">Local Binary Patterns and Binary Descriptors</h2>
+<p>The SIFT descriptor, discussed in the previous section, produces a 128‑dimensional floating‑point vector that is matched using Euclidean distance. While SIFT offers excellent discriminative power and robustness, its computational and memory footprint can be a bottleneck in real‑time or resource‑constrained applications. An alternative family of descriptors replaces the gradient‑orientation histograms with <strong>binary strings</strong> formed by simple intensity comparisons. These <strong>binary descriptors</strong> can be matched extremely quickly using the <strong>Hamming distance</strong> (the number of bits that differ), which is implemented in hardware on virtually all modern CPUs. The foundational idea behind many of these descriptors is the <strong>Local Binary Pattern (LBP)</strong>, originally developed for texture analysis. This section traces the evolution from LBP to modern binary keypoint descriptors such as BRIEF, ORB, BRISK, and FREAK, and explains their design principles, strengths, and limitations.</p>
+<h3 id="1-the-local-binary-pattern-lbp">1. The Local Binary Pattern (LBP)</h3>
+<p>The Local Binary Pattern, introduced by Ojala et al., is a simple yet powerful texture descriptor that operates on a pixel’s local neighbourhood. For each pixel <span class="arithmatex">\(p\)</span> in an image, the LBP code is constructed by comparing the intensity of <span class="arithmatex">\(p\)</span> with the intensities of <span class="arithmatex">\(P\)</span> equally spaced neighbours on a circle of radius <span class="arithmatex">\(R\)</span>. Formally, let <span class="arithmatex">\(I_p\)</span> be the intensity of the centre pixel and <span class="arithmatex">\(I_n\)</span> (<span class="arithmatex">\(n = 0, \dots, P-1\)</span>) the intensities of the neighbours. The LBP code is a <span class="arithmatex">\(P\)</span>-bit binary number:</p>
+<div class="arithmatex">\[
+\text{LBP}_{P,R} = \sum_{n=0}^{P-1} s(I_n - I_p) \, 2^n,
+\qquad
+s(x) = \begin{cases}
+1 &amp; \text{if } x \ge 0,\\
+0 &amp; \text{otherwise}.
+\end{cases}
+\]</div>
+<p>The resulting binary string encodes the local texture pattern. For example, a <span class="arithmatex">\(3 \times 3\)</span> neighbourhood (<span class="arithmatex">\(P=8, R=1\)</span>) yields an 8‑bit code. The image is typically divided into cells, and a histogram of LBP codes is built for each cell; the concatenated histograms form the final texture descriptor.</p>
+<p>Key properties of LBP:</p>
+<ul>
+<li><strong>Illumination invariance:</strong> Because LBP relies only on relative intensity comparisons, it is invariant to monotonic grey‑scale changes (additive and multiplicative shifts).</li>
+<li><strong>Computational simplicity:</strong> Only integer comparisons and bit‑shifts are required.</li>
+<li><strong>No geometric normalisation:</strong> The raw LBP code is not rotation‑invariant. Rotation‑invariant variants exist (e.g., by circularly shifting the bit string to its minimum value), but they discard angular information.</li>
+<li><strong>Locality:</strong> LBP captures only the very local texture; it is not designed as a keypoint descriptor for wide‑baseline matching.</li>
+</ul>
+<p>Despite its limitations, LBP demonstrated that a binary string formed by pairwise intensity tests can be a highly discriminative representation of local appearance. This insight directly inspired the development of binary descriptors for local features.</p>
+<p>The top row of the figure below traces the construction of a single LBP<span class="arithmatex">\(_{8,1}\)</span> code: (a) a <span class="arithmatex">\(3\times 3\)</span> neighbourhood with the centre <span class="arithmatex">\(I_p = 150\)</span> highlighted; (b) the eight comparisons <span class="arithmatex">\(s(I_n - I_p)\)</span> shown as black/white cells (1 = <span class="arithmatex">\(I_n \ge I_p\)</span>); (c) the resulting 8-bit string read in MSB-first order, yielding the code "<span class="arithmatex">\(00011110\)</span>" = <span class="arithmatex">\(30\)</span>; (d) the geometric LBP<span class="arithmatex">\(_{8,1}\)</span> sampling — eight equispaced points on a radius-1 circle around the centre. The bottom row contrasts the sampling patterns of four keypoint binary descriptors, all drawn inside a unit-radius normalised patch: BRIEF picks random Gaussian-distributed point pairs (no orientation); ORB/rBRIEF uses learned, roughly symmetric pairs that are rotated by the patch orientation <span class="arithmatex">\(\theta\)</span>; BRISK places points on concentric rings; FREAK uses a foveated retina-like layout with dense central receptive fields and progressively larger peripheral fields (shown as translucent disks).</p>
+<p><img alt="From LBP to binary keypoint descriptors" src="../../figures/q_0011_binary_descriptors.png" /></p>
+<h3 id="2-from-lbp-to-binary-keypoint-descriptors">2. From LBP to Binary Keypoint Descriptors</h3>
+<p>A keypoint descriptor must be computed over a patch that has been normalised for scale, rotation, and (optionally) affine shape. The LBP idea can be adapted to this setting by replacing the fixed circular neighbourhood with a set of <strong>sampling point pairs</strong> distributed across the normalised patch. A binary descriptor is then a string of bits, each bit being the result of a simple intensity comparison between two pixels (or smoothed pixel values) at predefined locations.</p>
+<p>The general recipe for a binary keypoint descriptor is:</p>
+<ol>
+<li><strong>Patch normalisation:</strong> Extract a patch around the keypoint, resampled to a canonical scale and rotated by the dominant orientation (if orientation is available).</li>
+<li><strong>Sampling pattern:</strong> Define a set of <span class="arithmatex">\(N\)</span> point pairs <span class="arithmatex">\((x_i, y_i)\)</span> within the normalised patch. The pattern is fixed and known in advance.</li>
+<li><strong>Binary tests:</strong> For each pair, compare the (smoothed) intensities <span class="arithmatex">\(I(x_i)\)</span> and <span class="arithmatex">\(I(y_i)\)</span>:</li>
+</ol>
+<p>$$
+   \tau(I; x_i, y_i) = \begin{cases}
+   1 &amp; \text{if } I(x_i) &lt; I(y_i),\
+   0 &amp; \text{otherwise}.
+   \end{cases}
+   $$</p>
+<ol>
+<li><strong>Descriptor assembly:</strong> Concatenate the <span class="arithmatex">\(N\)</span> bits to form a binary vector of length <span class="arithmatex">\(N\)</span> (typically 128, 256, or 512 bits).</li>
+</ol>
+<p>Matching two binary descriptors is performed using the <strong>Hamming distance</strong>, which counts the number of differing bits. Modern CPUs can compute the Hamming distance of a 256‑bit string in a single instruction (POPCNT after XOR), making matching orders of magnitude faster than Euclidean distance for float vectors.</p>
+<h3 id="3-brief-binary-robust-independent-elementary-features">3. BRIEF: Binary Robust Independent Elementary Features</h3>
+<p><strong>BRIEF</strong> (Calonder et al., 2010) was the first descriptor to directly apply the LBP‑style binary test to a normalised image patch. BRIEF does not estimate a dominant orientation; it assumes the patch is already upright (e.g., from a rectified stereo pair). The sampling pattern consists of <span class="arithmatex">\(N\)</span> point pairs drawn from an isotropic Gaussian distribution centred on the patch. The patch is first smoothed with a Gaussian kernel to reduce noise sensitivity. The resulting descriptor is a 128‑, 256‑, or 512‑bit binary string.</p>
+<p>BRIEF is extremely fast to compute and match, but it has two major limitations:</p>
+<ul>
+<li><strong>No rotation invariance:</strong> Without orientation normalisation, BRIEF fails under significant in‑plane rotation.</li>
+<li><strong>No scale invariance:</strong> BRIEF relies on a fixed patch size; scale must be handled by an external detector.</li>
+</ul>
+<p>Despite these limitations, BRIEF demonstrated that binary descriptors can achieve matching performance comparable to SIFT in controlled settings while being dramatically faster.</p>
+<h3 id="4-orb-oriented-fast-and-rotated-brief">4. ORB: Oriented FAST and Rotated BRIEF</h3>
+<p><strong>ORB</strong> (Rublee et al., 2011) addresses the shortcomings of BRIEF by adding rotation invariance and improving the sampling pattern. The ORB pipeline, already introduced in the context of the FAST detector, consists of:</p>
+<ol>
+<li><strong>Detection:</strong> FAST corners are detected at multiple scales (scale‑space pyramid) and filtered with a Harris cornerness measure for non‑maximal suppression. The scale with the maximum FAST response is assigned to the keypoint.</li>
+<li><strong>Orientation assignment:</strong> The intensity centroid method computes a dominant orientation <span class="arithmatex">\(\theta\)</span> for a circular patch around the keypoint. This orientation is used to rotate the sampling pattern.</li>
+<li><strong>Descriptor (rBRIEF):</strong> ORB uses a learned binary sampling pattern. A large set of candidate point pairs is evaluated on a training set, and the pairs that produce the most uncorrelated and high‑variance bits are selected. The final descriptor is a 256‑bit binary string. Because the pattern is rotated by <span class="arithmatex">\(\theta\)</span>, the descriptor becomes rotation‑invariant.</li>
+</ol>
+<p>ORB achieves a good balance of speed, repeatability, and discriminability. It is the standard feature for real‑time SLAM systems (e.g., ORB‑SLAM2) and is implemented in OpenCV. The use of a binary descriptor allows matching thousands of features in a fraction of a millisecond.</p>
+<h3 id="5-brisk-binary-robust-invariant-scalable-keypoints">5. BRISK: Binary Robust Invariant Scalable Keypoints</h3>
+<p><strong>BRISK</strong> (Leutenegger et al., 2011) extends the binary descriptor concept with a scale‑space detector and a rotation‑invariant sampling pattern. The key innovations are:</p>
+<ul>
+<li><strong>Scale‑space FAST detector:</strong> BRISK builds a scale‑space pyramid and detects FAST corners at each level. True scale‑space extrema are identified by non‑maximal suppression in both space and scale.</li>
+<li><strong>Concentric sampling pattern:</strong> The descriptor sampling points lie on concentric circles centred on the keypoint. The pattern is designed to be isotropic and to provide long‑range as well as short‑range comparisons.</li>
+<li><strong>Orientation estimation:</strong> A subset of long‑range point pairs is used to estimate a dominant orientation via local gradient averages, similar to the intensity centroid but computed from the sampling pattern itself.</li>
+<li><strong>Binary descriptor:</strong> The sampling pattern is rotated by the estimated orientation. Short‑range pairs are used for the actual binary tests, yielding a 512‑bit descriptor.</li>
+</ul>
+<p>BRISK is fully scale‑ and rotation‑invariant and achieves competitive matching performance with SIFT while being significantly faster.</p>
+<h3 id="6-freak-fast-retina-keypoint">6. FREAK: Fast Retina Keypoint</h3>
+<p><strong>FREAK</strong> (Alahi et al., 2012) draws inspiration from the human retina, where the density of photoreceptors decreases with eccentricity. The FREAK sampling pattern consists of overlapping circular receptive fields arranged in a foveated structure: a dense cluster of points near the centre, with sparser points toward the periphery. Each receptive field is smoothed with a Gaussian whose standard deviation is proportional to the field’s size. The binary tests compare the smoothed intensities of pairs of receptive fields.</p>
+<p>FREAK’s design offers several advantages:</p>
+<ul>
+<li><strong>Coarse‑to‑fine matching:</strong> The pattern is structured so that the first 128 bits correspond to coarse, peripheral comparisons, while later bits encode finer details. This allows a cascade matching strategy: first compare the coarse bits, and only if they match, proceed to the finer bits.</li>
+<li><strong>Rotation invariance:</strong> Orientation is estimated from a selected set of symmetric pairs, and the pattern is rotated accordingly.</li>
+<li><strong>Compactness:</strong> A 512‑bit descriptor is typical, but the cascade allows early rejection, speeding up matching.</li>
+</ul>
+<p>FREAK is particularly well‑suited for applications where a large database of descriptors must be searched quickly.</p>
+<h3 id="7-common-properties-of-binary-descriptors">7. Common Properties of Binary Descriptors</h3>
+<p>All binary descriptors share a set of characteristic properties that distinguish them from float‑based descriptors like SIFT:</p>
+<ul>
+<li><strong>Speed:</strong> Computing a binary descriptor requires only pixel comparisons and bit manipulation. Matching uses the Hamming distance, which can be computed with a few CPU instructions. This makes binary descriptors ideal for real‑time applications on embedded platforms.</li>
+<li><strong>Memory efficiency:</strong> A 256‑bit descriptor occupies only 32 bytes, compared to 512 bytes for a 128‑dimensional float SIFT vector (assuming 4‑byte floats). This drastically reduces memory requirements for large databases and enables on‑chip storage.</li>
+<li><strong>Matching with Hamming distance:</strong> The Hamming distance is a true metric for binary strings. Approximate nearest‑neighbour libraries (e.g., FLANN, FAISS) can be adapted to binary data, and brute‑force matching is often fast enough for thousands of features.</li>
+<li><strong>Discriminability trade‑off:</strong> Binary descriptors typically have lower discriminative power than SIFT for the same number of bits, because they discard gradient magnitude and orientation information. However, by increasing the number of bits (e.g., 512 bits) and carefully designing the sampling pattern, the performance gap can be narrowed.</li>
+<li><strong>Robustness to illumination:</strong> Like LBP, binary descriptors are inherently invariant to monotonic intensity changes, because they rely only on comparisons. They are, however, more sensitive to noise than histogram‑based descriptors; Gaussian smoothing of the patch before comparison is essential.</li>
+<li><strong>Rotation and scale:</strong> Rotation invariance is achieved by rotating the sampling pattern using an externally estimated orientation (intensity centroid, or pattern‑derived orientation). Scale invariance is provided by the detector (scale‑space FAST or DoG). The descriptor itself is computed on a scale‑normalised patch.</li>
+</ul>
+<h3 id="8-summary">8. Summary</h3>
+<p>Local Binary Patterns introduced the idea of representing local image structure as a binary string of intensity comparisons. This concept was extended to keypoint descriptors in the form of BRIEF, ORB, BRISK, and FREAK. These binary descriptors replace the gradient histograms of SIFT with a set of pairwise intensity tests on a normalised patch, producing a compact binary vector. Matching is performed with the Hamming distance, enabling extremely fast correspondence search. ORB, in particular, combines a FAST detector, intensity‑centroid orientation, and a learned binary pattern (rBRIEF) to create a fully rotation‑ and scale‑invariant feature that is the backbone of modern real‑time SLAM systems. While binary descriptors trade some discriminative power for speed and memory efficiency, they are the method of choice when computational resources are limited and real‑time performance is paramount.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>BRIEF fails under in-plane rotation while ORB does not — yet both ultimately perform the same binary intensity comparison <span class="arithmatex">\(\tau(I; x_i, y_i)\)</span>. What specific step does ORB add, and why is that step sufficient to recover rotation invariance?</li>
+<li>Increasing the radius <span class="arithmatex">\(R\)</span> in <span class="arithmatex">\(\text{LBP}_{P,R}\)</span> captures texture at a coarser scale, but does not make the descriptor more discriminative indefinitely. When would making <span class="arithmatex">\(R\)</span> very large cause the LBP code to lose useful information about local structure?</li>
+<li>FREAK's first 128 bits encode coarse, peripheral comparisons while later bits encode finer central details. How does this ordering enable a cascade matching strategy, and under what database conditions would this cascade provide the largest speed-up over comparing all 512 bits?</li>
+<li>Binary descriptors are invariant to monotonic grey-scale changes because they use only pairwise intensity comparisons, yet they are described as more noise-sensitive than SIFT. Why does the same comparison operation that grants illumination invariance also increase vulnerability to noise, and how does Gaussian pre-smoothing address this without breaking invariance?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>ORB adds an <strong>orientation assignment</strong> step using the intensity centroid method, which computes a dominant angle <span class="arithmatex">\(\theta\)</span> for the patch. The fixed BRIEF sampling pattern is then rotated by <span class="arithmatex">\(\theta\)</span> before the binary tests <span class="arithmatex">\(\tau\)</span> are applied, so the same pattern is always evaluated in the patch's canonical frame regardless of how the patch is oriented in the image. Since the comparison positions rotate with the patch, the resulting bit string is the same for any in-plane rotation, restoring invariance that BRIEF lacks.</p>
+</li>
+<li>
+<p>When <span class="arithmatex">\(R\)</span> is very large, the <span class="arithmatex">\(P\)</span> sampled neighbours spread far from the centre pixel <span class="arithmatex">\(I_p\)</span> and begin to capture pixels whose intensities are determined by different object surfaces or background regions rather than the local texture under study. The comparisons <span class="arithmatex">\(s(I_n - I_p)\)</span> then reflect global scene content rather than the local structure around <span class="arithmatex">\(p\)</span>, making many bits essentially random with respect to the texture being described. Additionally, at very large radii the finite discrete grid forces the sampling points to be poorly approximated, further degrading the code's stability and discriminative power.</p>
+</li>
+<li>
+<p>Because the first 128 bits encode coarse, long-range comparisons, two descriptors that differ in gross appearance will already diverge in these bits and can be rejected without evaluating the remaining 384 bits. The cascade provides the largest speed-up when the database is large and most candidate pairs are true negatives (non-matches), since the majority of comparisons terminate early after the cheap coarse stage. Conversely, if most candidates are near-matches (high true-positive rate or highly similar database), the cascade saves little because many pairs must be evaluated all the way to the fine bits.</p>
+</li>
+<li>
+<p>The binary test <span class="arithmatex">\(s(I_n - I_p)\)</span> is invariant to any monotonic intensity shift because only the sign of the difference matters, not its magnitude. However, the same sign-sensitivity means that a small noise perturbation near <span class="arithmatex">\(I_n \approx I_p\)</span> can flip the bit even when the two pixels are genuinely similar, whereas a gradient-magnitude histogram bins contributions smoothly and many noisy samples average out. Gaussian pre-smoothing raises the effective signal level by averaging out high-frequency noise before the comparison, so the margin <span class="arithmatex">\(|I_n - I_p|\)</span> is typically large enough that noise cannot flip the sign; invariance is preserved because smoothing is a monotonic-magnitude operation applied uniformly and the comparison still relies only on the sign of the smoothed difference.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

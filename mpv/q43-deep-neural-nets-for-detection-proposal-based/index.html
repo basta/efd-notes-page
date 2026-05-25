@@ -1,0 +1,2992 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q43-deep-neural-nets-for-detection-proposal-based/">
+      
+      
+        <link rel="prev" href="../q44-deep-neural-nets---applications-in/">
+      
+      
+        <link rel="next" href="../q21-for-a-retrieval-task-what-are/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q43. Deep Neural Nets for detection - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deep-neural-networks-for-object-detection-proposalbased-and-endtoend-methods" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q43. Deep Neural Nets for detection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q03-describe-the-algorithm-for-the-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q11-describe-local-binary-patterns-like-descriptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q27-describe-the-ransac-algorithm-its-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q20-how-can-retrieval-and-ransac-be/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q40-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deep-neural-networks-for-object-detection-proposalbased-and-endtoend-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Neural Networks for Object Detection: Proposal‑Based and End‑to‑End Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Neural Networks for Object Detection: Proposal‑Based and End‑to‑End Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-object-detection-problem-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Object Detection Problem and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-proposalbased-methods-the-rcnn-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Proposal‑Based Methods: The R‑CNN Family
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Proposal‑Based Methods: The R‑CNN Family">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-rcnn-regions-with-cnn-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 R‑CNN: Regions with CNN Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-fast-rcnn-shared-convolutions-and-multitask-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Fast R‑CNN: Shared Convolutions and Multi‑Task Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-faster-rcnn-learned-region-proposals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Faster R‑CNN: Learned Region Proposals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-mask-rcnn-adding-instance-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Mask R‑CNN: Adding Instance Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-endtoend-methods-singleshot-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. End‑to‑End Methods: Single‑Shot Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. End‑to‑End Methods: Single‑Shot Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-yolo-you-only-look-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 YOLO: You Only Look Once
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-retinanet-and-focal-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 RetinaNet and Focal Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-detr-detection-with-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 DETR: Detection with Transformers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-summary-class-label-and-bounding-box-prediction-across-paradigms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Summary: Class Label and Bounding Box Prediction Across Paradigms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q35-dct---discriminative-kernel-correlation-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deep-neural-networks-for-object-detection-proposalbased-and-endtoend-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Neural Networks for Object Detection: Proposal‑Based and End‑to‑End Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Neural Networks for Object Detection: Proposal‑Based and End‑to‑End Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-object-detection-problem-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Object Detection Problem and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-proposalbased-methods-the-rcnn-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Proposal‑Based Methods: The R‑CNN Family
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Proposal‑Based Methods: The R‑CNN Family">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-rcnn-regions-with-cnn-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 R‑CNN: Regions with CNN Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-fast-rcnn-shared-convolutions-and-multitask-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Fast R‑CNN: Shared Convolutions and Multi‑Task Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-faster-rcnn-learned-region-proposals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Faster R‑CNN: Learned Region Proposals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-mask-rcnn-adding-instance-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Mask R‑CNN: Adding Instance Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-endtoend-methods-singleshot-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. End‑to‑End Methods: Single‑Shot Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. End‑to‑End Methods: Single‑Shot Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-yolo-you-only-look-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 YOLO: You Only Look Once
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-retinanet-and-focal-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 RetinaNet and Focal Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-detr-detection-with-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 DETR: Detection with Transformers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-summary-class-label-and-bounding-box-prediction-across-paradigms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Summary: Class Label and Bounding Box Prediction Across Paradigms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q43. Deep Neural Nets for detection</h1>
+
+<h2 id="deep-neural-networks-for-object-detection-proposalbased-and-endtoend-methods">Deep Neural Networks for Object Detection: Proposal‑Based and End‑to‑End Methods</h2>
+<p>Object detection is the task of simultaneously localising and classifying all objects of interest in an image. Unlike image classification, which assigns a single label to the whole image, detection must answer <strong>what</strong> objects are present and <strong>where</strong> they are located. The output is a set of bounding boxes, each associated with a class label and a confidence score. The course material traces the evolution of deep‑learning‑based detectors from exhaustive scanning to sophisticated end‑to‑end architectures. This section focuses on the two dominant paradigms: <strong>proposal‑based</strong> (two‑stage) methods and <strong>end‑to‑end</strong> (single‑stage) methods, and explains how each predicts class labels and bounding boxes.</p>
+<h3 id="1-the-object-detection-problem-and-evaluation">1. The Object Detection Problem and Evaluation</h3>
+<p>Formally, given an input image <span class="arithmatex">\(\mathbf{I}\)</span>, a detector must produce a set of <span class="arithmatex">\(M\)</span> predictions <span class="arithmatex">\(\{(\mathbf{b}_i, c_i, s_i)\}_{i=1}^{M}\)</span>, where <span class="arithmatex">\(\mathbf{b}_i = (x, y, w, h)\)</span> is a bounding box, <span class="arithmatex">\(c_i \in \{1,\dots,C\}\)</span> is the predicted class (with <span class="arithmatex">\(C\)</span> object categories), and <span class="arithmatex">\(s_i\)</span> is a confidence score. During training, the ground truth consists of a set of annotated boxes with class labels.</p>
+<p><strong>Evaluation metrics</strong> are essential for comparing detectors. The standard measure is <strong>Intersection over Union (IoU)</strong>, also known as the Jaccard index:</p>
+<div class="arithmatex">\[
+\text{IoU}(\mathbf{b}_{\text{pred}}, \mathbf{b}_{\text{gt}}) = \frac{|\mathbf{b}_{\text{pred}} \cap \mathbf{b}_{\text{gt}}|}{|\mathbf{b}_{\text{pred}} \cup \mathbf{b}_{\text{gt}}|}.
+\]</div>
+<p>A prediction is considered a true positive if its IoU with a ground‑truth box exceeds a threshold (typically <span class="arithmatex">\(0.5\)</span>). <strong>Mean Average Precision (mAP)</strong> summarises the precision–recall curve across all classes. The course slides illustrate these concepts and note that mAP is the primary benchmark metric on datasets such as Pascal VOC and COCO.</p>
+<h3 id="2-proposalbased-methods-the-rcnn-family">2. Proposal‑Based Methods: The R‑CNN Family</h3>
+<p>Proposal‑based detectors decompose the task into two stages: first, generate a sparse set of <strong>region proposals</strong> that are likely to contain objects; second, classify each proposal and refine its bounding box. This paradigm dominated the early deep‑learning era and remains highly accurate.</p>
+<h4 id="21-rcnn-regions-with-cnn-features">2.1 R‑CNN: Regions with CNN Features</h4>
+<p>The original <strong>R‑CNN</strong> (Girshick et al., CVPR 2014) uses an external region proposal algorithm (e.g., Selective Search) to generate around 2000 category‑independent candidate boxes. Each proposal is cropped from the image, warped to a fixed size (e.g., <span class="arithmatex">\(224 \times 224\)</span>), and fed through a convolutional neural network (CNN) to extract a feature vector. The features are then classified by a set of linear SVMs (one per class) and a separate bounding‑box regressor refines the proposal coordinates.</p>
+<ul>
+<li><strong>Class label prediction:</strong> For each proposal, the CNN feature vector is scored by <span class="arithmatex">\(C\)</span> binary SVMs. The class with the highest score (after non‑maximum suppression) is assigned, provided it exceeds a threshold; otherwise the proposal is labelled “background”.</li>
+<li><strong>Bounding box prediction:</strong> A class‑specific linear regression model predicts a correction <span class="arithmatex">\((\Delta x, \Delta y, \Delta w, \Delta h)\)</span> that transforms the proposal box into a tighter fit around the object.</li>
+</ul>
+<p>R‑CNN achieved a dramatic improvement over prior art (over 30% mAP gain on Pascal VOC 2012) but was extremely slow because the CNN was run independently for every proposal.</p>
+<h4 id="22-fast-rcnn-shared-convolutions-and-multitask-loss">2.2 Fast R‑CNN: Shared Convolutions and Multi‑Task Loss</h4>
+<p><strong>Fast R‑CNN</strong> (Girshick, ICCV 2015) addresses the speed bottleneck by sharing the convolutional computation across all proposals. The entire image is processed once by a stack of convolutional layers to produce a feature map. For each proposal, a <strong>Region of Interest (RoI) pooling</strong> layer extracts a fixed‑length feature vector from the feature map (by max‑pooling the proposal region into a fixed spatial grid, e.g., <span class="arithmatex">\(7 \times 7\)</span>). These RoI features are then fed through fully connected layers that branch into two sibling outputs:</p>
+<ul>
+<li>A <strong>softmax classifier</strong> over <span class="arithmatex">\(C+1\)</span> classes (including background).</li>
+<li>A <strong>bounding‑box regressor</strong> that outputs <span class="arithmatex">\(4 \times C\)</span> offsets (four coordinates for each object class).</li>
+</ul>
+<p>The network is trained end‑to‑end with a <strong>multi‑task loss</strong> that combines classification and localisation:</p>
+<div class="arithmatex">\[
+L = L_{\text{cls}} + \lambda \, [u \geq 1] \, L_{\text{loc}},
+\]</div>
+<p>where <span class="arithmatex">\(L_{\text{cls}}\)</span> is the cross‑entropy loss for the true class <span class="arithmatex">\(u\)</span>, <span class="arithmatex">\(L_{\text{loc}}\)</span> is a smooth‑L1 loss on the bounding‑box offsets (only for foreground proposals, indicated by the Iverson bracket <span class="arithmatex">\([u \geq 1]\)</span>), and <span class="arithmatex">\(\lambda\)</span> balances the two terms. The bounding‑box regression targets are parameterised as scale‑invariant offsets relative to the proposal:</p>
+<div class="arithmatex">\[
+t_x = \frac{x - x_p}{w_p}, \quad t_y = \frac{y - y_p}{h_p}, \quad t_w = \log\frac{w}{w_p}, \quad t_h = \log\frac{h}{h_p},
+\]</div>
+<p>where <span class="arithmatex">\((x_p, y_p, w_p, h_p)\)</span> are the proposal coordinates and <span class="arithmatex">\((x, y, w, h)\)</span> the ground‑truth box.</p>
+<p>Fast R‑CNN significantly speeds up both training and testing, but the external proposal generation remains a bottleneck.</p>
+<h4 id="23-faster-rcnn-learned-region-proposals">2.3 Faster R‑CNN: Learned Region Proposals</h4>
+<p><strong>Faster R‑CNN</strong> (Ren et al., NIPS 2015) eliminates the external proposal algorithm by introducing a <strong>Region Proposal Network (RPN)</strong> that shares convolutional features with the detection network. The RPN slides a small network over the feature map and, at each spatial location, considers <span class="arithmatex">\(k\)</span> <strong>anchor boxes</strong> of different scales and aspect ratios. For each anchor, the RPN outputs:</p>
+<ul>
+<li>An <strong>objectness score</strong> (two‑class softmax: object vs. not‑object).</li>
+<li>Four <strong>bounding‑box regression offsets</strong> to refine the anchor.</li>
+</ul>
+<p>Thus, the RPN itself performs class‑agnostic objectness prediction and bounding‑box regression. The top‑ranked proposals (after non‑maximum suppression) are passed to the Fast R‑CNN head for final classification and refinement. Training alternates between the RPN and the detection network, or uses a joint approximation.</p>
+<p><strong>Class label prediction</strong> in the final stage is a <span class="arithmatex">\((C+1)\)</span>-way softmax, exactly as in Fast R‑CNN. <strong>Bounding box prediction</strong> occurs twice: first in the RPN to adjust anchors, then in the detection head to further refine the proposals. Both stages use the same parameterisation of offsets relative to the anchor/proposal.</p>
+<p>Faster R‑CNN achieves state‑of‑the‑art accuracy (e.g., 73.2% mAP on VOC 2007) at 5 frames per second, making it a practical and influential two‑stage detector.</p>
+<h4 id="24-mask-rcnn-adding-instance-segmentation">2.4 Mask R‑CNN: Adding Instance Segmentation</h4>
+<p><strong>Mask R‑CNN</strong> (He et al., ICCV 2017) extends Faster R‑CNN with a third branch that predicts a binary segmentation mask for each RoI, in parallel with the class and box heads. It introduces <strong>RoIAlign</strong>, a quantization‑free pooling operation that preserves spatial accuracy. While primarily a segmentation method, it exemplifies how the proposal‑based framework naturally accommodates additional pixel‑level predictions.</p>
+<h3 id="3-endtoend-methods-singleshot-detection">3. End‑to‑End Methods: Single‑Shot Detection</h3>
+<p>End‑to‑end detectors forgo a separate proposal stage and instead predict bounding boxes and class labels directly from the image in a single forward pass. They are typically faster and conceptually simpler, though early versions traded some accuracy for speed.</p>
+<h4 id="31-yolo-you-only-look-once">3.1 YOLO: You Only Look Once</h4>
+<p><strong>YOLO</strong> (Redmon et al., CVPR 2016) frames detection as a regression problem. The input image is divided into an <span class="arithmatex">\(S \times S\)</span> grid (e.g., <span class="arithmatex">\(7 \times 7\)</span>). Each grid cell predicts <span class="arithmatex">\(B\)</span> bounding boxes (e.g., <span class="arithmatex">\(B=2\)</span>) and associated confidence scores, along with <span class="arithmatex">\(C\)</span> class probabilities. The confidence score reflects both the likelihood that the cell contains an object and the accuracy of the predicted box: <span class="arithmatex">\(\text{confidence} = \Pr(\text{Object}) \times \text{IoU}_{\text{pred}}^{\text{truth}}\)</span>.</p>
+<p>The network output is a tensor of shape <span class="arithmatex">\(S \times S \times (B \cdot 5 + C)\)</span>. For each cell and each box, the five numbers are <span class="arithmatex">\((x, y, w, h, \text{confidence})\)</span>, where <span class="arithmatex">\((x, y)\)</span> is the box centre relative to the cell, and <span class="arithmatex">\((w, h)\)</span> are relative to the whole image. The class probabilities are conditional on the cell containing an object, <span class="arithmatex">\(\Pr(\text{Class}_i \mid \text{Object})\)</span>.</p>
+<p>At inference time, the per‑cell class probabilities are multiplied by the box confidences to obtain class‑specific confidence scores, and non‑maximum suppression removes duplicates.</p>
+<p><strong>Training loss</strong> is a sum‑of‑squares error that jointly optimises localisation, confidence, and classification, with weighting factors to balance the contributions of small and large boxes and to down‑weight the influence of empty grid cells. The loss includes:</p>
+<ul>
+<li>Localisation loss for boxes responsible for an object (based on highest IoU with ground truth).</li>
+<li>Confidence loss for both object and no‑object cells.</li>
+<li>Classification loss for cells that contain an object.</li>
+</ul>
+<p>YOLO is extremely fast (45 fps for the base version, 150 fps for Fast YOLO) and reasons globally about the image, which reduces false positives. However, its coarse grid limits the detection of small or densely packed objects.</p>
+<p><strong>YOLOv2 / YOLO 9000</strong> (Redmon &amp; Farhadi, CVPR 2017) improves accuracy with batch normalisation, higher resolution, anchor boxes (dimensions found by k‑means clustering), and a finer output grid. It also introduces a hierarchical classification scheme that enables training on datasets with and without bounding‑box labels, expanding the detectable vocabulary to over 9000 categories.</p>
+<h4 id="32-retinanet-and-focal-loss">3.2 RetinaNet and Focal Loss</h4>
+<p><strong>RetinaNet</strong> (Lin et al., ICCV 2017) is a single‑stage detector that matches the accuracy of two‑stage methods by addressing the extreme <strong>class imbalance</strong> between foreground objects and background. In dense sampling of anchors, the vast majority are easy negatives that overwhelm the training signal.</p>
+<p>The key innovation is the <strong>Focal Loss</strong>, a dynamically scaled cross‑entropy loss that down‑weights the contribution of well‑classified examples and focuses training on hard, misclassified ones:</p>
+<div class="arithmatex">\[
+\text{FL}(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t),
+\]</div>
+<p>where <span class="arithmatex">\(p_t\)</span> is the model’s estimated probability for the true class, <span class="arithmatex">\(\alpha_t\)</span> is a class‑balancing weight, and <span class="arithmatex">\(\gamma \geq 0\)</span> is the focusing parameter (e.g., <span class="arithmatex">\(\gamma = 2\)</span>). When <span class="arithmatex">\(p_t\)</span> is large (easy example), <span class="arithmatex">\((1-p_t)^\gamma\)</span> becomes very small, reducing the loss.</p>
+<p>RetinaNet uses a Feature Pyramid Network (FPN) backbone and two task‑specific subnetworks: one for classification (with focal loss) and one for bounding‑box regression (smooth‑L1 loss), applied to a dense set of anchors. This design achieves top accuracy while maintaining the speed of a single‑stage detector.</p>
+<h4 id="33-detr-detection-with-transformers">3.3 DETR: Detection with Transformers</h4>
+<p><strong>DETR</strong> (Carion et al., ECCV 2020) is a fully end‑to‑end detector that casts object detection as a direct set prediction problem, eliminating the need for anchors, region proposals, and non‑maximum suppression. It uses a standard CNN backbone to extract features, which are then processed by a <strong>Transformer encoder–decoder</strong>. The decoder takes a small fixed number of learned <strong>object queries</strong> (e.g., 100) and, through cross‑attention, produces output embeddings for each query. A simple feed‑forward network (FFN) then predicts, for each query, either a class label (including a “no‑object” class) or a bounding box.</p>
+<p>The training loss is a <strong>bipartite matching</strong> between the set of <span class="arithmatex">\(N\)</span> predictions and the ground‑truth objects (padded with “no‑object”). The Hungarian algorithm finds the optimal one‑to‑one assignment that minimises a matching cost combining classification and bounding‑box errors. The loss then penalises the matched pairs:</p>
+<div class="arithmatex">\[
+L = \sum_{i=1}^{N} \left[ -\log \hat{p}_{\hat{\sigma}(i)}(c_i) + \mathbb{1}_{\{c_i \neq \varnothing\}} \lambda_{\text{box}} L_{\text{box}}(b_i, \hat{b}_{\hat{\sigma}(i)}) \right],
+\]</div>
+<p>where <span class="arithmatex">\(\hat{\sigma}\)</span> is the optimal assignment, <span class="arithmatex">\(\hat{p}\)</span> are predicted class probabilities, <span class="arithmatex">\(c_i\)</span> the true class, and <span class="arithmatex">\(L_{\text{box}}\)</span> a combination of L1 loss and generalized IoU loss.</p>
+<p>DETR is conceptually elegant and achieves competitive performance, especially on large objects, but requires long training schedules. Its self‑attention maps also naturally reveal instance segmentation cues, leading to extensions like MaskFormer and Mask2Former.</p>
+<h3 id="4-summary-class-label-and-bounding-box-prediction-across-paradigms">4. Summary: Class Label and Bounding Box Prediction Across Paradigms</h3>
+<p>The table below summarises how the main detection architectures handle the two core outputs.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Class label prediction</th>
+<th>Bounding box prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R‑CNN</strong></td>
+<td>Linear SVMs on CNN features per proposal</td>
+<td>Class‑specific linear regression on proposal offsets</td>
+</tr>
+<tr>
+<td><strong>Fast R‑CNN</strong></td>
+<td>Softmax over <span class="arithmatex">\(C+1\)</span> classes on RoI features</td>
+<td>Class‑specific regression head (smooth‑L1 loss) on RoI features</td>
+</tr>
+<tr>
+<td><strong>Faster R‑CNN</strong></td>
+<td>RPN: objectness (2‑class softmax); Detection head: <span class="arithmatex">\((C+1)\)</span>-class softmax</td>
+<td>RPN: anchor offset regression; Detection head: proposal offset regression</td>
+</tr>
+<tr>
+<td><strong>YOLO</strong></td>
+<td>Per‑grid‑cell class probabilities, multiplied by box confidence</td>
+<td>Direct regression of <span class="arithmatex">\((x, y, w, h)\)</span> relative to grid cell and image</td>
+</tr>
+<tr>
+<td><strong>RetinaNet</strong></td>
+<td>Per‑anchor classification with focal loss</td>
+<td>Per‑anchor box regression (smooth‑L1)</td>
+</tr>
+<tr>
+<td><strong>DETR</strong></td>
+<td>FFN on decoder output: <span class="arithmatex">\((C+1)\)</span>-class softmax</td>
+<td>FFN on decoder output: normalised box coordinates (L1 + GIoU loss)</td>
+</tr>
+</tbody>
+</table>
+<p>Proposal‑based methods decouple localisation and classification into two stages, using a region proposal mechanism (external or learned) and refining boxes twice. End‑to‑end methods unify the pipeline, predicting all outputs in a single network pass, with innovations such as grid‑based prediction, focal loss, and transformer‑based set prediction to handle the challenges of dense detection. Both paradigms continue to evolve, with modern frameworks (Detectron2, YOLOv8) offering robust implementations that balance accuracy and speed for real‑world applications, including the autonomous driving tasks demonstrated by the CTU eForce formula student team.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>YOLO divides the image into an <span class="arithmatex">\(S \times S\)</span> grid and each cell predicts a fixed number of boxes — why does this design struggle with small or densely clustered objects, and how does YOLOv2's use of anchor boxes help?</li>
+<li>Focal Loss in RetinaNet down-weights easy examples via the factor <span class="arithmatex">\((1 - p_t)^\gamma\)</span>. What would happen to training if you set <span class="arithmatex">\(\gamma = 0\)</span>, and why does a large <span class="arithmatex">\(\gamma\)</span> risk under-training?</li>
+<li>DETR uses bipartite matching with the Hungarian algorithm instead of NMS. Why is NMS unnecessary in DETR's framework, and in what scenario might the set-prediction approach still produce duplicate detections?</li>
+<li>Fast R-CNN shares the convolutional backbone across all region proposals, whereas R-CNN runs the CNN separately for each proposal. Beyond speed, does sharing the backbone affect what the network can learn — and if so, how?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>Each grid cell can only predict <span class="arithmatex">\(B\)</span> boxes and one set of class probabilities, so if multiple objects (or many small objects) fall in the same cell, the network cannot represent them all — only the one box with the highest IoU is trained for localisation. YOLOv2 introduces anchor boxes with shapes pre-computed via k-means clustering on ground-truth boxes and uses a finer output grid, which allows each cell to predict multiple distinct boxes with different aspect ratios and better covers small or overlapping objects.</p>
+</li>
+<li>
+<p>Setting <span class="arithmatex">\(\gamma = 0\)</span> reduces Focal Loss to standard cross-entropy (<span class="arithmatex">\(\text{FL}(p_t) = -\alpha_t \log(p_t)\)</span>), so easy background examples contribute equally to the gradient and overwhelm the rare, hard foreground examples — exactly the class-imbalance problem RetinaNet is designed to solve. A very large <span class="arithmatex">\(\gamma\)</span> suppresses the loss for most examples so aggressively that even moderately hard examples receive negligible gradient, causing the model to converge slowly or fail to learn fine-grained discriminations because too little training signal remains.</p>
+</li>
+<li>
+<p>DETR enforces a one-to-one assignment between predictions and ground-truth objects during training via the Hungarian algorithm, so each object can be "claimed" by at most one query; this global uniqueness constraint makes post-hoc NMS redundant. Duplicates could still arise if the number of object queries <span class="arithmatex">\(N\)</span> is smaller than the actual number of objects in a scene, forcing multiple queries to attend to the same instance — or during early training before the bipartite matching has converged, when several queries may settle on the same target.</p>
+</li>
+<li>
+<p>Sharing the backbone enables end-to-end training with a multi-task loss, so the convolutional features are jointly optimised for both localisation and classification rather than being fixed from a pre-trained network (as in R-CNN). This joint optimisation allows the backbone to learn representations that are directly useful for bounding-box regression and class discrimination simultaneously, generally yielding richer, task-adapted features and better generalisation compared to the pipeline approach of R-CNN.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

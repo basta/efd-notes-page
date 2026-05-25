@@ -1,0 +1,2777 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q27-describe-the-ransac-algorithm-its-properties/">
+      
+      
+        <link rel="prev" href="../q13-learning-local-feature-detectors-describe-the/">
+      
+      
+        <link rel="next" href="../q37-describe-the-hough-transformation-algorithm-for/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q27. Describe the RANSAC algorithm, its properties,… - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ransac-random-sample-consensus" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q27. Describe the RANSAC algorithm, its properties,…
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q03-describe-the-algorithm-for-the-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q11-describe-local-binary-patterns-like-descriptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ransac-random-sample-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RANSAC: Random Sample Consensus
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RANSAC: Random Sample Consensus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-problem-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problem Setting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-ransac-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The RANSAC Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-properties-and-probabilistic-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Properties and Probabilistic Guarantee
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-advantages-and-disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Advantages and Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q20-how-can-retrieval-and-ransac-be/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q40-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q43-deep-neural-nets-for-detection-proposal-based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q35-dct---discriminative-kernel-correlation-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ransac-random-sample-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RANSAC: Random Sample Consensus
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RANSAC: Random Sample Consensus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-problem-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Problem Setting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-ransac-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The RANSAC Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-properties-and-probabilistic-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Properties and Probabilistic Guarantee
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-advantages-and-disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Advantages and Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q27. Describe the RANSAC algorithm, its properties,…</h1>
+
+<h2 id="ransac-random-sample-consensus">RANSAC: Random Sample Consensus</h2>
+<p>Many computer vision tasks require estimating the parameters of a geometric model from a set of noisy measurements – for example, fitting a line to edge points, computing an epipolar geometry from tentative correspondences, or finding a plane in a 3D point cloud. In realistic data, a large fraction of the measurements are <strong>outliers</strong> that do not conform to the model at all. Standard least‑squares fitting is catastrophically sensitive to even a single gross outlier. <strong>RANSAC</strong> (RANdom SAmple Consensus) is a robust estimation paradigm that can tolerate extreme outlier ratios and has become one of the most widely used algorithms in computer vision.</p>
+<h3 id="1-problem-setting">1. Problem Setting</h3>
+<p>We are given a set of <span class="arithmatex">\(N\)</span> data points <span class="arithmatex">\(\mathcal{X} = \{\mathbf{x}_i\}_{i=1}^N\)</span>. A model is defined by a parameter vector <span class="arithmatex">\(\theta\)</span>. For each point <span class="arithmatex">\(\mathbf{x}\)</span> we can compute a distance <span class="arithmatex">\(d(\mathbf{x},\theta)\)</span> to the model. A point is considered an <strong>inlier</strong> if <span class="arithmatex">\(d(\mathbf{x},\theta) \le \sigma\)</span>, where <span class="arithmatex">\(\sigma\)</span> is a user‑supplied <strong>inlier threshold</strong>; otherwise it is an <strong>outlier</strong>. The goal is to find the model <span class="arithmatex">\(\theta^*\)</span> that minimises the cost</p>
+<div class="arithmatex">\[
+J(\theta) = \sum_{\mathbf{x}\in\mathcal{X}} f(\mathbf{x},\theta),\qquad
+f(\mathbf{x},\theta) = \begin{cases}
+0 &amp; \text{if } d(\mathbf{x},\theta) \le \sigma,\\
+1 &amp; \text{otherwise}.
+\end{cases}
+\]</div>
+<p>In other words, we seek the model that is consistent with the largest number of points – the model with the <strong>maximum consensus set</strong>. The cost function is non‑convex and the optimisation is combinatorial, so an exhaustive search over all possible minimal subsets is infeasible.</p>
+<h3 id="2-the-ransac-algorithm">2. The RANSAC Algorithm</h3>
+<p>RANSAC tackles the problem by repeatedly hypothesising models from small random subsets and verifying them against all data. The core loop is:</p>
+<ol>
+<li><strong>Sample</strong> – draw a random subset <span class="arithmatex">\(S \subset \mathcal{X}\)</span> of size <span class="arithmatex">\(m\)</span>, where <span class="arithmatex">\(m\)</span> is the minimum number of points needed to define the model (e.g., <span class="arithmatex">\(m=2\)</span> for a line, <span class="arithmatex">\(m=7\)</span> for the fundamental matrix).</li>
+<li><strong>Estimate</strong> – compute model parameters <span class="arithmatex">\(\theta = e(S)\)</span> from the sample.</li>
+<li><strong>Verify</strong> – evaluate the support of <span class="arithmatex">\(\theta\)</span> by counting how many points in <span class="arithmatex">\(\mathcal{X}\)</span> satisfy <span class="arithmatex">\(d(\mathbf{x},\theta) \le \sigma\)</span>. Let <span class="arithmatex">\(J(\theta)\)</span> be the number of outliers (or, equivalently, the number of inliers).</li>
+<li><strong>Update</strong> – if <span class="arithmatex">\(J(\theta)\)</span> is smaller than the best cost <span class="arithmatex">\(J^*\)</span> seen so far, store <span class="arithmatex">\(\theta^* \leftarrow \theta\)</span>, <span class="arithmatex">\(J^* \leftarrow J(\theta)\)</span>, and recompute the number of iterations <span class="arithmatex">\(k\)</span> that are still needed (see below).</li>
+<li><strong>Terminate</strong> – stop when the probability that a better model exists falls below <span class="arithmatex">\(1-\eta\)</span>, where <span class="arithmatex">\(\eta\)</span> is the desired confidence.</li>
+</ol>
+<p>After the loop, the final model is often re‑estimated from all inliers of the best hypothesis using a standard (non‑robust) method, e.g., least squares, to improve accuracy. This final step is called <strong>local optimisation</strong> in the LO‑RANSAC variant, but even the basic RANSAC typically refines the model on the consensus set.</p>
+<p>The algorithm is inherently non‑deterministic: the random sampling may or may not hit an all‑inlier subset. The termination criterion provides a probabilistic guarantee that a correct model has been found with confidence <span class="arithmatex">\(\eta\)</span>.</p>
+<h3 id="3-parameters">3. Parameters</h3>
+<p>RANSAC has three explicit parameters:</p>
+<ul>
+<li><strong>Sample size <span class="arithmatex">\(m\)</span></strong> – the minimal number of points required to instantiate the model. It is determined by the model (e.g., 2 for a line, 3 for an affine transformation, 7 for the fundamental matrix). Using the minimal sample size maximises the probability of drawing an uncontaminated sample.</li>
+<li><strong>Inlier threshold <span class="arithmatex">\(\sigma\)</span></strong> – the maximum distance for a point to be considered consistent with the model. It should reflect the expected measurement noise. Setting <span class="arithmatex">\(\sigma\)</span> too large risks labelling outliers as inliers; too small may reject valid inliers.</li>
+<li><strong>Confidence <span class="arithmatex">\(\eta\)</span></strong> – the desired probability that the true model is found. Typical values are <span class="arithmatex">\(0.95\)</span>, <span class="arithmatex">\(0.99\)</span>, or <span class="arithmatex">\(0.999\)</span>. Higher confidence requires more iterations.</li>
+</ul>
+<p>The <strong>number of iterations <span class="arithmatex">\(k\)</span></strong> is not a fixed parameter but is derived from the other quantities and from the inlier ratio <span class="arithmatex">\(\varepsilon\)</span> of the best model found so far. If <span class="arithmatex">\(Q\)</span> is the number of inliers of the current best hypothesis, the inlier ratio is estimated as <span class="arithmatex">\(\varepsilon = Q/N\)</span>. The probability that a single random sample of size <span class="arithmatex">\(m\)</span> consists entirely of inliers is <span class="arithmatex">\(\varepsilon^m\)</span>. The probability that none of <span class="arithmatex">\(k\)</span> samples is all‑inlier is <span class="arithmatex">\((1-\varepsilon^m)^k\)</span>. To achieve confidence <span class="arithmatex">\(\eta\)</span>, we need</p>
+<div class="arithmatex">\[
+(1-\varepsilon^m)^k &lt; 1-\eta \quad\Longrightarrow\quad
+k \ge \frac{\log(1-\eta)}{\log(1-\varepsilon^m)}.
+\]</div>
+<p>Every time a better model is found, <span class="arithmatex">\(\varepsilon\)</span> is updated and <span class="arithmatex">\(k\)</span> is recomputed. This adaptive scheme ensures that the algorithm runs just long enough to satisfy the confidence requirement without needing to know the true inlier ratio in advance.</p>
+<h3 id="4-properties-and-probabilistic-guarantee">4. Properties and Probabilistic Guarantee</h3>
+<ul>
+<li><strong>Robustness to outliers</strong> – RANSAC can handle arbitrarily high outlier fractions, as long as the inlier ratio <span class="arithmatex">\(\varepsilon\)</span> is not zero. The required number of iterations grows polynomially with <span class="arithmatex">\(1/\varepsilon\)</span>, so the method remains practical even when inliers are a minority (e.g., 10–20%).</li>
+<li><strong>Probabilistic guarantee</strong> – with the adaptive termination rule, the probability that the algorithm returns the true model (or one with at least as many inliers) is at least <span class="arithmatex">\(\eta\)</span>. This guarantee holds regardless of the distribution of outliers, provided the inlier noise is bounded by <span class="arithmatex">\(\sigma\)</span>.</li>
+<li><strong>Simplicity</strong> – the algorithm is easy to implement and makes only mild assumptions: the model can be estimated from <span class="arithmatex">\(m\)</span> points, and the inlier threshold <span class="arithmatex">\(\sigma\)</span> is known.</li>
+<li><strong>Non‑determinism</strong> – different runs may yield slightly different results because of the random sampling. The confidence <span class="arithmatex">\(\eta\)</span> controls the chance of failure.</li>
+<li><strong>Time complexity</strong> – each iteration evaluates all <span class="arithmatex">\(N\)</span> points, so the total time is <span class="arithmatex">\(O(k \cdot N \cdot t_M)\)</span>, where <span class="arithmatex">\(t_M\)</span> is the cost of evaluating one point against the model. The number of iterations <span class="arithmatex">\(k\)</span> depends on <span class="arithmatex">\(\varepsilon\)</span> and <span class="arithmatex">\(m\)</span>; the table in the slides shows that for low inlier ratios and large <span class="arithmatex">\(m\)</span>, <span class="arithmatex">\(k\)</span> can become enormous, making RANSAC slow.</li>
+</ul>
+<h3 id="5-advantages-and-disadvantages">5. Advantages and Disadvantages</h3>
+<p><strong>Advantages</strong></p>
+<ul>
+<li>Extremely popular and widely applicable (geometry estimation, motion segmentation, object detection, etc.).</li>
+<li>Does not require the percentage of inliers to be known or limited – it works for any <span class="arithmatex">\(\varepsilon &gt; 0\)</span>.</li>
+<li>Provides a probabilistic guarantee on the correctness of the solution.</li>
+<li>Mild assumptions: only the inlier threshold <span class="arithmatex">\(\sigma\)</span> and the model’s minimal sample size <span class="arithmatex">\(m\)</span> need to be specified.</li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul>
+<li><strong>Slow when the inlier ratio is low.</strong> The number of required iterations grows quickly as <span class="arithmatex">\(\varepsilon\)</span> decreases, especially for models with large <span class="arithmatex">\(m\)</span>.</li>
+<li><strong>Sensitivity to the threshold <span class="arithmatex">\(\sigma\)</span>.</strong> An inappropriate <span class="arithmatex">\(\sigma\)</span> can cause the algorithm to miss the true model or to accept a false one. Variants such as MSAC, MLESAC, or MAGSAC address this by using softer cost functions or by estimating <span class="arithmatex">\(\sigma\)</span> automatically.</li>
+<li><strong>Noisy inliers degrade performance.</strong> Even an all‑inlier sample may produce a poor model if the inliers are noisy or poorly conditioned. This is why RANSAC often takes longer than the theoretical prediction – not every uncontaminated sample yields a hypothesis that attracts the full consensus set. LO‑RANSAC and other local‑optimisation schemes mitigate this problem.</li>
+<li><strong>Degeneracy.</strong> When the data contain a dominant degenerate configuration (e.g., all points lie on a plane while trying to estimate epipolar geometry), RANSAC may converge to the degenerate model. The DEGENSAC variant explicitly handles such cases.</li>
+</ul>
+<p>In summary, RANSAC is a foundational robust estimator that trades exhaustive search for randomised sampling, offering a practical and theoretically grounded solution to model fitting in the presence of massive outliers. Its many variants (R‑RANSAC, PROSAC, WaldSAC, LO‑RANSAC, GC‑RANSAC) improve speed, accuracy, and robustness while retaining the core random‑sampling philosophy.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>The required number of iterations <span class="arithmatex">\(k\)</span> is recomputed every time a better model is found. Why does this adaptive strategy make RANSAC more efficient than fixing <span class="arithmatex">\(k\)</span> in advance, and what assumption about the data does the update rely on?</li>
+<li>RANSAC uses the minimal sample size <span class="arithmatex">\(m\)</span> rather than a larger subset. Why is using the smallest possible sample preferable, and in what situation could using a larger sample actually be beneficial?</li>
+<li>Suppose you apply RANSAC to estimate a homography (<span class="arithmatex">\(m = 4\)</span>) in a scene where only 10% of correspondences are inliers. How does this outlier ratio affect the number of required iterations compared to a scene with 50% inliers, and what practical consequence does this have?</li>
+<li>A colleague proposes replacing the hard inlier/outlier threshold <span class="arithmatex">\(\sigma\)</span> with a smooth cost that penalises large residuals gradually (as in MSAC). Under what conditions does the hard threshold of standard RANSAC perform poorly, and why does a soft cost help in those cases?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>When a better hypothesis is found, the estimated inlier ratio <span class="arithmatex">\(\varepsilon = Q/N\)</span> increases, which reduces the required <span class="arithmatex">\(k = \log(1-\eta)/\log(1-\varepsilon^m)\)</span>. This means the algorithm can terminate earlier than a fixed-<span class="arithmatex">\(k\)</span> schedule would allow, since the early rounds often find progressively better models that tighten the bound. The update relies on the assumption that the current best inlier ratio is a good lower-bound estimate of the true inlier ratio, so the remaining iterations are sufficient to guarantee confidence <span class="arithmatex">\(\eta\)</span>.</p>
+</li>
+<li>
+<p>Using the minimal sample size <span class="arithmatex">\(m\)</span> maximises the probability <span class="arithmatex">\(\varepsilon^m\)</span> that a random draw is all-inlier, since each additional point multiplies by <span class="arithmatex">\(\varepsilon &lt; 1\)</span> and thus shrinks that probability. A larger sample could be beneficial when the inliers are very noisy and a larger, overdetermined system yields a more stable model estimate — essentially trading fewer clean samples for better-conditioned individual fits, as done in approaches like LO-RANSAC's local refinement step.</p>
+</li>
+<li>
+<p>With 10% inliers (<span class="arithmatex">\(\varepsilon = 0.1\)</span>) and <span class="arithmatex">\(m = 4\)</span>, the probability of a clean sample is <span class="arithmatex">\(\varepsilon^m = 0.0001\)</span>, requiring <span class="arithmatex">\(k \approx \log(1-\eta)/\log(1-0.0001) \approx 46{,}000\)</span> iterations at <span class="arithmatex">\(\eta = 0.99\)</span>. By contrast, with 50% inliers (<span class="arithmatex">\(\varepsilon = 0.5\)</span>), the same <span class="arithmatex">\(\eta\)</span> needs only <span class="arithmatex">\(k \approx 17\)</span> iterations. The practical consequence is that RANSAC becomes extremely slow — or even infeasible — when inlier ratios are very low, motivating guided sampling strategies like PROSAC that prefer higher-quality correspondences.</p>
+</li>
+<li>
+<p>The hard threshold performs poorly when the true noise is heteroscedastic or when <span class="arithmatex">\(\sigma\)</span> is mis-set: too large a <span class="arithmatex">\(\sigma\)</span> accepts outliers that slightly violate the model, inflating the consensus set with false inliers; too small a <span class="arithmatex">\(\sigma\)</span> rejects valid noisy inliers, causing the algorithm to miss the true model. A soft cost like MSAC penalises residuals continuously (truncated quadratic), so borderline points contribute partial evidence rather than being arbitrarily accepted or rejected, making the score more discriminative and less sensitive to the exact choice of threshold.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

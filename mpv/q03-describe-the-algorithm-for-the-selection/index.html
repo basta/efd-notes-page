@@ -1,0 +1,2823 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q03-describe-the-algorithm-for-the-selection/">
+      
+      
+        <link rel="prev" href="../q02-harris-interest-points---definition-algorithm/">
+      
+      
+        <link rel="next" href="../q04-describe-steps-to-generalize-harrishessian-detector/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q3. Describe the algorithm for the selection… - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#selection-of-interest-point-scale-using-the-laplacian" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q3. Describe the algorithm for the selection…
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#selection-of-interest-point-scale-using-the-laplacian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selection of Interest Point Scale Using the Laplacian
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selection of Interest Point Scale Using the Laplacian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-concept-of-characteristic-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Concept of Characteristic Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-laplacian-of-gaussian-as-a-scale-selection-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Laplacian of Gaussian as a Scale-Selection Kernel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-scale-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Scale Normalisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-algorithm-for-scale-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Algorithm for Scale Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-practical-considerations-and-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Practical Considerations and Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q11-describe-local-binary-patterns-like-descriptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q27-describe-the-ransac-algorithm-its-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q20-how-can-retrieval-and-ransac-be/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q40-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q43-deep-neural-nets-for-detection-proposal-based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q35-dct---discriminative-kernel-correlation-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#selection-of-interest-point-scale-using-the-laplacian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selection of Interest Point Scale Using the Laplacian
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Selection of Interest Point Scale Using the Laplacian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-concept-of-characteristic-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Concept of Characteristic Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-laplacian-of-gaussian-as-a-scale-selection-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Laplacian of Gaussian as a Scale-Selection Kernel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-scale-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Scale Normalisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-algorithm-for-scale-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Algorithm for Scale Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-practical-considerations-and-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Practical Considerations and Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q3. Describe the algorithm for the selection…</h1>
+
+<h2 id="selection-of-interest-point-scale-using-the-laplacian">Selection of Interest Point Scale Using the Laplacian</h2>
+<p>A fundamental limitation of early corner detectors such as Harris is their lack of <strong>scale invariance</strong>: a corner at one image resolution may appear as an edge or a flat region when the image is zoomed. To achieve scale-invariant detection, each interest point must be assigned a <strong>characteristic scale</strong>—the size of the local image structure that is most stable and repeatable across different views. The Laplacian of Gaussian (LoG) provides a principled mechanism for selecting this scale automatically and independently in each image.</p>
+<h3 id="1-the-concept-of-characteristic-scale">1. The Concept of Characteristic Scale</h3>
+<p>The key idea is to treat the interest point not as a single pixel but as a <strong>region</strong> (typically a circle) whose radius is proportional to the scale <span class="arithmatex">\(\sigma\)</span>. If we can find a function <span class="arithmatex">\(F(x, y; \sigma)\)</span> that attains a local extremum over both spatial location and scale, then the <span class="arithmatex">\(\sigma\)</span> at which the extremum occurs is covariant with the image scale. That is, if the image is scaled by a factor <span class="arithmatex">\(s\)</span>, the extremum will shift to <span class="arithmatex">\(s\sigma\)</span>, and the same physical region will be detected in both images.</p>
+<p>For this to work, the function <span class="arithmatex">\(F\)</span> must be <strong>scale-covariant</strong>: its response to a given image structure should peak when the observation scale <span class="arithmatex">\(\sigma\)</span> matches the intrinsic scale of that structure. The Laplacian of Gaussian is one such function—it responds strongly to <strong>blob-like</strong> structures (regions of rapid intensity change that are roughly circular) and achieves its maximum when the zero-crossing of the Laplacian aligns with the boundary of the blob.</p>
+<h3 id="2-the-laplacian-of-gaussian-as-a-scale-selection-kernel">2. The Laplacian of Gaussian as a Scale-Selection Kernel</h3>
+<p>The Laplacian operator <span class="arithmatex">\(\nabla^2\)</span> measures the second spatial derivative of the image. Applied directly to a noisy image, it is highly sensitive to fine texture. To analyse structures at a given scale, the image is first smoothed with a Gaussian kernel <span class="arithmatex">\(G(x, y; \sigma) = \frac{1}{2\pi\sigma^2} e^{-(x^2+y^2)/(2\sigma^2)}\)</span>. The <strong>Laplacian of Gaussian</strong> (LoG) is then the convolution of the image <span class="arithmatex">\(I(x,y)\)</span> with the Laplacian of the Gaussian:</p>
+<div class="arithmatex">\[
+\nabla^2 L(x, y; \sigma) = \nabla^2 \bigl( G(x,y;\sigma) * I(x,y) \bigr) = \bigl( \nabla^2 G(x,y;\sigma) \bigr) * I(x,y),
+\]</div>
+<p>where</p>
+<div class="arithmatex">\[
+\nabla^2 G(x,y;\sigma) = \frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2} = \frac{1}{\pi\sigma^4} \left( \frac{x^2+y^2}{2\sigma^2} - 1 \right) e^{-(x^2+y^2)/(2\sigma^2)}.
+\]</div>
+<p>The LoG kernel has a characteristic <strong>Mexican-hat</strong> shape: a positive central peak surrounded by a negative ring. When convolved with a bright circular blob on a dark background, the response is maximal at the centre of the blob when the scale <span class="arithmatex">\(\sigma\)</span> of the Gaussian matches the radius of the blob. If <span class="arithmatex">\(\sigma\)</span> is too small, the kernel sees only the flat interior; if <span class="arithmatex">\(\sigma\)</span> is too large, the blob is smoothed away. Thus, the LoG naturally acts as a <strong>matched filter</strong> for blobs of size proportional to <span class="arithmatex">\(\sigma\)</span>.</p>
+<h3 id="3-scale-normalisation">3. Scale Normalisation</h3>
+<p>A critical detail is that the amplitude of the LoG response decays as <span class="arithmatex">\(\sigma\)</span> increases, because the Gaussian smoothing reduces the overall intensity variations. To make the response comparable across scales, the LoG must be <strong>scale-normalised</strong>. The correct normalisation factor for the Laplacian in <span class="arithmatex">\(D\)</span> dimensions is <span class="arithmatex">\(\sigma^2\)</span> (for 2D images, <span class="arithmatex">\(\sigma^2\)</span>). The scale-normalised Laplacian is therefore</p>
+<div class="arithmatex">\[
+\text{LoG}_{\text{norm}}(x, y; \sigma) = \sigma^2 \, \bigl| \nabla^2 L(x, y; \sigma) \bigr|.
+\]</div>
+<p>Multiplying by <span class="arithmatex">\(\sigma^2\)</span> compensates for the amplitude decay and ensures that a blob of fixed intensity will produce the same maximum response regardless of the scale at which it is observed. This property is essential for detecting extrema in the scale dimension.</p>
+<h3 id="4-algorithm-for-scale-selection">4. Algorithm for Scale Selection</h3>
+<p>The scale-selection algorithm using the Laplacian proceeds in the following steps:</p>
+<ol>
+<li>
+<p><strong>Build a scale-space representation.</strong><br />
+   Convolve the input image with a family of Gaussian kernels of increasing standard deviation <span class="arithmatex">\(\sigma_1, \sigma_2, \dots, \sigma_n\)</span>. The sequence of smoothed images <span class="arithmatex">\(L(x,y;\sigma_i)\)</span> forms a <strong>Gaussian scale space</strong>. Typically, the scales are chosen in a geometric progression, e.g., <span class="arithmatex">\(\sigma_i = \sigma_0 \, k^i\)</span> with <span class="arithmatex">\(k \approx 1.2\text{–}1.4\)</span>, covering a range that spans the expected sizes of image structures.</p>
+</li>
+<li>
+<p><strong>Compute the scale-normalised Laplacian response.</strong><br />
+   For each scale <span class="arithmatex">\(\sigma_i\)</span>, compute the Laplacian of the smoothed image and multiply by <span class="arithmatex">\(\sigma_i^2\)</span>:
+   $$
+   F(x, y; \sigma_i) = \sigma_i^2 \, \bigl| \nabla^2 L(x, y; \sigma_i) \bigr|.
+   $$
+   This yields a 3D volume of responses indexed by <span class="arithmatex">\((x, y, \sigma_i)\)</span>.</p>
+</li>
+<li>
+<p><strong>Detect local extrema in space and scale.</strong><br />
+   A point <span class="arithmatex">\((x, y, \sigma_i)\)</span> is selected as a candidate scale if its response <span class="arithmatex">\(F\)</span> is a local maximum (or minimum, depending on the sign convention) in a <span class="arithmatex">\(3 \times 3 \times 3\)</span> neighbourhood—i.e., greater than all 26 neighbours in the <span class="arithmatex">\((x, y, \sigma)\)</span> volume. This ensures that the point is both a spatial extremum and a scale extremum.</p>
+</li>
+<li>
+<p><strong>Sub-scale refinement (optional but recommended).</strong><br />
+   To obtain a more accurate scale estimate, a 1D quadratic (or a 3D quadratic in <span class="arithmatex">\((x,y,\sigma)\)</span>) can be fitted to the response values around the discrete extremum. The peak of the fitted polynomial gives a continuous scale value <span class="arithmatex">\(\hat{\sigma}\)</span> that is not restricted to the sampled <span class="arithmatex">\(\sigma_i\)</span>.</p>
+</li>
+<li>
+<p><strong>Output the characteristic scale.</strong><br />
+   The refined <span class="arithmatex">\(\hat{\sigma}\)</span> is assigned to the interest point as its <strong>characteristic scale</strong>. The corresponding spatial location <span class="arithmatex">\((x,y)\)</span> defines the centre of a circular region of radius proportional to <span class="arithmatex">\(\hat{\sigma}\)</span> (often <span class="arithmatex">\(r = c \cdot \hat{\sigma}\)</span>, with <span class="arithmatex">\(c \approx 3\text{–}5\)</span> to encompass the full blob structure).</p>
+</li>
+</ol>
+<p>The algorithm is run independently on each image. Because the scale-normalised LoG is covariant with image scaling, the same physical blob will produce an extremum at a scale <span class="arithmatex">\(\hat{\sigma}\)</span> that is proportional to the true size of the blob in that image. Thus, the detected scales in two images of the same scene will be related by the same factor as the image scaling.</p>
+<p>The figure below makes the mechanism concrete. Panel (a) shows three dark disks of radii <span class="arithmatex">\(r \in \{8, 18, 32\}\)</span> px; circles drawn at radius <span class="arithmatex">\(\sqrt{2}\,\hat\sigma\)</span> — where <span class="arithmatex">\(\hat\sigma\)</span> is the scale that maximises the scale-normalised LoG at the blob centre — sit on the true blob boundaries. Panel (b) plots the response <span class="arithmatex">\(\sigma^2 \nabla^2 L(x_c, y_c; \sigma)\)</span> as a function of <span class="arithmatex">\(\sigma\)</span> for each blob: each curve has a single clear peak, and the dotted (detected <span class="arithmatex">\(\hat\sigma\)</span>) and dashed (<span class="arithmatex">\(r/\sqrt{2}\)</span>, theory) markers nearly coincide (<span class="arithmatex">\(\hat\sigma = 5.5,\ 12.3,\ 22.4\)</span> vs. expected <span class="arithmatex">\(5.66,\ 12.73,\ 22.63\)</span>). Larger blobs peak at larger <span class="arithmatex">\(\sigma\)</span>, confirming that the location of the LoG extremum is covariant with the structure size.</p>
+<p><img alt="Scale selection via the scale-normalised Laplacian" src="../../figures/q_0003_log_scale.png" /></p>
+<h3 id="5-practical-considerations-and-variants">5. Practical Considerations and Variants</h3>
+<ul>
+<li>
+<p><strong>Difference of Gaussians (DoG).</strong><br />
+  Computing the full LoG at many scales can be expensive. The DoG, defined as
+  $$
+  \text{DoG}(x,y;\sigma) = G(x,y;k\sigma) - G(x,y;\sigma),
+  $$
+  provides an efficient approximation of the scale-normalised Laplacian up to a constant factor:
+  $$
+  \sigma^2 \nabla^2 G \approx \frac{1}{k-1} \bigl( G(k\sigma) - G(\sigma) \bigr).
+  $$
+  The SIFT detector exploits this relationship by searching for extrema of the DoG in a scale-space pyramid, which is computationally much cheaper than explicit LoG filtering.</p>
+</li>
+<li>
+<p><strong>Combined detectors: Harris-Laplacian.</strong><br />
+  The Laplacian can be used solely for scale selection, while a different operator (e.g., the Harris cornerness measure) handles spatial localisation. In the <strong>Harris-Laplacian</strong> detector, candidate locations are first found as spatial maxima of the Harris response at a fixed initial scale. Then, for each candidate, the scale-normalised Laplacian is evaluated over a range of scales, and the scale that maximises the Laplacian is selected. This decouples spatial and scale detection, often improving repeatability.</p>
+</li>
+<li>
+<p><strong>Blob vs. corner scale.</strong><br />
+  The Laplacian is inherently a <strong>blob detector</strong>—it responds best to circular, symmetric intensity changes. For corner-like structures, the determinant of the Hessian (DoH) or the Laplacian may still be used, but the scale selection is less sharp. In practice, the Laplacian (or its DoG approximation) has proven highly effective for a wide variety of natural image structures.</p>
+</li>
+</ul>
+<h3 id="6-summary">6. Summary</h3>
+<p>Scale selection using the Laplacian is a cornerstone of scale-invariant feature detection. The algorithm consists of:</p>
+<ul>
+<li>Constructing a Gaussian scale space.</li>
+<li>Computing the scale-normalised Laplacian response at each scale.</li>
+<li>Finding local extrema in the <span class="arithmatex">\((x, y, \sigma)\)</span> volume.</li>
+<li>Assigning the extremum’s scale as the characteristic scale of the interest point.</li>
+</ul>
+<p>This method, either directly or via the DoG approximation, underpins many widely used detectors (SIFT, Harris-Laplacian, Hessian-Laplacian) and enables the reliable matching of image regions across large changes in viewpoint and resolution.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>The scale-normalised LoG multiplies the raw response by <span class="arithmatex">\(\sigma^2\)</span>. Why is this normalisation necessary, and what would go wrong if you compared raw LoG responses across scales without it?</li>
+<li>The DoG approximates the scale-normalised Laplacian. Under what circumstances might this approximation break down, and how does the choice of the ratio <span class="arithmatex">\(k\)</span> affect the quality of the approximation?</li>
+<li>Harris-Laplacian decouples spatial localisation from scale selection. Why might running Harris at a fixed initial scale before applying the Laplacian be preferable to using the Laplacian alone for both tasks?</li>
+<li>Consider a textured image region where many overlapping blob-like structures exist at similar scales. How would this affect the scale-selection extremum, and when would the Laplacian-based method fail to assign a meaningful characteristic scale?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>Without scale normalisation, the amplitude of the raw LoG response decays as <span class="arithmatex">\(\sigma\)</span> increases because Gaussian smoothing suppresses intensity variations at larger scales. Comparing raw responses across scales would therefore systematically favour small-<span class="arithmatex">\(\sigma\)</span> detections, and scale-space extrema would always cluster at the finest scales rather than at the scale matching the true blob size. Multiplying by <span class="arithmatex">\(\sigma^2\)</span> compensates for this decay so that a blob of fixed intensity produces the same peak response regardless of the scale at which it is observed.</p>
+</li>
+<li>
+<p>The DoG approximation <span class="arithmatex">\(G(k\sigma) - G(\sigma) \approx (k-1)\,\sigma^2 \nabla^2 G\)</span> is a first-order finite difference in log-scale, so it degrades when <span class="arithmatex">\(k\)</span> is large (coarse sampling introduces discretisation error) or very close to 1 (the difference becomes numerically unstable and the pyramid requires too many levels). In practice <span class="arithmatex">\(k \approx 1.2\)</span>–<span class="arithmatex">\(1.4\)</span> balances approximation accuracy against computational cost; for highly elongated or irregular structures the isotropic Laplacian is already a poor model, and the DoG inherits those limitations regardless of <span class="arithmatex">\(k\)</span>.</p>
+</li>
+<li>
+<p>The Laplacian is a blob detector that responds best to circular, symmetric structures; it is less reliable at precisely localising corners or saddle points spatially. Harris, by contrast, uses the second-moment matrix to identify locations with large intensity curvature in all directions, giving sharper spatial localisation. Decoupling the tasks lets each operator do what it does best: Harris finds the where, and the Laplacian then finds the scale, typically improving repeatability compared to using the LoG alone for both.</p>
+</li>
+<li>
+<p>When many overlapping blobs of similar size coexist, their individual LoG responses superpose and the <span class="arithmatex">\(\sigma\)</span>-response curve may show a broad, flat plateau rather than a sharp peak, making the extremum ill-defined or sensitive to noise. The method fails to assign a meaningful characteristic scale whenever the response has no clear local maximum in the <span class="arithmatex">\((x, y, \sigma)\)</span> volume—this happens in highly repetitive textures where the concept of a single dominant scale does not hold, and the detected <span class="arithmatex">\(\hat{\sigma}\)</span> would be unstable across small image perturbations.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

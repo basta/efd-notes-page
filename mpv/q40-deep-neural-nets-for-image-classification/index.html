@@ -1,0 +1,3139 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q40-deep-neural-nets-for-image-classification/">
+      
+      
+        <link rel="prev" href="../q20-how-can-retrieval-and-ransac-be/">
+      
+      
+        <link rel="next" href="../q41-deep-neural-nets-for-image-classification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q40. Deep Neural Nets for image classification - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deep-neural-networks-for-image-classification-convolutional-pooling-and-fully-connected-layers-and-nonlinearities" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q40. Deep Neural Nets for image classification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q03-describe-the-algorithm-for-the-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q11-describe-local-binary-patterns-like-descriptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q27-describe-the-ransac-algorithm-its-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q20-how-can-retrieval-and-ransac-be/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deep-neural-networks-for-image-classification-convolutional-pooling-and-fully-connected-layers-and-nonlinearities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Neural Networks for Image Classification: Convolutional, Pooling, and Fully Connected Layers, and Non‑linearities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Neural Networks for Image Classification: Convolutional, Pooling, and Fully Connected Layers, and Non‑linearities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-overall-pipeline-from-pixels-to-class-scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Overall Pipeline: From Pixels to Class Scores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-convolutional-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Convolutional Layer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Convolutional Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-input-and-output-tensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Input and Output Tensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-filters-kernels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Filters (Kernels)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-stride-and-padding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Stride and Padding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-role-in-the-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Role in the Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-nonlinear-activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Non‑linear Activation Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Non‑linear Activation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-sigmoid-and-tanh-classical-saturating-nonlinearities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Sigmoid and Tanh – Classical Saturating Non‑linearities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-relu-rectified-linear-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 ReLU – Rectified Linear Unit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-other-activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Other Activation Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-pooling-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Pooling Layer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Pooling Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-maxpooling-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Max‑Pooling Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-fully-connected-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Fully Connected Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-putting-it-all-together-the-alexnet-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Putting It All Together: The AlexNet Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-why-deep-networks-work-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Why Deep Networks Work Now
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q43-deep-neural-nets-for-detection-proposal-based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q35-dct---discriminative-kernel-correlation-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#deep-neural-networks-for-image-classification-convolutional-pooling-and-fully-connected-layers-and-nonlinearities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep Neural Networks for Image Classification: Convolutional, Pooling, and Fully Connected Layers, and Non‑linearities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep Neural Networks for Image Classification: Convolutional, Pooling, and Fully Connected Layers, and Non‑linearities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-overall-pipeline-from-pixels-to-class-scores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The Overall Pipeline: From Pixels to Class Scores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-convolutional-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Convolutional Layer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Convolutional Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-input-and-output-tensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Input and Output Tensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-filters-kernels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Filters (Kernels)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-stride-and-padding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Stride and Padding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-role-in-the-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Role in the Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-nonlinear-activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Non‑linear Activation Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Non‑linear Activation Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-sigmoid-and-tanh-classical-saturating-nonlinearities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Sigmoid and Tanh – Classical Saturating Non‑linearities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-relu-rectified-linear-unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 ReLU – Rectified Linear Unit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-other-activation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Other Activation Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-pooling-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Pooling Layer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Pooling Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-maxpooling-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Max‑Pooling Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-fully-connected-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Fully Connected Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-putting-it-all-together-the-alexnet-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Putting It All Together: The AlexNet Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-why-deep-networks-work-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Why Deep Networks Work Now
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q40. Deep Neural Nets for image classification</h1>
+
+<h2 id="deep-neural-networks-for-image-classification-convolutional-pooling-and-fully-connected-layers-and-nonlinearities">Deep Neural Networks for Image Classification: Convolutional, Pooling, and Fully Connected Layers, and Non‑linearities</h2>
+<p>Deep neural networks have revolutionised image classification by learning hierarchical representations directly from raw pixels. The architecture that ignited the modern deep learning era – AlexNet – and its successors are built from a small set of fundamental layer types: <strong>convolutional layers</strong>, <strong>pooling layers</strong>, <strong>fully connected layers</strong>, and <strong>non‑linear activation functions</strong>. This section describes each of these building blocks, their roles within a classification network, and the design principles that make deep architectures trainable and effective.</p>
+<h3 id="1-the-overall-pipeline-from-pixels-to-class-scores">1. The Overall Pipeline: From Pixels to Class Scores</h3>
+<p>A deep convolutional neural network (CNN) for image classification can be viewed as a directed acyclic computational graph that transforms an input image into a probability distribution over predefined categories. The typical structure, exemplified by AlexNet, consists of:</p>
+<ol>
+<li><strong>Input layer</strong> – an RGB image of size <span class="arithmatex">\(W \times H \times 3\)</span>.</li>
+<li><strong>Intermediate layers</strong> – a sequence of convolutional layers, often interleaved with non‑linear activations and pooling layers.</li>
+<li><strong>Fully connected layers</strong> – one or more layers that aggregate the spatially distributed features into a fixed‑length vector.</li>
+<li><strong>Output layer</strong> – a softmax layer that produces a normalised probability vector over the <span class="arithmatex">\(C\)</span> classes.</li>
+<li><strong>Loss function</strong> – the cross‑entropy loss that compares the predicted distribution with the ground‑truth label during training.</li>
+</ol>
+<p>The entire graph is <strong>end‑to‑end differentiable</strong>, meaning that the gradient of the loss with respect to every parameter can be computed by back‑propagation, enabling optimisation via stochastic gradient descent (SGD) or its adaptive variants such as ADAM.</p>
+<h3 id="2-convolutional-layer">2. Convolutional Layer</h3>
+<p>The convolutional layer is the core building block that exploits the spatial structure of images. Unlike a fully connected layer that connects every input to every output, a convolutional layer uses <strong>local connectivity</strong> and <strong>weight sharing</strong> to dramatically reduce the number of parameters and to make the network translationally equivariant.</p>
+<h4 id="21-input-and-output-tensors">2.1 Input and Output Tensors</h4>
+<p>A convolutional layer operates on a 3D tensor (a multi‑channel feature map). Let the input be a tensor of size</p>
+<div class="arithmatex">\[
+W \times H \times D,
+\]</div>
+<p>where <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(H\)</span> are the spatial width and height, and <span class="arithmatex">\(D\)</span> is the number of channels (e.g., <span class="arithmatex">\(D=3\)</span> for an RGB image, or <span class="arithmatex">\(D=64\)</span> for an intermediate feature map). The layer produces an output tensor of size</p>
+<div class="arithmatex">\[
+W' \times H' \times D',
+\]</div>
+<p>where <span class="arithmatex">\(D'\)</span> is the number of filters (output channels) chosen by the architect.</p>
+<h4 id="22-filters-kernels">2.2 Filters (Kernels)</h4>
+<p>The layer contains a bank of <span class="arithmatex">\(D'\)</span> learnable filters. Each filter has spatial dimensions <span class="arithmatex">\(K \times K\)</span> and extends through the full depth <span class="arithmatex">\(D\)</span> of the input. Thus the total number of parameters per filter is <span class="arithmatex">\(K \times K \times D\)</span>, and the whole layer has</p>
+<div class="arithmatex">\[
+K \times K \times D \times D'
+\]</div>
+<p>parameters (plus one bias per output channel, if used). The filter is convolved with the input: at each spatial location, the element‑wise product between the filter weights and the corresponding input patch is computed and summed, yielding a single scalar in the output feature map. This operation is a <strong>dot product</strong> between the vectorised filter and the vectorised input patch.</p>
+<h4 id="23-stride-and-padding">2.3 Stride and Padding</h4>
+<p>Two hyperparameters control the spatial dimensions of the output:</p>
+<ul>
+<li><strong>Stride <span class="arithmatex">\(S\)</span></strong> – the step size with which the filter slides over the input. <span class="arithmatex">\(S=1\)</span> means the filter moves one pixel at a time; <span class="arithmatex">\(S&gt;1\)</span> downsamples the feature map.</li>
+<li><strong>Zero padding <span class="arithmatex">\(P\)</span></strong> – the number of zeros added to the border of the input. Padding is used to control the spatial size and to allow the filter to process the edges of the image.</li>
+</ul>
+<p>The output spatial dimensions are given by</p>
+<div class="arithmatex">\[
+W' = \left\lfloor \frac{W - K + 2P}{S} \right\rfloor + 1, \qquad
+H' = \left\lfloor \frac{H - K + 2P}{S} \right\rfloor + 1.
+\]</div>
+<p>For example, a <span class="arithmatex">\(3 \times 3\)</span> filter with stride <span class="arithmatex">\(1\)</span> and padding <span class="arithmatex">\(1\)</span> preserves the spatial size (<span class="arithmatex">\(W' = W\)</span>), a common design choice in modern architectures.</p>
+<h4 id="24-role-in-the-hierarchy">2.4 Role in the Hierarchy</h4>
+<p>Early convolutional layers learn low‑level features such as oriented edges and colour blobs (resembling the receptive fields of simple cells in the primary visual cortex). Deeper layers combine these into mid‑level motifs (corners, textures, object parts) and eventually into high‑level, category‑specific patterns. Because the same filter is applied across all spatial locations, the network becomes <strong>translationally equivariant</strong>: if the input is shifted, the feature map shifts correspondingly.</p>
+<h3 id="3-nonlinear-activation-functions">3. Non‑linear Activation Functions</h3>
+<p>After each convolutional (or fully connected) layer, a non‑linear activation function is applied element‑wise to the output tensor. Without non‑linearities, the entire network would collapse into a single affine transformation, regardless of its depth. The choice of activation has a profound impact on training dynamics.</p>
+<h4 id="31-sigmoid-and-tanh-classical-saturating-nonlinearities">3.1 Sigmoid and Tanh – Classical Saturating Non‑linearities</h4>
+<p>The <strong>sigmoid</strong> function</p>
+<div class="arithmatex">\[
+\sigma(x) = \frac{1}{1 + e^{-x}}
+\]</div>
+<p>squashes each input into the interval <span class="arithmatex">\((0,1)\)</span>. The <strong>hyperbolic tangent</strong></p>
+<div class="arithmatex">\[
+\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+\]</div>
+<p>squashes into <span class="arithmatex">\((-1,1)\)</span>. Both were widely used in early neural networks. However, they suffer from the <strong>vanishing gradient</strong> problem: for large positive or negative inputs, the function saturates (its derivative approaches zero). During back‑propagation, gradients are multiplied by these tiny derivatives, causing the gradient signal to decay exponentially as it flows backward through many layers. This makes deep networks extremely difficult to train with saturating non‑linearities.</p>
+<h4 id="32-relu-rectified-linear-unit">3.2 ReLU – Rectified Linear Unit</h4>
+<p>The <strong>ReLU</strong> activation, defined as</p>
+<div class="arithmatex">\[
+\text{ReLU}(x) = \max(0, x),
+\]</div>
+<p>is the simplest non‑linearity and was a key enabler of deep network training in AlexNet. Its derivative is <span class="arithmatex">\(1\)</span> for positive inputs and <span class="arithmatex">\(0\)</span> for negative inputs. The non‑saturating nature for <span class="arithmatex">\(x&gt;0\)</span> prevents the vanishing gradient, allowing gradients to flow freely through many layers. ReLU is computationally cheap and often serves as a strong baseline. A potential issue is that neurons can “die” if they consistently receive negative inputs, causing their gradient to be zero and never recovering. Variants such as <strong>Leaky ReLU</strong> (<span class="arithmatex">\(\max(0.1x, x)\)</span>) and <strong>ELU</strong> (Exponential Linear Unit) address this by allowing a small, non‑zero slope for negative inputs.</p>
+<h4 id="33-other-activation-functions">3.3 Other Activation Functions</h4>
+<p>The slides also mention <strong>Maxout</strong>, which takes the maximum over a set of linear responses, and more recent activations like <strong>GELU</strong> (Gaussian Error Linear Unit), a smooth approximation used in transformers and modern CNNs (e.g., ConvNeXt). The general trend is toward non‑saturating, smooth functions that facilitate optimisation.</p>
+<h3 id="4-pooling-layer">4. Pooling Layer</h3>
+<p>Pooling layers reduce the spatial dimensions of feature maps, thereby decreasing the number of parameters and computation in the network, and providing a degree of <strong>local translation invariance</strong>. The most common type is <strong>max‑pooling</strong>.</p>
+<h4 id="41-maxpooling-operation">4.1 Max‑Pooling Operation</h4>
+<p>A max‑pooling layer takes an input tensor of size <span class="arithmatex">\(W \times H \times D\)</span> and produces an output of size <span class="arithmatex">\(W' \times H' \times D\)</span> (the depth is unchanged). It operates independently on each channel. A spatial window of size <span class="arithmatex">\(K \times K\)</span> slides over the input with stride <span class="arithmatex">\(S\)</span>, and at each position the maximum value within the window is taken. Padding <span class="arithmatex">\(P\)</span> can be applied similarly to convolution.</p>
+<p>For example, with <span class="arithmatex">\(K=2\)</span>, <span class="arithmatex">\(S=2\)</span>, and <span class="arithmatex">\(P=0\)</span>, the spatial resolution is halved. The output dimensions follow the same formula as for convolution.</p>
+<h4 id="42-properties">4.2 Properties</h4>
+<ul>
+<li><strong>No learnable parameters</strong> – max‑pooling is a fixed, non‑linear operation.</li>
+<li><strong>Dimensionality reduction</strong> – by downsampling, it reduces the computational load for subsequent layers and enlarges the effective receptive field.</li>
+<li><strong>Local translation invariance</strong> – small shifts in the input may not change the maximum within a pooling window, making the representation robust to minor spatial perturbations.</li>
+</ul>
+<p>In modern architectures, pooling is sometimes replaced by strided convolutions, but the principle of gradual spatial reduction remains essential.</p>
+<h3 id="5-fully-connected-layer">5. Fully Connected Layer</h3>
+<p>After several convolutional and pooling stages, the spatial dimensions of the feature maps are typically small (e.g., <span class="arithmatex">\(6 \times 6\)</span> or <span class="arithmatex">\(7 \times 7\)</span>) while the depth is large (e.g., <span class="arithmatex">\(256\)</span> or <span class="arithmatex">\(512\)</span>). At this point, the 3D tensor is <strong>flattened</strong> into a 1D vector and fed into one or more <strong>fully connected (FC) layers</strong>.</p>
+<p>An FC layer connects every input neuron to every output neuron via a weight matrix <span class="arithmatex">\(\mathbf{W}\)</span> and a bias vector <span class="arithmatex">\(\mathbf{b}\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}.
+\]</div>
+<p>The number of parameters in an FC layer is the product of the input and output dimensions, which can be enormous. For instance, in AlexNet the first FC layer takes a flattened vector of size <span class="arithmatex">\(9216\)</span> (<span class="arithmatex">\(6 \times 6 \times 256\)</span>) and maps it to <span class="arithmatex">\(4096\)</span> units, resulting in over <span class="arithmatex">\(37\)</span> million parameters. This is why modern architectures (e.g., GoogLeNet, ResNet) often avoid large FC layers altogether, using global average pooling instead to produce a compact feature vector.</p>
+<p>The final FC layer produces a vector of raw scores (logits) of length <span class="arithmatex">\(C\)</span>, the number of classes. These logits are then passed through a <strong>softmax</strong> function to obtain a probability distribution:</p>
+<div class="arithmatex">\[
+p_i = \frac{e^{z_i}}{\sum_{j=1}^{C} e^{z_j}},
+\]</div>
+<p>where <span class="arithmatex">\(z_i\)</span> is the logit for class <span class="arithmatex">\(i\)</span>. The network is trained by minimising the <strong>cross‑entropy loss</strong> between the predicted distribution <span class="arithmatex">\(\mathbf{p}\)</span> and the one‑hot encoded ground‑truth label <span class="arithmatex">\(\mathbf{y}\)</span>:</p>
+<div class="arithmatex">\[
+L = -\sum_{i=1}^{C} y_i \log p_i.
+\]</div>
+<h3 id="6-putting-it-all-together-the-alexnet-example">6. Putting It All Together: The AlexNet Example</h3>
+<p>AlexNet, the architecture that won the ILSVRC 2012 challenge by a large margin, is a canonical illustration of these building blocks. It consists of:</p>
+<ul>
+<li><strong>5 convolutional layers</strong>, each followed by a ReLU non‑linearity. The first, second, and fifth convolutional layers are followed by max‑pooling layers that reduce spatial resolution.</li>
+<li><strong>3 fully connected layers</strong>: two with 4096 units each (with ReLU and dropout), and a final softmax layer with 1000 outputs for the ImageNet classes.</li>
+<li><strong>60 million parameters</strong> in total, trained on 1.2 million labelled images.</li>
+</ul>
+<p>Key design choices that enabled its success include:</p>
+<ul>
+<li><strong>ReLU</strong> instead of sigmoid/tanh to mitigate vanishing gradients.</li>
+<li><strong>Dropout</strong> – randomly omitting 50% of hidden units during training to prevent over‑fitting, effectively averaging many subnetworks.</li>
+<li><strong>Data augmentation</strong> – artificially enlarging the training set by random crops and horizontal flips.</li>
+<li><strong>GPU implementation</strong> – exploiting the massive parallelism of convolutional operations.</li>
+</ul>
+<h3 id="7-why-deep-networks-work-now">7. Why Deep Networks Work Now</h3>
+<p>The slide material highlights several reasons why deep CNNs became feasible and dominant after decades of scepticism:</p>
+<ul>
+<li><strong>Large labelled datasets</strong> (e.g., ImageNet with 1.2M images) provide enough supervision to train millions of parameters without severe over‑fitting.</li>
+<li><strong>Weight sharing</strong> in convolutional layers drastically reduces the parameter count compared to fully connected networks, making deep architectures practical.</li>
+<li><strong>Non‑saturating activations (ReLU)</strong> and <strong>batch normalisation</strong> (later developments) stabilise gradient flow, allowing networks with tens or hundreds of layers to be trained.</li>
+<li><strong>Powerful parallel hardware (GPUs)</strong> delivers the computational throughput needed for both training and inference.</li>
+</ul>
+<h3 id="8-summary">8. Summary</h3>
+<p>A deep neural network for image classification is composed of a hierarchy of layers:</p>
+<ul>
+<li><strong>Convolutional layers</strong> extract local features through learnable filters, exploiting spatial structure and weight sharing.</li>
+<li><strong>Non‑linear activation functions</strong> (most commonly ReLU and its variants) introduce the non‑linearity necessary for learning complex mappings, while avoiding the vanishing gradient problem that plagued earlier saturating functions.</li>
+<li><strong>Pooling layers</strong> (typically max‑pooling) progressively reduce spatial resolution, increasing the receptive field and providing local translation invariance.</li>
+<li><strong>Fully connected layers</strong> aggregate the spatially distributed features into a global representation and produce the final class scores, with a softmax output and cross‑entropy loss driving supervised training.</li>
+</ul>
+<p>This modular, differentiable architecture, combined with large datasets and GPU acceleration, forms the foundation of modern image classification and has been extended to countless other vision tasks.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>ReLU solves the vanishing gradient problem for positive activations, but neurons can "die" permanently during training. Under what conditions does this happen, and why does Leaky ReLU prevent it?</li>
+<li>A convolutional layer and a fully connected layer can both learn linear mappings followed by a non-linearity — how does weight sharing in convolution change what the layer can and cannot represent compared to a fully connected layer?</li>
+<li>If you replace all max-pooling layers in a CNN with strided convolutions (same stride and kernel size), what do you gain and what do you lose relative to the original design?</li>
+<li>Global average pooling collapses each channel's spatial map to a single value before the final classifier, replacing large FC layers. When might this design choice hurt classification accuracy compared to using FC layers?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>A ReLU neuron dies when it receives a consistently large negative input, so its output is always zero and its gradient is always zero — the weight update is therefore zero and the neuron never recovers. Leaky ReLU prevents this by using <span class="arithmatex">\(\max(0.1x, x)\)</span> instead of <span class="arithmatex">\(\max(0, x)\)</span>, giving a small but non-zero gradient for negative inputs so that the weight can still be updated and the neuron can recover.</p>
+</li>
+<li>
+<p>Weight sharing means every spatial position uses the same filter, so a convolutional layer can only detect features that are the same regardless of where they appear in the image — it is translationally equivariant but cannot learn position-specific patterns. A fully connected layer has independent weights for every input-output pair, so it can represent arbitrary position-dependent mappings but loses the parameter efficiency and translational structure that make convolutions effective for images.</p>
+</li>
+<li>
+<p>Replacing max-pooling with strided convolutions adds learnable parameters (the kernel weights), allowing the network to learn a data-driven downsampling rather than a fixed maximum operation; this can improve representational power and performance. However, you lose the guaranteed local translation invariance that max-pooling provides, since a learned strided convolution is not constrained to pick the locally dominant activation, and you add parameters and computation that may increase overfitting risk on small datasets.</p>
+</li>
+<li>
+<p>Global average pooling discards all spatial layout information within each channel map, so if the classification task depends on fine-grained spatial relationships or the precise configuration of parts (e.g., distinguishing faces with different expressions, or fine-grained species recognition), collapsing to a single scalar per channel can lose discriminative information that FC layers — operating on the full flattened feature map — could exploit. It can also hurt when the network's final feature maps are too coarse or semantically entangled for a simple channel-wise average to form a clean linear boundary between classes.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

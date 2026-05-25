@@ -1,0 +1,2971 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://basta.github.io/efd-notes-page/mpv/q35-dct---discriminative-kernel-correlation-tracking/">
+      
+      
+        <link rel="prev" href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/">
+      
+      
+        <link rel="next" href="../q36-dct-tracking-in-the-presence-of/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Q35. DCT - discriminative (kernel) correlation tracking - Course Study Guides</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#discriminative-kernel-correlation-tracking-dct-kcf" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Course Study Guides" class="md-header__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Course Study Guides
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q35. DCT - discriminative (kernel) correlation tracking
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Course Study Guides" class="md-nav__button md-logo" aria-label="Course Study Guides" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Course Study Guides
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/basta/efd-notes-page" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EFD Generated Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MPV Guide
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MPV Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Features (Lectures 1-2)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Local Features (Lectures 1-2)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q01-wide-baseline-matching-describe-the-steps-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q1. Wide-baseline matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q02-harris-interest-points---definition-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q2. Harris interest points - definition, algorithm…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q03-describe-the-algorithm-for-the-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q3. Describe the algorithm for the selection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q04-describe-steps-to-generalize-harrishessian-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q4. Describe steps to generalize Harris/Hessian detector…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q05-describe-ways-of-local-feature-orientation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q5. Describe ways of local feature orientation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q06-hessian-and-difference-of-gaussian-interest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q6. Hessian and Difference of Gaussian interest…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q07-define-maximally-stable-extremal-regions-mser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q7. Define Maximally Stable Extremal Regions (MSER)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q08-the-fast-interest-point-detector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q8. The FAST interest point detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q09-the-sift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q9. The SIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q10-rootsift-descriptor-describe-the-algorithm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q10. RootSIFT descriptor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q11-describe-local-binary-patterns-like-descriptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q11. Describe "Local Binary Patterns" like descriptors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q12-how-are-local-descriptors-matched-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q12. How are local descriptors matched? What…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q13-learning-local-feature-detectors-describe-the/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q13. Learning local feature detectors – describe…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RANSAC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RANSAC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q27-describe-the-ransac-algorithm-its-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q27. Describe the RANSAC algorithm, its properties,…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q37-describe-the-hough-transformation-algorithm-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q37. Describe the Hough transformation algorithm for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q39-compare-the-hough-transformation-with-ransac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q39. Compare the Hough transformation with RANSAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Retrieval
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image Retrieval
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q14-how-is-map-computed-discuss-relation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q14. How is mAP computed? Discuss relation…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q15-how-is-the-bag-of-words-representation-histogram/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q15. How is the Bag-of-Words representation (histogram)…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q16-what-is-an-inverted-file-structure-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q16. What is an inverted-file structure and…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q17-how-is-the-vlad-descriptor-computed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q17. How is the VLAD descriptor computed…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q18-how-does-the-smk-approach-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q18. How does the SMK approach work…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q19-how-is-spatial-verification-used-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q19. How is spatial verification used to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q20-how-can-retrieval-and-ransac-be/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q20. How can retrieval and RANSAC be…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q40-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q40. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q41-deep-neural-nets-for-image-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q41. Deep Neural Nets for image classification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q42-deep-neural-nets-how-do-you/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q42. Deep Neural Nets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q44-deep-neural-nets---applications-in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q44. Deep Neural Nets - applications in…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning Part 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning Part 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q43-deep-neural-nets-for-detection-proposal-based/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q43. Deep Neural Nets for detection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Metric Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Metric Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q21-for-a-retrieval-task-what-are/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q21. For a retrieval task, what are…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q22-how-does-netvlad-work-and-what/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q22. How does NetVLAD work and what…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q23-how-are-global-image-descriptors-obtained/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q23. How are global image descriptors obtained…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q24-how-do-the-contrastive-and-triplet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q24. How do the contrastive and triplet…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q25-how-can-you-make-recallk-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q25. How can you make recall@k to…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Supervised Learning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Self-Supervised Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q26-describe-the-simclr-approach-for-self-supervised/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q26. Describe the SIMCLR approach for self-supervised…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KLT Tracking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KLT Tracking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q31-for-a-static-scene-and-viewing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q31. For a static scene and viewing…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q32-which-image-patches-are-suitable-for/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q32. Which image patches are suitable for…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    KCF Tracking (Kernel Correlation Filter / DCT)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q33-mean-shift-algorithm-describe-the-principles-and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q33. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q34-mean-shift-algorithm-color-pixels-rgb-represented/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q34. Mean-shift algorithm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q35. DCT - discriminative (kernel) correlation tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#discriminative-kernel-correlation-tracking-dct-kcf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discriminative (Kernel) Correlation Tracking (DCT / KCF)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Discriminative (Kernel) Correlation Tracking (DCT / KCF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-from-correlation-to-discriminative-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. From Correlation to Discriminative Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-learning-algorithm-ridge-regression-with-circulant-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Learning Algorithm: Ridge Regression with Circulant Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The Learning Algorithm: Ridge Regression with Circulant Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-circulant-matrices-as-a-training-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Circulant Matrices as a Training Set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-ridge-regression-and-the-mosse-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Ridge Regression and the MOSSE Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-kernelised-correlation-filters-kcf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Kernelised Correlation Filters (KCF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-object-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Object Representation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-the-search-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. The Search Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. The Search Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-translation-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Translation Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-scale-adaptation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Scale Adaptation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-model-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Model Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q36-dct-tracking-in-the-presence-of/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q36. DCT tracking in the presence of…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracking-Learning-Detection (TLD)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q28-describe-the-steps-for-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q28. Describe the steps for object detection…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q29-describe-how-to-use-an-integral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q29. Describe how to use an integral…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q30-why-is-the-adaboost-algorithm-often/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q30. Why is the Adaboost algorithm often…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_12" id="__nav_3_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond 2026 Syllabus
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond 2026 Syllabus
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../q38-compare-the-hough-transformation-with-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q38. Compare the Hough transformation with a…
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#discriminative-kernel-correlation-tracking-dct-kcf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discriminative (Kernel) Correlation Tracking (DCT / KCF)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Discriminative (Kernel) Correlation Tracking (DCT / KCF)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-from-correlation-to-discriminative-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. From Correlation to Discriminative Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-learning-algorithm-ridge-regression-with-circulant-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Learning Algorithm: Ridge Regression with Circulant Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. The Learning Algorithm: Ridge Regression with Circulant Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-circulant-matrices-as-a-training-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Circulant Matrices as a Training Set
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-ridge-regression-and-the-mosse-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Ridge Regression and the MOSSE Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-kernelised-correlation-filters-kcf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Kernelised Correlation Filters (KCF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-object-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Object Representation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-the-search-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. The Search Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. The Search Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-translation-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Translation Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-scale-adaptation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Scale Adaptation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-model-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Model Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Q35. DCT - discriminative (kernel) correlation tracking</h1>
+
+<h2 id="discriminative-kernel-correlation-tracking-dct-kcf">Discriminative (Kernel) Correlation Tracking (DCT / KCF)</h2>
+<p>Discriminative Correlation Filter (DCF) trackers – and their kernelised extension, the Kernelised Correlation Filter (KCF) – represent a family of algorithms that reformulate visual object tracking as a <strong>discriminative learning problem</strong> solved entirely in the Fourier domain. Unlike generative methods such as the mean‑shift tracker, which build an appearance model of the target alone, DCF trackers learn a classifier that separates the target from its immediate background. The breakthrough insight is that evaluating a linear classifier on every possible sub‑window of an image is equivalent to a <strong>cross‑correlation</strong>, which can be computed with blazing speed via the Fast Fourier Transform (FFT). By further showing that all cyclic shifts of a base patch form a natural training set with a special <em>circulant</em> structure, the learning itself reduces to element‑wise operations in the Fourier domain. This section describes the algorithm, the way the object is represented, and the search strategy that together enable DCF/KCF trackers to run at hundreds of frames per second while achieving state‑of‑the‑art accuracy.</p>
+<h3 id="1-from-correlation-to-discriminative-tracking">1. From Correlation to Discriminative Tracking</h3>
+<p>Consider a linear classifier parameterised by a weight vector <span class="arithmatex">\(\mathbf{w}\)</span> (the <em>correlation filter</em>). Given an image patch <span class="arithmatex">\(\mathbf{z}\)</span>, the classifier’s confidence score is the dot product <span class="arithmatex">\(\mathbf{w}^\top \mathbf{z}\)</span>. To locate the target in a new frame, we need to evaluate this classifier on every possible sub‑window of a larger search region. If we treat the search region as a 2D signal and the classifier as a template, sliding the template over the signal and computing the dot product at each position is exactly the <strong>cross‑correlation</strong> operation:</p>
+<div class="arithmatex">\[
+\text{response map} = \mathbf{w} \star \mathbf{z}.
+\]</div>
+<p>By the Convolution Theorem, cross‑correlation in the spatial domain becomes an element‑wise product in the Fourier domain:</p>
+<div class="arithmatex">\[
+\mathcal{F}\{\mathbf{w} \star \mathbf{z}\} = \hat{\mathbf{w}}^* \odot \hat{\mathbf{z}},
+\]</div>
+<p>where <span class="arithmatex">\(\hat{\mathbf{w}} = \mathcal{F}(\mathbf{w})\)</span>, <span class="arithmatex">\(\hat{\mathbf{z}} = \mathcal{F}(\mathbf{z})\)</span>, <span class="arithmatex">\(*\)</span> denotes complex conjugation, and <span class="arithmatex">\(\odot\)</span> is the element‑wise product. The response map is recovered by the inverse FFT. This reduces the cost of an exhaustive sliding‑window search from <span class="arithmatex">\(\mathcal{O}(n^4)\)</span> to <span class="arithmatex">\(\mathcal{O}(n^2 \log n)\)</span>, making dense evaluation practical.</p>
+<p>The remaining challenge is <strong>learning</strong> the filter <span class="arithmatex">\(\mathbf{w}\)</span> from a single training image. The DCF framework solves this by constructing a rich training set from a single base patch and by employing ridge regression, which admits a closed‑form solution that again diagonalises in the Fourier domain.</p>
+<h3 id="2-the-learning-algorithm-ridge-regression-with-circulant-data">2. The Learning Algorithm: Ridge Regression with Circulant Data</h3>
+<p>Let <span class="arithmatex">\(\mathbf{x}\)</span> be a base image patch (the target) and let <span class="arithmatex">\(\mathbf{y}\)</span> be a desired response map – typically a 2D Gaussian centred at the target location, so that the classifier produces a smooth peak at the true position and low values elsewhere. We wish to learn a filter <span class="arithmatex">\(\mathbf{w}\)</span> that minimises the squared error over all training samples while remaining smooth.</p>
+<h4 id="21-circulant-matrices-as-a-training-set">2.1 Circulant Matrices as a Training Set</h4>
+<p>Instead of manually cropping positive and negative examples, the DCF framework uses <strong>all cyclic shifts</strong> of the base patch <span class="arithmatex">\(\mathbf{x}\)</span> as training samples. If <span class="arithmatex">\(\mathbf{x}\)</span> is an <span class="arithmatex">\(n \times n\)</span> image, its cyclic shifts are generated by the permutation matrix</p>
+<div class="arithmatex">\[
+P = \begin{bmatrix}
+0 &amp; 0 &amp; \cdots &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; \cdots &amp; 0 &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; 1 &amp; 0
+\end{bmatrix},
+\]</div>
+<p>so that <span class="arithmatex">\(P^i \mathbf{x}\)</span> shifts <span class="arithmatex">\(\mathbf{x}\)</span> by <span class="arithmatex">\(i\)</span> elements vertically or horizontally. The data matrix containing all cyclic shifts is a <strong>circulant matrix</strong> <span class="arithmatex">\(X = C(\mathbf{x})\)</span>. Circulant matrices have the remarkable property that they are diagonalised by the Discrete Fourier Transform (DFT):</p>
+<div class="arithmatex">\[
+X = F \,\operatorname{diag}(\hat{\mathbf{x}})\, F^H,
+\]</div>
+<p>where <span class="arithmatex">\(F\)</span> is the unitary DFT matrix and <span class="arithmatex">\(\hat{\mathbf{x}} = \mathcal{F}(\mathbf{x})\)</span>.</p>
+<h4 id="22-ridge-regression-and-the-mosse-solution">2.2 Ridge Regression and the MOSSE Solution</h4>
+<p>The learning objective is <strong>ridge regression</strong> (least‑squares with <span class="arithmatex">\(L_2\)</span> regularisation):</p>
+<div class="arithmatex">\[
+\min_{\mathbf{w}} \| X \mathbf{w} - \mathbf{y} \|^2 + \lambda \|\mathbf{w}\|^2,
+\]</div>
+<p>where <span class="arithmatex">\(\lambda\)</span> controls the trade‑off between data fit and smoothness, preventing overfitting. The closed‑form solution is</p>
+<div class="arithmatex">\[
+\mathbf{w} = (X^H X + \lambda I)^{-1} X^H \mathbf{y}.
+\]</div>
+<p>Substituting the diagonalisation <span class="arithmatex">\(X = F \operatorname{diag}(\hat{\mathbf{x}}) F^H\)</span> and using the unitarity of <span class="arithmatex">\(F\)</span> yields, after algebraic manipulation, the <strong>MOSSE</strong> (Minimum Output Sum of Squared Errors) solution:</p>
+<div class="arithmatex">\[
+\hat{\mathbf{w}} = \frac{\hat{\mathbf{x}}^* \odot \hat{\mathbf{y}}}{\hat{\mathbf{x}}^* \odot \hat{\mathbf{x}} + \lambda}.
+\]</div>
+<p>All operations are element‑wise; the filter is obtained by an inverse FFT. This is the core learning step of a DCF tracker. It requires only a few FFTs and no expensive matrix inversions, making it extremely fast.</p>
+<h4 id="23-kernelised-correlation-filters-kcf">2.3 Kernelised Correlation Filters (KCF)</h4>
+<p>To capture non‑linear relationships, the same circulant structure can be exploited in <strong>kernel ridge regression</strong>. The classifier is expressed in dual form as a linear combination of kernel evaluations:</p>
+<div class="arithmatex">\[
+f(\mathbf{z}) = \sum_{i} \alpha_i \, \kappa(\mathbf{z}, \mathbf{x}_i),
+\]</div>
+<p>where <span class="arithmatex">\(\boldsymbol{\alpha}\)</span> are the dual coefficients and <span class="arithmatex">\(\kappa\)</span> is a kernel function. If the kernel is <em>translation invariant</em> (e.g., Gaussian, polynomial), the kernel matrix <span class="arithmatex">\(K\)</span> built from circulant data is itself circulant. The dual coefficients then admit a Fourier‑domain solution:</p>
+<div class="arithmatex">\[
+\hat{\boldsymbol{\alpha}} = \frac{\hat{\mathbf{y}}}{\hat{\mathbf{k}}^{\mathbf{x}\mathbf{x}} + \lambda},
+\]</div>
+<p>where <span class="arithmatex">\(\mathbf{k}^{\mathbf{x}\mathbf{x}}\)</span> is the <strong>kernel auto‑correlation</strong> of the base patch <span class="arithmatex">\(\mathbf{x}\)</span>. For a Gaussian kernel, this auto‑correlation can be computed entirely in the Fourier domain using only element‑wise operations and a few FFTs (see the slide’s <code>kernel_correlation</code> function). The resulting tracker is the <strong>Kernelised Correlation Filter (KCF)</strong>.</p>
+<h3 id="3-object-representation">3. Object Representation</h3>
+<p>The object is represented by a <strong>feature map</strong> extracted from the image patch, not by raw pixel intensities alone. The choice of features dramatically affects tracking robustness.</p>
+<ul>
+<li><strong>MOSSE</strong> originally used raw grayscale pixel values (a single‑channel feature). This is simple but sensitive to illumination changes.</li>
+<li><strong>CSK</strong> (Circulant Structure of tracking with Kernels) extended MOSSE by applying a Gaussian kernel to raw pixels, improving discrimination while keeping the same circulant machinery.</li>
+<li><strong>KCF</strong> employs <strong>Histogram of Oriented Gradients (HOG)</strong> features, typically 31 or 32 channels computed on a dense grid of cells. HOG captures local shape and edge orientation, providing invariance to photometric variations while remaining fast to compute.</li>
+<li><strong>Further extensions</strong> integrate multiple feature types: colour names, colour histograms, PCA‑reduced HOG, or deep convolutional neural network (CNN) features (e.g., from VGG‑Net). The KCF framework naturally handles multi‑channel features: the kernel correlation simply sums the contributions over all channels in the Fourier domain. For example, the Gaussian kernel correlation between two multi‑channel patches <span class="arithmatex">\(\mathbf{x}\)</span> and <span class="arithmatex">\(\mathbf{z}\)</span> is</li>
+</ul>
+<div class="arithmatex">\[
+k^{\mathbf{x}\mathbf{z}} = \exp\!\left(-\frac{1}{\sigma^2} \Big( \|\mathbf{x}\|^2 + \|\mathbf{z}\|^2 - 2\,\mathcal{F}^{-1}\!\big(\sum\nolimits_c \hat{\mathbf{x}}_c^* \odot \hat{\mathbf{z}}_c\big) \Big) \right),
+\]</div>
+<p>where <span class="arithmatex">\(c\)</span> indexes the feature channels. This allows the tracker to exploit rich, high‑dimensional representations without sacrificing the computational benefits of the Fourier‑domain formulation.</p>
+<h3 id="4-the-search-method">4. The Search Method</h3>
+<p>At each new frame, the tracker must locate the target using the previously learned filter (or dual coefficients) and an updated appearance model.</p>
+<h4 id="41-translation-search">4.1 Translation Search</h4>
+<ol>
+<li><strong>Extract a search window</strong> centred at the target’s previous position. The window is larger than the target to accommodate motion. A cosine (or sine) window is applied to the patch to smoothly taper the edges to zero, which enforces the cyclic assumption of the FFT and emphasises the central region.</li>
+<li><strong>Compute the feature map</strong> <span class="arithmatex">\(\mathbf{z}\)</span> for this search window (same representation as used for training).</li>
+<li><strong>Compute the response map</strong>:</li>
+<li>For a linear DCF: <span class="arithmatex">\(\text{response} = \mathcal{F}^{-1}\big( \hat{\mathbf{w}}^* \odot \hat{\mathbf{z}} \big)\)</span>.</li>
+<li>For KCF: first compute the kernel cross‑correlation <span class="arithmatex">\(\mathbf{k}^{\mathbf{x}\mathbf{z}}\)</span> between the learned target appearance <span class="arithmatex">\(\mathbf{x}\)</span> and the search patch <span class="arithmatex">\(\mathbf{z}\)</span>, then <span class="arithmatex">\(\text{response} = \mathcal{F}^{-1}\big( \hat{\mathbf{k}}^{\mathbf{x}\mathbf{z}} \odot \hat{\boldsymbol{\alpha}} \big)\)</span>.</li>
+<li><strong>Locate the peak</strong>: the pixel with the maximum response value indicates the translation displacement of the target relative to the previous position. The target bounding box is updated accordingly.</li>
+</ol>
+<h4 id="42-scale-adaptation">4.2 Scale Adaptation</h4>
+<p>The basic DCF/KCF formulation estimates only translation. Scale changes are handled by one of two common strategies:</p>
+<ul>
+<li><strong>Multi‑scale search (MOSSE, SAMF):</strong> Several patches are extracted at different scales around the estimated translation, each resized to the fixed filter size. The filter is evaluated on each, and the scale yielding the highest response is selected. This is simple but requires multiple forward passes.</li>
+<li><strong>Separate scale filter (DSST):</strong> A dedicated 1‑dimensional correlation filter is trained on a scale pyramid (a set of image patches cropped at multiple scales, all centred at the target location). The scale filter is evaluated independently to estimate the optimal scale, while the translation filter handles the 2D location. This decoupling is efficient and accurate.</li>
+</ul>
+<h4 id="43-model-update">4.3 Model Update</h4>
+<p>To adapt to appearance changes, the tracker maintains a running estimate of the target appearance <span class="arithmatex">\(\mathbf{x}\)</span> and the filter coefficients. After each frame, the new appearance <span class="arithmatex">\(\mathbf{x}_{\text{new}}\)</span> and the newly computed filter <span class="arithmatex">\(\mathbf{w}_{\text{new}}\)</span> (or <span class="arithmatex">\(\boldsymbol{\alpha}_{\text{new}}\)</span>) are blended with the previous models using a fixed learning rate <span class="arithmatex">\(\eta\)</span> (e.g., <span class="arithmatex">\(\eta = 0.02\)</span>):</p>
+<div class="arithmatex">\[
+\mathbf{x} \leftarrow (1-\eta)\,\mathbf{x} + \eta\,\mathbf{x}_{\text{new}}, \qquad
+\mathbf{w} \leftarrow (1-\eta)\,\mathbf{w} + \eta\,\mathbf{w}_{\text{new}}.
+\]</div>
+<p>This exponential moving average provides temporal smoothing and enables the tracker to gradually adapt to changes in illumination, pose, and background.</p>
+<h3 id="5-summary">5. Summary</h3>
+<ul>
+<li><strong>Algorithm:</strong> DCF/KCF learns a discriminative classifier by solving ridge regression on all cyclic shifts of a base patch. The circulant structure of the data matrix allows the solution to be computed entirely in the Fourier domain with element‑wise operations, yielding the MOSSE filter. The kernelised version (KCF) extends this to non‑linear decision boundaries using the kernel trick while preserving the same computational efficiency.</li>
+<li><strong>Object representation:</strong> The target is represented by a multi‑channel feature map (raw pixels, HOG, colour names, or deep CNN features). The KCF framework naturally handles multiple channels by summing their contributions in the kernel computation.</li>
+<li><strong>Search method:</strong> Detection is performed by computing the cross‑correlation (or kernelised cross‑correlation) between the learned filter and the search window in the Fourier domain. The peak of the resulting response map gives the new target location. Scale is estimated either by a multi‑scale search or by a separate scale filter. The model is updated online with a running average.</li>
+</ul>
+<p>The elegance of DCF/KCF lies in the marriage of a sound machine‑learning formulation (ridge regression) with the computational power of the FFT, yielding trackers that are both highly accurate and exceptionally fast.</p>
+<hr />
+<h3 id="self-test">Self-Test</h3>
+<ol>
+<li>The DCF framework treats all cyclic shifts of a base patch as training samples. Why is this a reasonable approximation for generating positive and negative examples, and under what circumstances might it break down?</li>
+<li>The regularisation term <span class="arithmatex">\(\lambda\)</span> in the ridge regression objective controls the trade-off between data fit and filter smoothness. How would an overly large <span class="arithmatex">\(\lambda\)</span> affect the tracker's response map and its ability to localise the target precisely?</li>
+<li>KCF with HOG features is generally more robust than a linear DCF on raw pixels, but not always superior. Describe a tracking scenario where the additional complexity of HOG and the kernel trick would <em>not</em> help and might even hurt performance.</li>
+<li>The model update rule uses a fixed learning rate <span class="arithmatex">\(\eta\)</span>. How does the choice of <span class="arithmatex">\(\eta\)</span> create a fundamental tension between adapting to gradual appearance change and maintaining a reliable target model under occlusion or drift?</li>
+</ol>
+<h3 id="answer-key">Answer Key</h3>
+<ol>
+<li>
+<p>Cyclic shifts of a base patch naturally produce nearby sub-windows that straddle the target boundary, giving samples that are mostly background (negative) or mostly target (positive) without manual annotation. This approximation breaks down when the target is near the image border (where cyclic wrap-around introduces nonsensical training samples) or when the background immediately surrounding the target is atypical of the broader scene, causing the filter to overfit to a non-representative set of distractors.</p>
+</li>
+<li>
+<p>A very large <span class="arithmatex">\(\lambda\)</span> heavily penalises filter energy, forcing <span class="arithmatex">\(\mathbf{w}\)</span> toward zero and making the learned filter overly smooth and diffuse. In the Fourier solution <span class="arithmatex">\(\hat{\mathbf{w}} = (\hat{\mathbf{x}}^* \odot \hat{\mathbf{y}}) / (\hat{\mathbf{x}}^* \odot \hat{\mathbf{x}} + \lambda)\)</span>, a dominant <span class="arithmatex">\(\lambda\)</span> in the denominator suppresses high-frequency components, producing a broad, flat response map with a shallow peak that makes precise sub-pixel localisation unreliable.</p>
+</li>
+<li>
+<p>HOG and the kernel trick are most beneficial when appearance variation (illumination, viewpoint, deformation) is the dominant challenge. They would offer little advantage — and could hurt — when tracking a nearly uniform or textureless object (e.g., a plain white ball), because HOG responses near zero across all orientations give a degenerate feature map, and the kernel trick then amplifies noise rather than discriminative signal; a simple linear filter on raw pixel intensities may produce a sharper, more stable response in such cases.</p>
+</li>
+<li>
+<p>A high <span class="arithmatex">\(\eta\)</span> lets the model quickly incorporate new appearance, which is useful for gradual changes like illumination or pose drift, but it also means that a frame with an occluded or incorrectly localised target will rapidly corrupt the stored appearance model — a phenomenon known as model drift. Conversely, a very low <span class="arithmatex">\(\eta\)</span> keeps the model stable and resistant to outlier frames, but the tracker may fail to adapt to legitimate appearance changes and eventually lose the target. The fixed exponential moving average <span class="arithmatex">\(\mathbf{w} \leftarrow (1-\eta)\mathbf{w} + \eta\mathbf{w}_{\text{new}}\)</span> cannot distinguish between reliable updates and corrupted ones, so there is no universally optimal <span class="arithmatex">\(\eta\)</span>.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.tracking", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
