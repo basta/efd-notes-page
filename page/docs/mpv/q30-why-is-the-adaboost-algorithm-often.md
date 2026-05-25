@@ -32,6 +32,10 @@ Although not a property of AdaBoost itself, the algorithm is almost always paire
 
 AdaBoost is a natural fit for sliding‑window detection because it simultaneously performs **feature selection**, builds a **cascade of increasingly discriminative stages**, combines **cheap weak classifiers** into a strong one, and **focuses learning on difficult examples**. These properties directly address the core challenge of sliding‑window methods: evaluating a huge number of windows with both high speed and high accuracy. While the TLD detector uses a different ensemble (Random Ferns) and a nearest‑neighbour final stage, it shares the same cascade philosophy that AdaBoost‑based detectors have proven so successful.
 
+The figure illustrates both ideas. Panel (a) shows a toy AdaBoost strong classifier built from three axis-aligned weak stumps: each stump alone is barely better than random, but their weighted vote produces a curved decision surface that separates "object" (red) from "background" (blue) — a small number of cheap features composed into something powerful. Panel (b) explains why the cascade matters numerically: if each stage achieves a high per-stage detection rate ($\approx\!0.995$) and a loose per-stage false-positive rate ($\approx\!0.5$), then after $k$ stages the cumulative detection rate stays high ($0.995^k$) while the cumulative false-positive rate decays geometrically ($0.5^k$) — reaching $10^{-6}$ after about 20 stages, all built from cheap features.
+
+![AdaBoost weak→strong + cumulative cascade rates](../figures/q_0030_adaboost.png)
+
 ---
 
 ### Self-Test

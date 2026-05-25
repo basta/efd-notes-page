@@ -47,6 +47,10 @@ Even if the true motion is constrained (e.g., purely horizontal for a vertical e
 
 Although not as catastrophic as a flat region or a single edge, highly periodic textures (e.g., a checkerboard with a period smaller than the expected displacement) can also cause problems. The SSD cost function may have multiple local minima, and the tracker can converge to an incorrect, aliased displacement. While the structure tensor may be well‑conditioned, the lack of a unique global minimum makes such patches unreliable for tracking without additional constraints.
 
+The figure makes the structure-tensor argument concrete by computing the actual SSD landscape for each kind of patch. The top row shows three test patches (flat / vertical edge / L-corner); the bottom row shows the corresponding SSD cost surface obtained by sliding the patch over a larger version of the same structure. The flat patch produces a nearly constant SSD — no minimum to lock onto. The edge patch produces a long valley along the edge direction (the aperture problem) — minimisation can jump anywhere along the valley. Only the corner produces a single sharp, isolated SSD minimum, which is what KLT's Gauss–Newton iterations need to converge reliably.
+
+![Tracking patch suitability: SSD cost surfaces for flat / edge / corner](../figures/q_0032_patches.png)
+
 ### 3. Summary of Patch Suitability
 
 | Suitable | Not Suitable |

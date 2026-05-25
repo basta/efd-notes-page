@@ -58,6 +58,10 @@ $$
 
 where $\odot$ denotes element‑wise multiplication and $\mathbf{w} = (w_1, \dots, w_K)^\top$.
 
+The figure below visualises the three pieces of the BoW similarity. Panel (a) shows two sparse term-frequency histograms drawn back-to-back (image A above the axis, image B below) for a vocabulary of $K=60$ visual words — most bins are zero, and the two images share both generic words (low indices) and a handful of rare, distinctive ones. Panel (b) plots the idf weights $w_k = \log(M/M_k)$: very small for generic, near-universal words and large for rare ones. Panel (c) shows the per-word contribution $w_k^2\, h_{A,k}\, h_{B,k}$ to the dot-product similarity, coloured by word frequency. Red (generic) words contribute ~0 even when both images contain them, while green (rare) words dominate the score — this is exactly the noise-suppression behaviour that idf provides.
+
+![BoW: sparse histograms, idf weights, idf-weighted similarity](../figures/q_0015_bow.png)
+
 ### 3. Image‑to‑Image Similarity with BoW
 
 Given two images $A$ and $B$ with idf‑weighted BoW vectors $\tilde{\mathbf{h}}_A$ and $\tilde{\mathbf{h}}_B$, the similarity is typically measured by the **dot product** (or, equivalently, the cosine similarity if the vectors are $L_2$‑normalised):

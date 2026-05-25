@@ -130,6 +130,10 @@ $$
 
 This exponential moving average provides temporal smoothing and enables the tracker to gradually adapt to changes in illumination, pose, and background.
 
+The figure walks through one detection step with an actual closed-form MOSSE filter. Panel (a) is the target template $\mathbf{x}$ (a Gaussian blob with an off-centre dark spot). Panel (b) shows the learned filter $\mathbf{w}$ obtained from the Fourier-domain ridge regression formula $\hat{\mathbf{w}} = \hat{\mathbf{x}}^* \odot \hat{\mathbf{y}} / (\hat{\mathbf{x}}^*\odot\hat{\mathbf{x}} + \lambda)$ — the filter has both positive and negative weights and emphasises the discriminative parts of the template. Panel (c) is the search window $\mathbf{z}$ with the target translated by $(\Delta y, \Delta x) = (5, -3)$ plus a bit of noise. Panel (d) is the response map computed in the Fourier domain; its peak (cyan dot) lies exactly at the true shift, recovering the displacement in one FFT-domain multiplication.
+
+![DCF/KCF: template, learned filter, search window, response peak](../figures/q_0035_kcf.png)
+
 ### 5. Summary
 
 - **Algorithm:** DCF/KCF learns a discriminative classifier by solving ridge regression on all cyclic shifts of a base patch. The circulant structure of the data matrix allows the solution to be computed entirely in the Fourier domain with element‑wise operations, yielding the MOSSE filter. The kernelised version (KCF) extends this to non‑linear decision boundaries using the kernel trick while preserving the same computational efficiency.

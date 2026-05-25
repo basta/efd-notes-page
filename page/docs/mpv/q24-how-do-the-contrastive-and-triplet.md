@@ -56,6 +56,10 @@ Because the hardness of a negative depends on the evolving network parameters, h
 
 The slides also illustrate how structure‑from‑motion (SfM) data can be used to select **diverse hard negatives** – one per 3D model – to avoid redundancy and cover different failure modes of the current embedding.
 
+The figure shows all three ideas. Panel (a) plots the contrastive-loss curves for a positive pair (quadratic in distance, always pulling closer) and a negative pair (quadratic only inside the margin $m$, zero beyond it — exactly the "easy negatives produce no gradient" regime). Panel (b) shows the triplet-loss surface as a function of $(D_{ap}, D_{an})$: the loss is zero above the line $D_{an} = D_{ap} + m$ and increases linearly below it. Panel (c) places the anchor at the origin in a 2-D embedding space: the dashed circle is the margin, the positive sits next to it, easy negatives (gray) are outside the margin and contribute zero gradient, and a few hard negatives (red) inside the margin are the *only* source of useful signal for the negative side of the loss — which is why mining them matters.
+
+![Contrastive/triplet losses with margin and hard-negative mining](../figures/q_0024_losses.png)
+
 ### 5. Summary
 
 - **Contrastive loss** pulls positive pairs together and pushes negative pairs apart beyond a margin $m$.

@@ -155,6 +155,10 @@ Key design choices that enabled its success include:
 - **Data augmentation** – artificially enlarging the training set by random crops and horizontal flips.
 - **GPU implementation** – exploiting the massive parallelism of convolutional operations.
 
+The figure summarises the architecture and its non-linearities. Panel (a) is a schematic AlexNet-style pipeline: conv → ReLU → pool stages progressively downsample the spatial resolution while increasing channel depth, then a FC head with dropout produces softmax class scores. Panel (b) plots the common activation functions on the same axes: sigmoid and tanh saturate (causing vanishing gradients for deep stacks), ReLU passes positive inputs unchanged but zeros out negatives (cheap, but can cause "dead" neurons), Leaky ReLU adds a small slope for negatives to keep gradients alive, and GELU is the smooth ReLU-like activation used in transformers and modern CNNs.
+
+![CNN building blocks: pipeline diagram + activation functions](../figures/q_0040_cnn_layers.png)
+
 ### 7. Why Deep Networks Work Now
 
 The slide material highlights several reasons why deep CNNs became feasible and dominant after decades of scepticism:

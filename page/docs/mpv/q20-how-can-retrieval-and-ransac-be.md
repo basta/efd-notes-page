@@ -38,6 +38,10 @@ where $g(r)$ is a monotonically increasing function for $r \ge 1$, e.g., $g(r) =
 
 The result of this first stage is a shortlist of images that are likely to contain a zoomed‑in view of some part of the query. The ranking is no longer purely based on visual word co‑occurrence; it is biased toward images where the matched features exhibit a larger scale than the query features.
 
+The figure illustrates why a scale-aware weight is needed. Panel (a) shows the distribution of per-match scale ratios $r = \text{scale}(A_{db}) / \text{scale}(A_q)$ for three database candidates: a near-duplicate (matches concentrated at $r \approx 1$ with many shared words), a zoom-in (fewer matches but at $r > 1$), and a wide-angle shot ($r < 1$). Panel (b) compares the aggregate score under three different vote weights: standard BoW ($g(r)=1$) — which ranks the near-duplicate first because it has the most matches; $g(r)=r^2$ — which boosts the zoom-in candidate; and the gated $g(r)=r\cdot\mathbb{1}[r>1]$ — which zeroes out wide-angle matches entirely and surfaces the zoom-in candidate as the top result.
+
+![Zoom-in retrieval: scale-aware vote weights reshape the ranking](../figures/q_0020_zoom.png)
+
 #### 2.2 Stage 2: RANSAC‑Based Verification and Re‑Ranking by Scale Change
 
 The top‑ranked candidates from the scale‑aware BoW stage are then subjected to **fast spatial matching** (the deterministic RANSAC variant described in the Spatial Verification section). Recall that from a single tentative correspondence $(A, x, y) \leftrightarrow (A', x', y')$, we can directly hypothesise a similarity or affine transformation

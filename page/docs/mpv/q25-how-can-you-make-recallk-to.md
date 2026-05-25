@@ -46,6 +46,10 @@ $$
 
 where $\tau'$ is another temperature parameter (often set equal to $\tau$). This function approaches 1 when $\widehat{\text{rank}}(i) \ll k$ and 0 when $\widehat{\text{rank}}(i) \gg k$, with a smooth transition around $k$.
 
+The figure shows the construction and its trade-offs. Panel (a) plots the hard step function $\mathbf{1}[x>0]$ together with three sigmoid approximations: small $\tau$ (red) tracks the step tightly but has near-zero gradient almost everywhere; large $\tau$ (blue) is smooth and differentiable but a much looser approximation. Panel (b) shows the smooth rank in action: a histogram of negative similarities with one positive marked in red, and the smooth-rank estimate for several $\tau$ — small $\tau$ recovers the true integer rank, large $\tau$ underestimates it. Panel (c) sketches the training dynamics: true recall@k climbs over epochs while a small-$\tau$ surrogate tracks it tightly but trains slowly, and a large-$\tau$ surrogate overestimates recall but provides stronger gradients — the practical reason for annealing $\tau$ from large to small during training.
+
+![Recall@k surrogate via sigmoid smoothing](../figures/q_0025_recall_surrogate.png)
+
 ### 4. Recall@k Surrogate and Loss
 
 The **differentiable recall@k surrogate** for a single query is then

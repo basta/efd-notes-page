@@ -32,6 +32,10 @@ $$
 
 where $\alpha > 0$ is a temperature parameter that controls the softness of the assignment (as $\alpha \to \infty$, the assignment becomes hard). The weights are non‑negative and sum to one for each descriptor.
 
+The figure visualises the difference and the role of $\alpha$ on a 1‑D toy with three centroids. Panel (a) overlays VLAD's hard assignment (dashed step functions taking value 1 in the Voronoi cell of each centroid) with NetVLAD's soft assignment at $\alpha = 1.5$: every descriptor contributes to every centroid with a softmax weight that decays smoothly with distance. Panel (b) sweeps $\alpha$ for the weight onto the middle centroid: small $\alpha$ gives broad, gentle assignment (rich but blurry); large $\alpha$ (≥ 50) recovers nearly hard assignment — but at that point the softmax gradient is sharply peaked, so non-nearest centroids receive almost no gradient and the network loses the very signal that makes end-to-end training work.
+
+![NetVLAD: soft vs hard assignment and the role of $\alpha$](../figures/q_0022_netvlad.png)
+
 #### 2.2 Aggregation
 
 The per‑word residual sum is now computed as a **weighted sum** over all local descriptors:

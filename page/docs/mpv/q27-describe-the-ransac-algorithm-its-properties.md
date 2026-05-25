@@ -47,6 +47,10 @@ $$
 
 Every time a better model is found, $\varepsilon$ is updated and $k$ is recomputed. This adaptive scheme ensures that the algorithm runs just long enough to satisfy the confidence requirement without needing to know the true inlier ratio in advance.
 
+The figure brings these three pieces together on a 2-D line-fitting example. Panel (a) shows the raw data: ~43% of points are inliers lying near a true line, the rest are outliers scattered uniformly. Panel (b) shows the best hypothesis returned by RANSAC after 500 random 2-point samples: the green band has width $\pm\sigma$, and only the points falling inside it count as inliers — least-squares fit to those inliers would now give an accurate final line. Panel (c) plots the required iterations $k$ for confidence $\eta = 0.99$ as a function of the inlier ratio $\varepsilon$ for several minimal sample sizes $m$; the explosion as $\varepsilon \to 0$ or $m$ grows is exactly why RANSAC is fast for low-dimensional models (line: $m=2$) but can be slow for the fundamental matrix ($m=7$).
+
+![RANSAC: line fitting and iteration count vs inlier ratio](../figures/q_0027_ransac.png)
+
 ### 4. Properties and Probabilistic Guarantee
 
 - **Robustness to outliers** – RANSAC can handle arbitrarily high outlier fractions, as long as the inlier ratio $\varepsilon$ is not zero. The required number of iterations grows polynomially with $1/\varepsilon$, so the method remains practical even when inliers are a minority (e.g., 10–20%).

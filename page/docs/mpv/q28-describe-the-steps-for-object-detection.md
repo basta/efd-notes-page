@@ -47,6 +47,10 @@ The final stage is a **nearest‑neighbour classifier** that compares the candid
 
 The NN classifier is computationally expensive because it involves comparing the candidate against many stored exemplars. However, because the cascade has already eliminated the vast majority of windows, only around 50 patches per frame reach this stage, keeping the total cost manageable.
 
+The figure makes the cascade economics concrete. Panel (a) is a funnel diagram: roughly $10^6$ candidate windows enter the variance filter (very cheap, integral-image lookups), which keeps ~50%; the Random-Ferns ensemble cuts those down to ~50 survivors with fast pixel comparisons; the NN classifier finally processes only those last ~5 candidates with expensive NCC. Panel (b) shows why the design works: surviving window counts drop ~5 orders of magnitude across stages, and the per-stage *total cost* (windows × per-window cost) stays bounded — the expensive NCC step never sees more than a few dozen patches per frame, which is what makes real-time scanning possible.
+
+![Sliding-window detection: coarse-to-fine cascade rejection](../figures/q_0028_cascade.png)
+
 ### 4. How Reasonable Speed Is Achieved
 
 The speed of the TLD detector is the result of several design choices that work together:

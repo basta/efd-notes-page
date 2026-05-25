@@ -117,6 +117,10 @@ where $\hat{\sigma}$ is the optimal assignment, $\hat{p}$ are predicted class pr
 
 DETR is conceptually elegant and achieves competitive performance, especially on large objects, but requires long training schedules. Its self‑attention maps also naturally reveal instance segmentation cues, leading to extensions like MaskFormer and Mask2Former.
 
+The figure compares the two paradigms side-by-side and shows the two pieces of detection machinery they share. Panel (a) is a schematic of a two-stage detector (Faster R-CNN): a CNN backbone produces a shared feature map; the Region Proposal Network outputs objectness + anchor refinement; RoI-pooled features feed two sibling heads producing $(C+1)$-class softmax and per-class box regression. Panel (b) is a single-stage detector (YOLO): one CNN forward pass produces an $S \times S \times (B\cdot 5 + C)$ dense output tensor that is directly decoded into per-cell classes and boxes. Panel (c) illustrates Intersection-over-Union, the metric used to decide which predictions count as true positives. Panel (d) plots the Focal Loss for several focusing parameters $\gamma$: setting $\gamma > 0$ multiplies cross-entropy by $(1-p_t)^\gamma$, pushing the loss for easy (high-$p_t$) examples toward zero so that hard examples dominate the gradient — RetinaNet's answer to the foreground/background imbalance of dense single-stage detection.
+
+![Object detection: two-stage vs single-stage, IoU, focal loss](../figures/q_0043_detection.png)
+
 ### 4. Summary: Class Label and Bounding Box Prediction Across Paradigms
 
 The table below summarises how the main detection architectures handle the two core outputs.

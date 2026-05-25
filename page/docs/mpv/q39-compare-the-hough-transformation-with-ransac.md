@@ -58,6 +58,10 @@ Both methods are designed to be robust to outliers, but their failure modes diff
 
 **RANSAC** is extremely general. Any model for which one can (a) estimate parameters from a minimal set of data points and (b) compute a distance from a point to the model can be plugged into the RANSAC framework. This includes homographies, fundamental matrices, camera pose, 3D plane fitting, and many others. The algorithm makes no assumptions about the distribution of outliers, only that the inlier ratio $\varepsilon$ is known or can be estimated, and that the noise threshold $\sigma$ can be specified.
 
+The figure makes the cost and capability trade-offs visual. Panel (a) plots RANSAC's required iterations $k$ against the inlier ratio $\varepsilon$ for several minimal-sample sizes $m$ (line: $m=2$; affine: $m=3$; homography: $m=4$; fundamental matrix: $m=7,8$), with the Hough transform's cost shown as a flat dashed line. Hough's cost is essentially independent of $\varepsilon$ — the curves cross, showing why Hough is preferable at low inlier ratios and small $m$, while RANSAC dominates at moderate $\varepsilon$ and high $m$. Panel (b) is a feature matrix summarising when each method shines: Hough wins on low-dim parameters, very low inlier ratios, and multiple instances; RANSAC wins on high-dim continuous parameters and single dominant structures.
+
+![Hough vs RANSAC: cost scaling and applicability matrix](../figures/q_0039_hough_vs_ransac.png)
+
 ### 8. Summary Table
 
 | Aspect | Hough Transform | RANSAC |

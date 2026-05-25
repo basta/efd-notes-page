@@ -11,6 +11,10 @@ Let $f_\theta : \mathcal{I} \to \mathbb{R}^d$ be a function parameterised by a d
 
 The mapping $f_\theta$ is typically a fully convolutional network (FCN) followed by a pooling layer that collapses the spatial dimensions into a single vector, or a Vision Transformer (ViT) whose class token or pooled patch tokens serve as the global descriptor. Crucially, the whole pipeline – from pixels to the final descriptor – is differentiable, enabling **end‑to‑end metric learning**.
 
+The figure makes the geometric idea concrete. Panel (a) sketches a poorly-trained embedding where four classes (different colours) overlap heavily on the unit circle: nearest-neighbour search within the dashed cosine-similarity ball around the black star (query) would return many wrong-class items. Panel (b) shows a well-trained embedding from metric learning: the same four classes form tight, well-separated clusters, so the same NN search now returns only same-class items. The retrieval procedure is identical in both cases — what changed is the geometry of the learned space, which is exactly what end-to-end training optimises.
+
+![Vector-space embedding: well- vs poorly-trained descriptor space](../figures/q_0021_embedding.png)
+
 ### 2. Benefits of the Vector‑Space Approach
 
 Compared to the local‑feature + inverted‑file paradigm (BoW, VLAD, SMK), mapping images to a global descriptor vector offers several practical and performance advantages.
