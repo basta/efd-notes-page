@@ -2,31 +2,51 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [master, main]
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v2
-
-      - name: "Set up Python"
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version-file: ".python-version"
+          python-version: "3.12"
 
-      - name: Install dependencies
-        run: uv sync --all-extras --dev
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-mkdocs-${{ hashFiles('.github/workflows/deploy.yml') }}
 
-      - name: Build and Deploy
-        run: |
-          cd page
-          uv run mkdocs gh-deploy --force
+      - name: Install MkDocs
+        run: pip install mkdocs mkdocs-material
+
+      - name: Build site
+        working-directory: page
+        run: mkdocs build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: page/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
