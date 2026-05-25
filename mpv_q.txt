@@ -1,0 +1,44 @@
+Wide-baseline matching. Describe the steps for obtaining correspondences between a pair of images, which are taken from different viewpoints.
+Harris interest points - definition, algorithm for detection, parameters. Explain the motivation behind the definition. Describe the effects of the parameters on the number of detected points. To which transformation (geometric/photometric) is this detector invariant?
+Describe the algorithm for the selection of interest point (region) scale using the Laplacian.
+Describe steps to generalize Harris/Hessian detector to become affine invariant.
+Describe ways of local feature orientation estimation
+Hessian and Difference of Gaussian interest points. Definition, properties.
+Define Maximally Stable Extremal Regions (MSER). Describe the algorithm for their detection. Properties of extremal regions end the maximally stable subset.
+The FAST interest point detector
+The SIFT descriptor. Describe the algorithm and its properties.
+RootSIFT descriptor. Describe the algorithm.
+Describe "Local Binary Patterns" like descriptors.
+How are local descriptors matched? What are the ways of filtering out unreliable correspondences?
+Learning local feature detectors – describe the possible loss functions (R2D2, SuperPoint) and training data sources.
+How is mAP computed? Discuss relation to precision@k, recall@k for particular k.
+How is the Bag-of-Words representation (histogram) constructed? What is the idf weighting, how is it estimated, and what problem is it handling? How is image-to-image similarity estimated with the BoW representation? How is the codebook size affecting the sparsity of the BoW histogram and what are other factors affecting its sparsity?
+What is an inverted-file structure and how is it used to perform retrieval with BoW? In which cases is it better to use an inverted file instead of directly storing the original BoW vectors? What are the factors affecting the memory requirements for performing retrieval on a dataset of images with BoW and an inverted-file? What are the factors affecting the memory requirements for performing retrieval on a dataset of images with BoW when an inverted-file is not used?
+How is the VLAD descriptor computed and how does it differ from BoW?
+How does the SMK approach work and how does it extend the BoW approach? How does SMK differ from the BoW approach? Discuss advantages, drawbacks, memory, speed, performance.
+How is spatial verification used to improve retrieval performance? How are tentative correspondences obtained with the BoW approach? What is the image-to-image similarity measure with spatial verification and why is this better than the BoW similarity?
+How can retrieval and RANSAC be used to perform zoom-in operation given a query image and a large dataset of images? How does the first retrieval stage (before re-ranking with RANSAC) differ from the standard retrieval with BoW? Why is this modification necessary?
+For a retrieval task, what are the benefits of mapping images to a vector space and how is retrieval performed then?
+How does NetVLAD work and what is the difference with VLAD?
+How are global image descriptors obtained using CNNs and SPoC, MAC, GeM? What is the relation between GeM and the others? Which of these representations are translation invariant and why? Describe one CNN architecture for extracting global descriptors that is not translation invariant? Why isn't it?
+How do the contrastive and triplet loss work? What is the role of the margin? What are hard negatives and why are they so important?
+How can you make recall@k to be differentiable and use it as a loss? Describe the loss in detail.
+Describe the SIMCLR approach for self-supervised learning. What happens if you train it only using positive pairs?
+Describe the RANSAC algorithm, its properties, advantages and disadvantages. Which parameters it has?
+Describe the steps for object detection using "sliding windows" ("scanning windows"). How is the reasonable speed achieved?
+Describe how to use an integral image for computing the sum of the intensity and the intensity variance for a rectangular region.
+Why is the Adaboost algorithm often used for the "sliding window" methods? Give more than one reason.
+For a static scene and viewing by camera with only horizontal movement. Draw an image patch, which will be useful for a tracking using a gradient method (KLT tracker). Which properties should such image patch have to be suitable for tracking?
+Which image patches are suitable for tracking? Why? Which patches are not suitable?
+Mean-shift algorithm. Describe the principles and simulate calculation for 1D example.
+Mean-shift algorithm. Color pixels [R,G,B] represented in 3D space. How can you reduce the color-space into 256 color-space?
+DCT - discriminative (kernel) correlation tracking. The algorithm, representation of the object, the search method.
+DCT tracking in the presence of rotation and scale change.
+Describe the Hough transformation algorithm for detection of parametrized structure (line, circle, …). Discuss the properties of the algorithm (time and memory requirements, parameters).
+Compare the Hough transformation with a brute-force search algorithm.
+Compare the Hough transformation with RANSAC.
+Deep Neural Nets for image classification. Structure - convolutional, pooling and fully connected layers. Non-linearities.
+Deep Neural Nets for image classification. Learning - the cost function, the SGD (stochastic gradient method), drop-out, batch normalization. SGD parameters.
+Deep Neural Nets. How do you select learning rate?
+Deep Neural Nets for detection. Proposal-based and end-to-end methods. Class label and bounding box prediction.
+Deep Neural Nets - applications in computer vision.

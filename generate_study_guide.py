@@ -129,7 +129,7 @@ def main():
         description="Generate a study guide from markdown notes."
     )
     parser.add_argument(
-        "--input", default="page/docs/index.md", help="Input markdown file"
+        "--input", default="page/docs/efd-slides.md", help="Input markdown file"
     )
     parser.add_argument(
         "--output", default="page/docs/study_guide.md", help="Output markdown file"

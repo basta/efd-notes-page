@@ -1,0 +1,74 @@
+{
+  "lectures": [
+    {
+      "file": "MPV2026_local_features_lctures_1_2",
+      "title": "Local Features (Lectures 1-2)",
+      "topics": "Wide-baseline correspondences, Harris corners, Hessian/DoG, scale selection via Laplacian, affine invariance, orientation estimation, MSER, FAST detector, SIFT/RootSIFT descriptors, LBP-like descriptors, descriptor matching, ratio test, learning local feature detectors, R2D2/SuperPoint."
+    },
+    {
+      "file": "2021_ransac",
+      "title": "RANSAC",
+      "topics": "RANSAC algorithm, robust estimation, sample size, number of iterations, inlier/outlier, MSAC/PROSAC variants, parameters, advantages and disadvantages, comparison with Hough."
+    },
+    {
+      "file": "mpv25_retrieval",
+      "title": "Image Retrieval",
+      "topics": "Bag-of-Words histogram, codebook, idf weighting, inverted file, image-to-image similarity, VLAD descriptor, SMK (Selective Match Kernel), spatial verification, query expansion, retrieval + RANSAC zoom-in, mAP, precision@k, recall@k, sparsity."
+    },
+    {
+      "file": "deep_learning_mpv_2026",
+      "title": "Deep Learning Part 1",
+      "topics": "CNN structure (convolutional, pooling, fully connected layers), non-linearities, image classification, SGD, learning rate selection, dropout, batch normalization, cost functions, Transformers, applications of CNNs in computer vision."
+    },
+    {
+      "file": "deep_learning_2_mpv_2025",
+      "title": "Deep Learning Part 2",
+      "topics": "Object detection with deep nets, proposal-based detectors, end-to-end detectors, bounding box prediction, class prediction, segmentation, foundation models."
+    },
+    {
+      "file": "cvm-07-2026-03-30-3d_reconstruction_part_1",
+      "title": "3D Reconstruction Part 1",
+      "topics": "Camera models, structure-from-motion, epipolar geometry."
+    },
+    {
+      "file": "mpv-08-2026-04-13_3d_reconstruction_part_2",
+      "title": "3D Reconstruction Part 2",
+      "topics": "Multi-view stereo, NeRFs, 3D Gaussian Splatting."
+    },
+    {
+      "file": "MPV2025_Learned_matching",
+      "title": "Deep Learned Local Features",
+      "topics": "SuperPoint, SuperGlue, RoMa, DUSt3R, learned matching pipelines."
+    },
+    {
+      "file": "mpv24_deepmetriclearning",
+      "title": "Deep Metric Learning",
+      "topics": "Global image descriptors via CNNs, SPoC/MAC/GeM pooling, translation invariance, contrastive loss, triplet loss, margin, hard negatives, differentiable recall@k loss, NetVLAD, mapping images to vector space for retrieval."
+    },
+    {
+      "file": "mpv24_ssl",
+      "title": "Self-Supervised Learning",
+      "topics": "Auto-encoders, contrastive self-supervised methods, SimCLR, role of positive and negative pairs."
+    },
+    {
+      "file": "matas-2018.04-klt-only",
+      "title": "KLT Tracking",
+      "topics": "Kanade-Lucas-Tomasi tracker, gradient-based tracking, which image patches are suitable for tracking, aperture problem."
+    },
+    {
+      "file": "kcf_lecture2016",
+      "title": "KCF Tracking (Kernel Correlation Filter / DCT)",
+      "topics": "Discriminative correlation tracking (DCT), KCF, kernel correlation filter, scale and rotation handling, search method, object representation, long-term tracking, mean-shift tracking, color-space reduction."
+    },
+    {
+      "file": "tld",
+      "title": "Tracking-Learning-Detection (TLD)",
+      "topics": "TLD framework, P-N learning, online detector updates, scanning window detection, integral image, ensemble classifier, NN classifier."
+    },
+    {
+      "file": "tracking_by_segmentation",
+      "title": "Tracking by Segmentation",
+      "topics": "Tracking via segmentation masks."
+    }
+  ]
+}

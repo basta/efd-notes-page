@@ -8,3 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
+
+# IDE
+.idea/
+
+# MkDocs build output
+page/site/
+
+# Large source PDFs (re-downloadable from course wiki)
+MPV/*.pdf
+
