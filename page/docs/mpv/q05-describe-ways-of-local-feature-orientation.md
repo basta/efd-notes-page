@@ -1,3 +1,5 @@
+> **Source question (Q5):** Describe ways of local feature orientation estimation
+
 ## Local Feature Orientation Estimation
 
 A local feature detected at a particular location and scale still lacks one essential degree of freedom: **rotation**. Two images of the same physical surface patch may be rotated relative to each other, and a descriptor computed on the raw patch would not match. To achieve **rotation invariance**, the patch must first be brought into a canonical orientation. This step is part of building a **similarity frame** – a coordinate system defined by centre $(x,y)$, scale $\sigma$, and orientation $\theta$ – that normalises the patch before description.

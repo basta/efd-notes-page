@@ -1,3 +1,5 @@
+> **Source question (Q13):** Learning local feature detectors – describe the possible loss functions (R2D2, SuperPoint) and training data sources.
+
 ## Learning Local Feature Detectors: Loss Functions and Training Data
 
 The classical detector pipeline – Harris corners, FAST, Difference-of-Gaussians – relies on handcrafted rules that define what constitutes a “good” keypoint. These rules are based on intuitive properties such as high intensity variation in all directions or blob‑like structures at a characteristic scale. While effective, they are not optimised for the ultimate goal of establishing reliable correspondences across wide baselines. The rise of deep learning has enabled a paradigm shift: instead of designing a detector by hand, we can **learn** a function that maps an input image to a set of keypoints, directly optimising the repeatability and discriminability of the resulting features. This section describes two influential learned detectors, **SuperPoint** and **R2D2**, with a focus on their loss functions and the sources of training data that make such learning possible.

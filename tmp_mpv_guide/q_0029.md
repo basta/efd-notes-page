@@ -1,3 +1,5 @@
+> **Source question (Q29):** Describe how to use an integral image for computing the sum of the intensity and the intensity variance for a rectangular region.
+
 ## Integral Images for Fast Computation of Sum and Variance in Rectangular Regions
 
 The TLD detector’s first cascade stage – the variance filter – must evaluate the intensity variance of thousands of image patches per frame. Computing the variance naïvely for every window would be prohibitively slow. The solution is the **integral image** (also called a summed‑area table), a data structure that allows the sum of pixel values inside any axis‑aligned rectangle to be computed in constant time, independent of the rectangle’s size. By maintaining two integral images – one for the original intensities and one for the squared intensities – both the mean and the variance of a patch can be obtained with just a handful of arithmetic operations. This section explains the construction of integral images and derives the formulas for computing the sum of intensities and the intensity variance over a rectangular region.

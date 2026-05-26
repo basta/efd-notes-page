@@ -1,3 +1,5 @@
+> **Source question (Q15):** How is the Bag-of-Words representation (histogram) constructed? What is the idf weighting, how is it estimated, and what problem is it handling? How is image-to-image similarity estimated with the BoW representation? How is the codebook size affecting the sparsity of the BoW histogram and what are other factors affecting its sparsity?
+
 ## Bag-of-Words Representation for Image Retrieval
 
 The Bag-of-Words (BoW) model is a foundational technique for large‑scale instance‑level image retrieval. It draws an analogy to text retrieval: a document is represented by the set of words it contains, ignoring word order. In the visual domain, an image is represented by a histogram of **visual words** obtained by quantising the space of local descriptors. This section explains how the BoW histogram is constructed, the role and estimation of **inverse document frequency (idf)** weighting, how image‑to‑image similarity is computed, and how the codebook size – along with other factors – determines the sparsity of the representation.

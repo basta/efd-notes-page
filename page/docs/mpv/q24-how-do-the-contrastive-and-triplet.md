@@ -1,3 +1,5 @@
+> **Source question (Q24):** How do the contrastive and triplet loss work? What is the role of the margin? What are hard negatives and why are they so important?
+
 ## Contrastive and Triplet Losses: Margin and Hard Negative Mining
 
 The previous sections described how a deep network $f_\theta$ maps an image to a global descriptor $\mathbf{X} \in \mathbb{R}^d$ and how different pooling strategies (SPoC, MAC, GeM) produce translation‑invariant representations. To make these descriptors useful for retrieval, the network must be trained so that relevant images are close in the descriptor space and irrelevant ones are far apart. This is achieved by **metric learning losses**. Two of the most fundamental are the **contrastive loss** and the **triplet loss**. This section explains how they work, the role of the margin, and why **hard negative mining** is essential for learning a discriminative embedding.

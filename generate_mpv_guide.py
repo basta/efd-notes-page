@@ -156,8 +156,10 @@ def main():
                 except Exception as e:
                     print(f"    ERROR: {e}")
                     result = f"## Q{i}: {question}\n\n[ERROR generating: {e}]"
+                header = f"> **Source question (Q{i}):** {question}\n\n"
                 with open(tmp_file, "w", encoding="utf-8") as f:
-                    f.write(result)
+                    f.write(header + result)
+                result = header + result
 
         answers.append(result)
         context_buffer.append(result)

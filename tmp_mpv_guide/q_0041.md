@@ -1,3 +1,5 @@
+> **Source question (Q41):** Deep Neural Nets for image classification. Learning - the cost function, the SGD (stochastic gradient method), drop-out, batch normalization. SGD parameters.
+
 ## Deep Neural Nets for Image Classification: Learning — Cost Function, SGD, Dropout, Batch Normalization, and SGD Parameters
 
 Training a deep convolutional neural network for image classification is an optimisation problem of enormous scale. The network may contain millions of parameters, and the training set can consist of millions of labelled images. This section explains the core components that make this optimisation feasible and effective: the **cost function** that defines what it means to be correct, the **stochastic gradient descent (SGD)** algorithm that iteratively adjusts the parameters, the **hyper‑parameters** that control SGD, and two indispensable regularisation techniques — **dropout** and **batch normalisation** — that stabilise training and prevent overfitting. The exposition follows the framework established in the course slides and builds on the architectural building blocks described in the previous section.

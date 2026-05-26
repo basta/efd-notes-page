@@ -1,3 +1,5 @@
+> **Source question (Q32):** Which image patches are suitable for tracking? Why? Which patches are not suitable?
+
 ## Which Image Patches Are Suitable for Tracking? Why? Which Patches Are Not Suitable?
 
 The KLT tracker estimates the parameters of a geometric transformation – most commonly a 2D translation – that best align a template patch $T$ with an input image $I$. The estimation is performed by iteratively solving a linearised least‑squares problem. As derived in the earlier section on patch selection for horizontal motion, the stability and uniqueness of the solution depend entirely on the **structure tensor**

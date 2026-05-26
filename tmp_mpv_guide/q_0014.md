@@ -1,3 +1,5 @@
+> **Source question (Q14):** How is mAP computed? Discuss relation to precision@k, recall@k for particular k.
+
 ## Mean Average Precision (mAP) and its Relation to Precision@k and Recall@k
 
 In image retrieval, the system must rank database images according to their relevance to a query. Evaluating the quality of this ranking is non‑trivial: a single metric that captures the trade‑off between precision and recall across all possible cut‑off points is needed. **Mean Average Precision (mAP)** is the standard summary statistic for retrieval benchmarks. This section defines mAP, shows how it is computed, and explains its relationship to the simpler, cut‑off‑dependent measures **precision@k** and **recall@k**.

@@ -1,3 +1,5 @@
+> **Source question (Q6):** Hessian and Difference of Gaussian interest points. Definition, properties.
+
 ## Hessian and Difference-of-Gaussian Interest Points
 
 The previous sections introduced the Laplacian of Gaussian (LoG) as a scale-selection mechanism and described how to build scale-invariant detectors by searching for extrema of the scale-normalised LoG in scale space. In practice, two other operators are widely used for detecting blob-like interest points with automatic scale selection: the **determinant of the Hessian (DoH)** and the **Difference of Gaussians (DoG)**. Both are closely related to the LoG, but each offers distinct computational or theoretical advantages. This section defines these two interest point detectors, explains their relationship to the Laplacian, and summarises their key properties.

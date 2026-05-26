@@ -1,3 +1,5 @@
+> **Source question (Q40):** Deep Neural Nets for image classification. Structure - convolutional, pooling and fully connected layers. Non-linearities.
+
 ## Deep Neural Networks for Image Classification: Convolutional, Pooling, and Fully Connected Layers, and Non‑linearities
 
 Deep neural networks have revolutionised image classification by learning hierarchical representations directly from raw pixels. The architecture that ignited the modern deep learning era – AlexNet – and its successors are built from a small set of fundamental layer types: **convolutional layers**, **pooling layers**, **fully connected layers**, and **non‑linear activation functions**. This section describes each of these building blocks, their roles within a classification network, and the design principles that make deep architectures trainable and effective.

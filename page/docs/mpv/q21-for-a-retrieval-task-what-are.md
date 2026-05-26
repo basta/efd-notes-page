@@ -1,3 +1,5 @@
+> **Source question (Q21):** For a retrieval task, what are the benefits of mapping images to a vector space and how is retrieval performed then?
+
 ## Mapping Images to a Vector Space for Retrieval
 
 The previous sections described retrieval pipelines built on local features, visual vocabularies, and inverted files. A fundamentally different paradigm – and the one that dominates modern instance‑level and semantic retrieval – is to **map each entire image to a single global descriptor vector** in a Euclidean space, and then perform retrieval by nearest‑neighbour search in that space. This section explains the benefits of such a vector‑space embedding and how retrieval is carried out once the mapping is learned.

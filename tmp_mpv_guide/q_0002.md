@@ -1,3 +1,5 @@
+> **Source question (Q2):** Harris interest points - definition, algorithm for detection, parameters. Explain the motivation behind the definition. Describe the effects of the parameters on the number of detected points. To which transformation (geometric/photometric) is this detector invariant?
+
 ## Harris Interest Points: Definition, Algorithm, Parameters, and Invariance
 
 The **Harris corner detector** is a foundational technique for finding stable, repeatable interest points in an image. It belongs to the class of **corner detectors**—methods that identify locations where the image intensity changes significantly in more than one direction. Such points are highly discriminative and can be reliably re-detected under moderate viewpoint and illumination changes, making them essential building blocks for wide-baseline matching, tracking, and 3D reconstruction.

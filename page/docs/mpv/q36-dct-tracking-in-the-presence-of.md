@@ -1,3 +1,5 @@
+> **Source question (Q36):** DCT tracking in the presence of rotation and scale change.
+
 ## DCT Tracking in the Presence of Rotation and Scale Change
 
 Discriminative Correlation Filter (DCT) trackers – including MOSSE, KCF, and their successors – have demonstrated remarkable speed and accuracy by reformulating tracking as a ridge regression problem solved in the Fourier domain. The core formulation, however, models only **translation**: the filter is trained on cyclic shifts of a base patch and evaluated by computing a 2D response map whose peak gives the horizontal and vertical displacement. Real-world objects also undergo **scale changes** and **rotations**, which break the assumption that the target’s appearance can be captured by a fixed-size, axis-aligned bounding box. This section describes how DCT trackers are extended to handle scale and rotation, building on the circulant machinery introduced in the previous section.

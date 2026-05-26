@@ -1,3 +1,5 @@
+> **Source question (Q3):** Describe the algorithm for the selection of interest point (region) scale using the Laplacian.
+
 ## Selection of Interest Point Scale Using the Laplacian
 
 A fundamental limitation of early corner detectors such as Harris is their lack of **scale invariance**: a corner at one image resolution may appear as an edge or a flat region when the image is zoomed. To achieve scale-invariant detection, each interest point must be assigned a **characteristic scale**—the size of the local image structure that is most stable and repeatable across different views. The Laplacian of Gaussian (LoG) provides a principled mechanism for selecting this scale automatically and independently in each image.

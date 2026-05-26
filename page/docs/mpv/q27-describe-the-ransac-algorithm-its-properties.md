@@ -1,3 +1,5 @@
+> **Source question (Q27):** Describe the RANSAC algorithm, its properties, advantages and disadvantages. Which parameters it has?
+
 ## RANSAC: Random Sample Consensus
 
 Many computer vision tasks require estimating the parameters of a geometric model from a set of noisy measurements – for example, fitting a line to edge points, computing an epipolar geometry from tentative correspondences, or finding a plane in a 3D point cloud. In realistic data, a large fraction of the measurements are **outliers** that do not conform to the model at all. Standard least‑squares fitting is catastrophically sensitive to even a single gross outlier. **RANSAC** (RANdom SAmple Consensus) is a robust estimation paradigm that can tolerate extreme outlier ratios and has become one of the most widely used algorithms in computer vision.

@@ -1,3 +1,5 @@
+> **Source question (Q28):** Describe the steps for object detection using "sliding windows" ("scanning windows"). How is the reasonable speed achieved?
+
 ## Sliding Window Object Detection and Efficient Cascade Rejection
 
 The TLD tracker relies on an object detector that must evaluate thousands of image patches per frame in real time. The detector is built around the **sliding window** (or **scanning window**) paradigm, which is a classic approach to object localisation. This section describes the steps of sliding window detection and explains how the TLD detector achieves reasonable speed through a **cascade of increasingly discriminative classifiers**.

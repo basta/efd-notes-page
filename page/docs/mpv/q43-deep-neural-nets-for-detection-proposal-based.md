@@ -1,3 +1,5 @@
+> **Source question (Q43):** Deep Neural Nets for detection. Proposal-based and end-to-end methods. Class label and bounding box prediction.
+
 ## Deep Neural Networks for Object Detection: Proposal‑Based and End‑to‑End Methods
 
 Object detection is the task of simultaneously localising and classifying all objects of interest in an image. Unlike image classification, which assigns a single label to the whole image, detection must answer **what** objects are present and **where** they are located. The output is a set of bounding boxes, each associated with a class label and a confidence score. The course material traces the evolution of deep‑learning‑based detectors from exhaustive scanning to sophisticated end‑to‑end architectures. This section focuses on the two dominant paradigms: **proposal‑based** (two‑stage) methods and **end‑to‑end** (single‑stage) methods, and explains how each predicts class labels and bounding boxes.

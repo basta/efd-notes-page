@@ -1,3 +1,5 @@
+> **Source question (Q30):** Why is the Adaboost algorithm often used for the "sliding window" methods? Give more than one reason.
+
 ## Why Is the AdaBoost Algorithm Often Used for Sliding‑Window Methods?
 
 Sliding‑window object detection, as described in the context of the TLD tracker, must evaluate an enormous number of image patches – often $10^5$ to $10^6$ per frame – and decide whether each contains the object of interest. A successful detector must therefore satisfy two demanding requirements simultaneously: **extremely high classification speed** and **high detection accuracy**. The **AdaBoost** (Adaptive Boosting) algorithm, together with the cascade architecture it naturally enables, has become a cornerstone of many sliding‑window detectors (most famously the Viola–Jones face detector) because it addresses both requirements in a principled and highly effective way. Below are the main reasons for its widespread adoption.

@@ -1,3 +1,5 @@
+> **Source question (Q11):** Describe "Local Binary Patterns" like descriptors.
+
 ## Local Binary Patterns and Binary Descriptors
 
 The SIFT descriptor, discussed in the previous section, produces a 128‑dimensional floating‑point vector that is matched using Euclidean distance. While SIFT offers excellent discriminative power and robustness, its computational and memory footprint can be a bottleneck in real‑time or resource‑constrained applications. An alternative family of descriptors replaces the gradient‑orientation histograms with **binary strings** formed by simple intensity comparisons. These **binary descriptors** can be matched extremely quickly using the **Hamming distance** (the number of bits that differ), which is implemented in hardware on virtually all modern CPUs. The foundational idea behind many of these descriptors is the **Local Binary Pattern (LBP)**, originally developed for texture analysis. This section traces the evolution from LBP to modern binary keypoint descriptors such as BRIEF, ORB, BRISK, and FREAK, and explains their design principles, strengths, and limitations.

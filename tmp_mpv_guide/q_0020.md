@@ -1,3 +1,5 @@
+> **Source question (Q20):** How can retrieval and RANSAC be used to perform zoom-in operation given a query image and a large dataset of images? How does the first retrieval stage (before re-ranking with RANSAC) differ from the standard retrieval with BoW? Why is this modification necessary?
+
 ## Zoom-In Retrieval Using Retrieval and RANSAC
 
 The standard image retrieval pipeline, described in previous sections, ranks database images by their visual similarity to the query – typically returning near‑duplicates or images depicting the same object at a similar scale. In many applications, however, we are interested in a **zoom‑in** operation: given a query image, find database images that show a *higher‑resolution* view of some object or region present in the query. This is essential for detail mining, 3D reconstruction from a single image, and exploring fine‑grained structures. This section explains how a modified retrieval stage combined with RANSAC‑based spatial verification can perform zoom‑in retrieval, how the initial retrieval differs from standard BoW, and why that modification is necessary.

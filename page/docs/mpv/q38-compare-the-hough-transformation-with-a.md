@@ -1,3 +1,5 @@
+> **Source question (Q38):** Compare the Hough transformation with a brute-force search algorithm.
+
 > **Note:** This question was not found in the 2026 MPV slides — it may be from an older syllabus. Answer below is based on general computer vision knowledge.
 
 ## Comparing the Hough Transform with Brute‑Force Search

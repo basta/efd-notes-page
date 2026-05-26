@@ -1,3 +1,5 @@
+> **Source question (Q25):** How can you make recall@k to be differentiable and use it as a loss? Describe the loss in detail.
+
 ## Making Recall@k Differentiable: The Recall Surrogate Loss
 
 The previous sections introduced contrastive and triplet losses, which optimise pairwise or triplet relationships. While effective, these losses do not directly optimise the retrieval metrics used at evaluation time, such as **recall@k**. Recall@k measures the fraction of relevant items that appear among the top‑$k$ retrieved results for a query. Because it depends on a discrete ranking operation and a hard step function, recall@k is non‑differentiable and cannot be used as a loss in gradient‑based training. This section explains how to construct a **differentiable surrogate** for recall@k, turning the evaluation metric itself into a trainable loss.

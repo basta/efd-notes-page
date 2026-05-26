@@ -1,3 +1,5 @@
+> **Source question (Q37):** Describe the Hough transformation algorithm for detection of parametrized structure (line, circle, …). Discuss the properties of the algorithm (time and memory requirements, parameters).
+
 ## The Hough Transform for Detecting Parametrized Structures
 
 The Hough transform is a classical computer vision technique for detecting instances of parametric shapes – lines, circles, ellipses, and more – in images. Unlike the RANSAC algorithm discussed earlier, which relies on random sampling and hypothesis verification, the Hough transform is a **voting‑based** method that maps each image feature (typically an edge point) into a parameter space. Peaks in this parameter space correspond to the parameters of the shape instances present in the image. This section describes the algorithm, its common parametrizations, and its computational properties.

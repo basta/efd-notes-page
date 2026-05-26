@@ -1,3 +1,5 @@
+> **Source question (Q10):** RootSIFT descriptor. Describe the algorithm.
+
 ## RootSIFT Descriptor
 
 The SIFT descriptor, described in the previous section, produces a 128‑dimensional floating‑point vector that is L2‑normalised, clipped, and re‑normalised. This vector is typically compared using Euclidean distance. **RootSIFT** is a simple yet surprisingly effective modification of the SIFT descriptor that replaces the Euclidean distance with the **Hellinger distance** (also known as the Bhattacharyya distance for histograms) by applying an element‑wise square root to the normalised descriptor. The resulting descriptor is still a 128‑dimensional vector, but the Euclidean distance between two RootSIFT vectors is equivalent to the Hellinger distance between the original SIFT vectors. Empirically, RootSIFT consistently improves matching performance, often at negligible computational cost.

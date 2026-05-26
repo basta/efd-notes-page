@@ -1,3 +1,5 @@
+> **Source question (Q42):** Deep Neural Nets. How do you select learning rate?
+
 ## Selecting the Learning Rate for Deep Neural Networks
 
 The learning rate $\eta$ is arguably the single most important hyper‑parameter in training deep neural networks. It controls the step size taken in the direction of the negative gradient during stochastic gradient descent (SGD) and its variants. Choosing an appropriate learning rate – and a schedule for adapting it over time – is critical for achieving both rapid convergence and good generalisation. This section explains the role of the learning rate, the consequences of poor choices, and the practical strategies for selecting and scheduling it, drawing on the principles and techniques presented in the course slides and the broader deep learning literature.

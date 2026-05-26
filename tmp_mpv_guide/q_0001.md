@@ -1,3 +1,5 @@
+> **Source question (Q1):** Wide-baseline matching. Describe the steps for obtaining correspondences between a pair of images, which are taken from different viewpoints.
+
 ## Wide-Baseline Matching: Obtaining Correspondences Across Viewpoints
 
 Wide-baseline stereo refers to the problem of finding point correspondences between two images of the same scene taken from substantially different viewpoints. Unlike narrow-baseline setups (where a simple window correlation suffices), wide-baseline scenarios introduce large changes in scale, rotation, perspective distortion, and illumination. The standard solution relies on **local features**—distinguished image regions that can be reliably detected and described in a viewpoint-invariant manner. The overall pipeline consists of four main stages: **detection**, **description**, **matching**, and **geometric verification**.

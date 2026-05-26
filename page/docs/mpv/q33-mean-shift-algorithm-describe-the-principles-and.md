@@ -1,3 +1,5 @@
+> **Source question (Q33):** Mean-shift algorithm. Describe the principles and simulate calculation for 1D example.
+
 ## Mean-Shift Algorithm: Principles and 1D Example
 
 The mean-shift algorithm is a versatile non‑parametric technique for locating the modes (local maxima) of a density function given only discrete samples from that density. In computer vision, it has been applied to clustering, image segmentation, and – most notably for this course – real‑time visual object tracking. Unlike the KLT tracker, which aligns a template by minimising the sum of squared differences, or correlation filter trackers, which learn a discriminative classifier, the mean‑shift tracker is a **generative** method that seeks the region of an image whose appearance (typically encoded by a colour histogram) best matches a target model. The core of the tracker is the mean‑shift procedure itself, which iteratively shifts a window towards the nearest mode of a similarity surface. This section explains the underlying principles of mean‑shift and walks through a concrete 1D calculation.

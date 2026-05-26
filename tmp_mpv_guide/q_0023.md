@@ -1,3 +1,5 @@
+> **Source question (Q23):** How are global image descriptors obtained using CNNs and SPoC, MAC, GeM? What is the relation between GeM and the others? Which of these representations are translation invariant and why? Describe one CNN architecture for extracting global descriptors that is not translation invariant? Why isn't it?
+
 ## Global Image Descriptors from CNNs: SPoC, MAC, GeM, and Translation Invariance
 
 The previous sections introduced the idea of mapping a whole image to a single global descriptor vector for efficient retrieval. In this section we examine **how** such a descriptor is obtained from a convolutional neural network (CNN), focusing on three classic pooling strategies – SPoC, MAC, and GeM – and their relationship. We then discuss which of these representations are translation invariant and why, and finally describe a CNN architecture that is **not** translation invariant.

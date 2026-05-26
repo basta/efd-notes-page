@@ -1,3 +1,5 @@
+> **Source question (Q9):** The SIFT descriptor. Describe the algorithm and its properties.
+
 ## The SIFT Descriptor
 
 The Scale-Invariant Feature Transform (SIFT), introduced by David Lowe, is arguably the most influential local feature in the history of computer vision. While the term “SIFT” often refers to the entire pipeline – detector, orientation assignment, and descriptor – the **SIFT descriptor** is the component that encodes the appearance of a local image region into a compact, highly discriminative vector. This section describes the SIFT descriptor algorithm in detail, explains the design choices behind each step, and summarises its key properties. The preceding sections have already covered the Difference-of-Gaussians (DoG) detector and the orientation assignment procedure; here we assume that a similarity‑covariant region (centre, scale, orientation) has already been established, and we focus exclusively on how the descriptor is built from that normalised patch.

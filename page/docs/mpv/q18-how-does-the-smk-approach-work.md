@@ -1,3 +1,5 @@
+> **Source question (Q18):** How does the SMK approach work and how does it extend the BoW approach? How does SMK differ from the BoW approach? Discuss advantages, drawbacks, memory, speed, performance.
+
 ## Selective Match Kernel (SMK)
 
 The Selective Match Kernel (SMK) is a local‑feature‑based image similarity measure that extends the Bag‑of‑Words (BoW) model by replacing the binary, word‑level vote with a **fine‑grained, non‑linear function of descriptor residuals**. It belongs to the family of match kernels that compare sets of local features directly, but it retains the inverted‑file compatibility of BoW by restricting comparisons to features assigned to the same visual word. This section explains the mechanics of SMK, how it builds upon BoW, its key differences, and the resulting trade‑offs in memory, speed, and retrieval performance.

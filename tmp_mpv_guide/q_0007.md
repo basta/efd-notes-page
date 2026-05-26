@@ -1,3 +1,5 @@
+> **Source question (Q7):** Define Maximally Stable Extremal Regions (MSER). Describe the algorithm for their detection. Properties of extremal regions end the maximally stable subset.
+
 ## Maximally Stable Extremal Regions (MSER)
 
 The detectors discussed so far – Harris, Hessian, DoG – are **point‑based**: they locate a centre and a scale, then grow a circular or elliptical region around it. A fundamentally different philosophy is to treat the image as a set of nested level sets and to detect **regions directly** as connected components of thresholded images. The **Maximally Stable Extremal Region (MSER)** detector, introduced by Matas et al., follows this second path. It produces regions that are **affine covariant**, robust to monotonic illumination changes, and complementary to corner/blob detectors. MSERs have been a cornerstone of wide‑baseline matching, particularly for scenes with homogeneous intensity structures (e.g., buildings, text, graffiti).

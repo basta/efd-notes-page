@@ -1,3 +1,5 @@
+> **Source question (Q44):** Deep Neural Nets - applications in computer vision.
+
 ## Deep Neural Nets — Applications in Computer Vision
 
 The previous sections have established the fundamental building blocks of deep convolutional neural networks, the principles of their training, and the architectures that underpin modern object detection. This section broadens the perspective to survey the extraordinary range of **computer vision tasks** that deep neural networks have come to dominate. The course material presents a whirlwind tour of applications, from the foundational problem of image classification to generative models that synthesise entirely new visual content. What unifies these diverse applications is the ability of deep networks to learn hierarchical, abstract representations directly from raw pixels, replacing hand‑crafted features and task‑specific pipelines with end‑to‑end differentiable models.

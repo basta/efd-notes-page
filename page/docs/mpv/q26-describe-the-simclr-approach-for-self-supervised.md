@@ -1,3 +1,5 @@
+> **Source question (Q26):** Describe the SIMCLR approach for self-supervised learning. What happens if you train it only using positive pairs?
+
 ## SimCLR: A Simple Framework for Contrastive Learning of Visual Representations
 
 The previous sections introduced contrastive and triplet losses for learning image descriptors from labelled data. Self‑supervised learning (SSL) removes the need for manual labels by deriving a supervisory signal from the data itself. Among SSL methods, **instance discrimination** treats each image as its own class, and the goal is to learn representations that are invariant to data augmentations while being discriminative across different images. **SimCLR** (Simple Framework for Contrastive Learning of Visual Representations) is a prominent instance‑discrimination method that achieves state‑of‑the‑art performance with a remarkably straightforward design. This section describes the SimCLR pipeline, its key components, and explains why training with *only* positive pairs leads to a collapsed representation.

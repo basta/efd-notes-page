@@ -1,3 +1,5 @@
+> **Source question (Q19):** How is spatial verification used to improve retrieval performance? How are tentative correspondences obtained with the BoW approach? What is the image-to-image similarity measure with spatial verification and why is this better than the BoW similarity?
+
 ## Spatial Verification for Retrieval Refinement
 
 The Bag-of-Words (BoW) model, described in previous sections, ranks database images by the similarity of their visual word histograms. While efficient and scalable, this ranking is based purely on the statistics of local descriptor quantisation and ignores the spatial arrangement of the corresponding features. **Spatial verification** is a post‑processing step that re‑ranks a shortlist of top‑retrieved images by enforcing geometric consistency among the local feature matches. This section explains how tentative correspondences are obtained from the BoW representation, how spatial verification uses them to estimate a geometric transformation and count inliers, and why the resulting inlier count is a more reliable similarity measure than the raw BoW score.

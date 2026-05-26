@@ -1,3 +1,5 @@
+> **Source question (Q17):** How is the VLAD descriptor computed and how does it differ from BoW?
+
 ## Vector of Locally Aggregated Descriptors (VLAD)
 
 The Bag-of-Words (BoW) model, described in previous sections, represents an image by a histogram of visual word occurrences. Each local descriptor contributes a binary vote: 1 if it falls into a given visual word, 0 otherwise. The **Vector of Locally Aggregated Descriptors (VLAD)** extends this idea by accumulating **residual vectors** – the difference between each local descriptor and its assigned visual word – thereby capturing first‑order statistics of the descriptor distribution within each cluster. This yields a more discriminative representation while retaining a compact, dense vector form that is compatible with approximate nearest neighbour search.

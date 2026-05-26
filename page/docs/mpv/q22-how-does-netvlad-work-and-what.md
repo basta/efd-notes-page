@@ -1,3 +1,5 @@
+> **Source question (Q22):** How does NetVLAD work and what is the difference with VLAD?
+
 ## NetVLAD: A Learnable VLAD Layer
 
 The previous section described how mapping images to a global descriptor vector enables efficient and scalable retrieval. Among the many architectures for producing such a descriptor, **NetVLAD** occupies a special place: it takes the classical VLAD (Vector of Locally Aggregated Descriptors) aggregation scheme and makes it **fully differentiable**, allowing the entire pipeline – from local features to the final global descriptor – to be trained end‑to‑end with a retrieval‑oriented loss. This section explains how NetVLAD works and highlights the key differences from the original, hand‑crafted VLAD.

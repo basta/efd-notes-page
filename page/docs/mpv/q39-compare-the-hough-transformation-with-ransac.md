@@ -1,3 +1,5 @@
+> **Source question (Q39):** Compare the Hough transformation with RANSAC.
+
 ## Comparing the Hough Transform with RANSAC
 
 The Hough transform and RANSAC (RANdom SAmple Consensus) are two foundational paradigms for robust model fitting in the presence of outliers. Both aim to recover the parameters of a geometric model from noisy, cluttered data, but they adopt fundamentally different strategies. The Hough transform, described in detail in the previous section, is a **voting‑based** method that accumulates evidence in a discretized parameter space. RANSAC, introduced by Fischler and Bolles, is a **hypothesize‑and‑test** method that repeatedly draws minimal random samples, instantiates model hypotheses, and verifies them against the full dataset. This section compares the two approaches along the dimensions of algorithmic structure, computational complexity, robustness, handling of multiple instances, and practical applicability, drawing on the RANSAC framework presented in the course slides.

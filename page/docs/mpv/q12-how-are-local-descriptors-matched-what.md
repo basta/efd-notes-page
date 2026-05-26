@@ -1,3 +1,5 @@
+> **Source question (Q12):** How are local descriptors matched? What are the ways of filtering out unreliable correspondences?
+
 ## Matching Local Descriptors and Filtering Unreliable Correspondences
 
 Once local features have been detected and described – whether by SIFT, RootSIFT, ORB, or a learned alternative – the next step is to establish correspondences between two (or more) images. This process, often called **matching**, is followed by a series of **filtering** steps that discard unreliable matches. The goal is to obtain a set of geometrically consistent, high‑confidence correspondences that can be used for camera pose estimation, 3D reconstruction, or image retrieval. This section describes the standard matching pipeline, the classic ratio test and cross‑check, and the central role of robust geometric verification, in particular the RANSAC family of algorithms.

@@ -1,3 +1,5 @@
+> **Source question (Q8):** The FAST interest point detector
+
 ## The FAST Interest Point Detector
 
 The detectors discussed so far – Harris, Hessian, DoG – rely on image derivatives and, in the case of scale‑invariant methods, on scale‑space pyramids. While they provide high repeatability and well‑localised features, their computational cost can be prohibitive for real‑time applications such as visual SLAM or augmented reality. The **Features from Accelerated Segment Test (FAST)** detector, introduced by Rosten and Drummond, takes a radically different approach: it defines a corner as a pixel whose intensity differs sufficiently from a contiguous set of pixels on a surrounding circle. This simple, intensity‑comparison‑based test can be executed extremely quickly, making FAST the backbone of many real‑time systems, most notably the ORB feature.

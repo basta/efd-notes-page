@@ -1,3 +1,5 @@
+> **Source question (Q34):** Mean-shift algorithm. Color pixels [R,G,B] represented in 3D space. How can you reduce the color-space into 256 color-space?
+
 ## Reducing the 3D RGB Colour Space to 256 Colours with Mean‑Shift
 
 The mean‑shift algorithm, introduced in the previous section as a mode‑seeking procedure on a kernel density estimate, can be applied directly to the **colour distribution** of an image. In a typical 24‑bit RGB image, each pixel is a point in a 3‑dimensional space $\mathbf{x}_i = (R_i, G_i, B_i)^\top$, yielding up to $256^3 \approx 16.7$ million possible colours. Many computer vision tasks – including the mean‑shift tracker’s histogram representation – benefit from a drastically reduced colour palette, often to just 256 distinct colours. This section explains how the mean‑shift algorithm itself can be used to perform such **colour space reduction** (colour quantization) by clustering the 3D colour points.

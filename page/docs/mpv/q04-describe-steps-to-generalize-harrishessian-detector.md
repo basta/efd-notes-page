@@ -1,3 +1,5 @@
+> **Source question (Q4):** Describe steps to generalize Harris/Hessian detector to become affine invariant.
+
 ## Generalising Harris/Hessian Detectors to Affine Invariance
 
 The standard Harris and Hessian detectors, even when augmented with scale selection (e.g., Harris-Laplacian, Hessian-Laplacian), provide only **similarity invariance** – they model the local image transformation as a rotation and uniform scaling. Under wide-baseline conditions, however, a circular region in one image may project to an elongated ellipse in the other due to perspective foreshortening. To achieve reliable matching across such viewpoints, the detector must be **affine covariant**: the detected region should transform according to the local affine map between the two images. The generalisation of the Harris/Hessian detector to full affine invariance is accomplished through an iterative process called **affine shape adaptation**.
