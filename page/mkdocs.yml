@@ -81,3 +81,13 @@ nav:
     - Q30. Why is the Adaboost algorithm often…: mpv/q30-why-is-the-adaboost-algorithm-often.md
   - Beyond 2026 Syllabus:
     - Q38. Compare the Hough transformation with a…: mpv/q38-compare-the-hough-transformation-with-a.md
+- KO Worked Examples (Claude):
+  - Overview: ko_manual/index.md
+  - 1. Introduction to Combinatorial Optimization: ko_manual/1_Basic_KO.md
+  - 2. Integer Linear Programming (ILP): ko_manual/2_ILP.md
+  - 3. Shortest Paths: ko_manual/3_SPT_KO.md
+  - 4. Network Flows: ko_manual/4_Flows_KO.md
+  - 5. Knapsack Problem: ko_manual/5_Knapsack.md
+  - 6. Traveling Salesman Problem: ko_manual/6_TSP.md
+  - 7. Scheduling: ko_manual/7_Sched_KO.md
+  - 8. Constraint Programming: ko_manual/8_CP_KO.md
